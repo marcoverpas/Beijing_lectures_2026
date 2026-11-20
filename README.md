@@ -6,7 +6,7 @@ These lectures are delivered at the [Central University of Finance and Economics
 
 <div align="center">
 <figure>
-<img src="beijing_figures/cover_beijing_2026.png" alt="Money, Interdependencies and the Ecosystem: Hybrid Stock-Flow Consistent Models in R" width="700">
+<img src="cover_beijing_2026.png" alt="Money, Interdependencies and the Ecosystem: Hybrid Stock-Flow Consistent Models in R" width="700">
 </figure>
 </div>
 
@@ -306,28 +306,28 @@ Strictly speaking, this is not a closed-form solution, but an implicit one, beca
 
 <figure>
 <img
-src="beijing_figures/sbm_sd.gif" alt="System-dynamics animation of Model SBM" width="900">
+src="sbm_sd.gif" alt="System-dynamics animation of Model SBM" width="900">
 </figure>
 
 To inspect the plumbing of a single period, we can freeze one snapshot and lay its payments out side by side. The Sankey diagram below shows the transactions-flow matrix of period 20, when the economy is still growing towards its steady state: payers are on the left, transactions in the middle and payees on the right. Since every transaction has exactly one source and one destination, each sector's outflows and inflows balance. The lower part of the diagram shows how saving is channelled: households add to their cash, bills and deposits, banks lend to firms and buy bills, and the government covers its deficit by issuing bills to households, banks and the central bank.
 
 <figure>
 <img
-src="beijing_figures/SANKEY_SBM.png" alt="Sankey diagram of the transactions-flow matrix of Model SBM" width="900">
+src="SANKEY_SBM.png" alt="Sankey diagram of the transactions-flow matrix of Model SBM" width="900">
 </figure>
 
 Simulated over time, these flows generate the dynamic paths shown below. National income converges monotonically to its steady state of about ¥132, and gross investment settles at about 15% of GDP. The consistency check (panel a) is zero throughout. Panel d) shows the accounting identity $V = B_s + K$ at work: household wealth (about 368) is matched by public debt (about 171) plus fixed capital (about 198).
 
 <figure>
 <img
-src="beijing_figures/SBM_anim.gif" alt="Baseline dynamics of Model SBM" width="900">
+src="SBM_anim.gif" alt="Baseline dynamics of Model SBM" width="900">
 </figure>
 
 **An experiment: higher government spending.** In the second scenario of the code, government spending rises permanently from 20 to 25 at period 101. In the animation below, the grey line is the baseline and the red one is the shock scenario. The fiscal expansion raises income and consumption through the usual multiplier, and investment follows as firms adjust their capital stock. The government budget moves into deficit (by about 3 on impact), but the deficit closes gradually, because higher income generates higher tax revenue. National income settles at about 165, consistent with the steady-state formula above, while public debt stabilises at a higher level (from about 171 to about 213).
 
 <figure>
 <img
-src="beijing_figures/SBM_experiment.gif" alt="Effects of higher government spending in Model SBM" width="900">
+src="SBM_experiment.gif" alt="Effects of higher government spending in Model SBM" width="900">
 </figure>
 
 #### 🛠️ Hands-on: the structure of the code
@@ -412,12 +412,12 @@ Notice that the order of the equations does not matter for the solution: since t
 
 > ### 📦 Box B - Playing with Model SBM
 >
-> The simulation laboratory below allows you to change the main coefficients and policy variables of Model SBM, from period 101 onwards, and to see the effects immediately. It is a self-contained HTML/JavaScript version of `1a_SBM.R`, with the same equations and parameters. Similar laboratories are available for Model OPENSBM-FLEX (Section 2.2), Model IO-SBM with fixed prices (Section 3.2) and Model ECO-IO-SBM (Section 4.2). Each laboratory can also be opened offline, by downloading the corresponding `.html` file from the folder `beijing_figures` and opening it in a browser.
+> The simulation laboratory below allows you to change the main coefficients and policy variables of Model SBM, from period 101 onwards, and to see the effects immediately. It is a self-contained HTML/JavaScript version of `1a_SBM.R`, with the same equations and parameters. Similar laboratories are available for Model OPENSBM-FLEX (Section 2.2), Model IO-SBM with fixed prices (Section 3.2) and Model ECO-IO-SBM (Section 4.2). Each laboratory can also be opened offline, by downloading the corresponding `.html` file from this repository and opening it in a browser.
 >
-> [![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_sbm.html)
+> [![Open interactive model](launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/int_sbm.html)
 > <div align="center">
 > <figure>
-> <a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_sbm.html" target="_blank">
+> <a href="https://marcoverpas.github.io/Beijing_lectures_2026/int_sbm.html" target="_blank">
 > <img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
 > </a>
 > </figure>
@@ -536,13 +536,13 @@ Exports depend on foreign income and imports on domestic income, with unit elast
 
 <figure>
 <img
-src="beijing_figures/OPENSBM_experiment.gif" alt="Effects of higher government spending in Model OPENSBM-FLEX" width="900">
+src="OPENSBM_experiment.gif" alt="Effects of higher government spending in Model OPENSBM-FLEX" width="900">
 </figure>
 <br>
 
-**🎮 Interactive version.** A simulation laboratory for Model OPENSBM-FLEX is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html). It allows you to change fiscal policy, the domestic and foreign interest rates, foreign income, the portfolio share of foreign bills, the price elasticity of trade and the speed of adjustment of the exchange rate. (With a high speed of adjustment and high elasticities, the exchange rate can overshoot and the model can break down, as in exercise 4 of Box E.) As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
+**🎮 Interactive version.** A simulation laboratory for Model OPENSBM-FLEX is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/int_opensbm.html). It allows you to change fiscal policy, the domestic and foreign interest rates, foreign income, the portfolio share of foreign bills, the price elasticity of trade and the speed of adjustment of the exchange rate. (With a high speed of adjustment and high elasticities, the exchange rate can overshoot and the model can break down, as in exercise 4 of Box E.) As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
-[![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html)
+[![Open interactive model](launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/int_opensbm.html)
 
 #### 🛠️ Hands-on: what changes in the code
 
@@ -569,7 +569,7 @@ Notice that the exchange rate enters the export and import equations with a lag,
 > Run the government-spending experiment with this version. The figure below compares the current account and net foreign assets under the two regimes. With a fixed exchange rate, the economy cannot reach a new stationary state: the fiscal anchor requires $PSBR = 0$, while external stability requires $CA = 0$, and there is only one variable (national income) that can adjust. Higher spending generates a permanent trade deficit, which is financed by selling domestic bills to the rest of the world. The interest payments on the growing foreign debt widen the current account deficit, which in turn raises the debt: the **twin deficits** feed each other and diverge.
 >
 > <figure>
-> <img src="beijing_figures/FIX_vs_FLEX.png" alt="Current account and net foreign assets under fixed and flexible exchange rates" width="900">
+> <img src="FIX_vs_FLEX.png" alt="Current account and net foreign assets under fixed and flexible exchange rates" width="900">
 > </figure>
 
 > ### ✏️ Box E - Exercises with Models OPENSBM-FLEX and OPENSBM-FIX
@@ -663,7 +663,7 @@ The same information can be represented as a **network**, where industries are t
 
 <figure>
 <img
-src="beijing_figures/IO_network.png" alt="Input-output network of Model IO-SBM" width="750">
+src="IO_network.png" alt="Input-output network of Model IO-SBM" width="750">
 </figure>
 <br>
 
@@ -715,7 +715,7 @@ Notice that the wage rate is the same in all industries, and that the wage bill 
 
 <figure>
 <img
-src="beijing_figures/IO_SBM_experiment.gif" alt="Effects of higher government spending in Model IO-SBM" width="900">
+src="IO_SBM_experiment.gif" alt="Effects of higher government spending in Model IO-SBM" width="900">
 </figure>
 <br>
 
@@ -723,15 +723,15 @@ src="beijing_figures/IO_SBM_experiment.gif" alt="Effects of higher government sp
 
 <figure>
 <img
-src="beijing_figures/IO_composition.png" alt="A change in the composition of public spending in Model IO-SBM" width="900">
+src="IO_composition.png" alt="A change in the composition of public spending in Model IO-SBM" width="900">
 </figure>
 <br>
 
 With a single capital-output ratio, nothing happens at the macroeconomic level: the gross output of manufacturing rises and that of services falls, but GDP and investment do not change. With industry-specific capital intensities, the shift towards capital-intensive manufacturing raises the target capital stock. Investment rises by 3.5% on impact and by about 5% at its peak, and GDP rises by about 1% on impact and by 1.4% after ten periods. In the long run, the fiscal anchor prevails again and GDP returns to its baseline level. The economy, however, is not the same as before: the capital-output ratio is higher (about 1.54 against 1.49), investment remains about 3.5% above its baseline level to replace the larger capital stock, and consumption is correspondingly lower. Total employment *falls* slightly, because labour productivity is higher in manufacturing than in services: one unit of final demand for manufactured goods requires, directly and indirectly, about 0.50 units of labour, against 0.68 units for services.
 
-**🎮 Interactive version.** A simulation laboratory for Model IO-SBM with fixed prices is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_io_sbm.html). It allows you to change the level and the composition of public spending, labour productivity in manufacturing, the propensities to consume, the tax rate and the interest rate, and shows gross output and employment by industry. As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
+**🎮 Interactive version.** A simulation laboratory for Model IO-SBM with fixed prices is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/int_io_sbm.html). It allows you to change the level and the composition of public spending, labour productivity in manufacturing, the propensities to consume, the tax rate and the interest rate, and shows gross output and employment by industry. As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
-[![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_io_sbm.html)
+[![Open interactive model](launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/int_io_sbm.html)
 
 #### 🛠️ Hands-on: the IO block in the code
 
@@ -830,7 +830,7 @@ Third, amortisation funds are set aside at the replacement cost of capital, $AF 
 
 <figure>
 <img
-src="beijing_figures/IO_SRAFFA_experiment.gif" alt="Effects of higher government spending in Model IO-SBM with Sraffa-like prices" width="900">
+src="IO_SRAFFA_experiment.gif" alt="Effects of higher government spending in Model IO-SBM with Sraffa-like prices" width="900">
 </figure>
 <br>
 
@@ -838,7 +838,7 @@ The figure below looks more closely at relative prices and distribution. Panel a
 
 <figure>
 <img
-src="beijing_figures/SRAFFA_prices.png" alt="Current and reproduction prices and the profit share in Model IO-SBM with Sraffa-like prices" width="900">
+src="SRAFFA_prices.png" alt="Current and reproduction prices and the profit share in Model IO-SBM with Sraffa-like prices" width="900">
 </figure>
 <br>
 
@@ -904,7 +904,7 @@ The animation below shows the government-spending experiment in Model IO-OPENSBM
 
 <figure>
 <img
-src="beijing_figures/IO_OPEN_SRAFFA_experiment.gif" alt="Effects of higher government spending in Model IO-OPENSBM with Sraffa-like prices" width="900">
+src="IO_OPEN_SRAFFA_experiment.gif" alt="Effects of higher government spending in Model IO-OPENSBM with Sraffa-like prices" width="900">
 </figure>
 <br>
 
@@ -974,13 +974,13 @@ The energy intensities are $\boldsymbol{\varepsilon} = [4, 3, 1.5]$ EJ per unit 
 
 <figure>
 <img
-src="beijing_figures/ECO_experiment.gif" alt="Effects of higher government spending in Model ECO-IO-SBM" width="900">
+src="ECO_experiment.gif" alt="Effects of higher government spending in Model ECO-IO-SBM" width="900">
 </figure>
 <br>
 
-**🎮 Interactive version.** A simulation laboratory for Model ECO-IO-SBM is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_eco_io_sbm.html). It allows you to change public spending, the share of renewable energy, the rate of decline of the CO<sub>2</sub> intensity of energy, the share of consumption spent on services and the sensitivity of investment to warming, and shows emissions, temperature and energy use over the whole simulation period. As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
+**🎮 Interactive version.** A simulation laboratory for Model ECO-IO-SBM is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/int_eco_io_sbm.html). It allows you to change public spending, the share of renewable energy, the rate of decline of the CO<sub>2</sub> intensity of energy, the share of consumption spent on services and the sensitivity of investment to warming, and shows emissions, temperature and energy use over the whole simulation period. As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
-[![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_eco_io_sbm.html)
+[![Open interactive model](launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/int_eco_io_sbm.html)
 
 #### 🛠️ Hands-on: the ecological block in the code
 
@@ -1081,7 +1081,7 @@ The **physical stock-flow matrix** (Table 12) shows how the flows change the sto
 
 <figure>
 <img
-src="beijing_figures/ECO_flows.png" alt="Emissions by industry, matter flows and reserves in Model ECO-IO-SBM-FULL" width="900">
+src="ECO_flows.png" alt="Emissions by industry, matter flows and reserves in Model ECO-IO-SBM-FULL" width="900">
 </figure>
 <br>
 
@@ -1165,7 +1165,7 @@ The goods market works like a queue at a shop. For each household, `cumsum(cdq)`
 
 <figure>
 <img
-src="beijing_figures/ABM_SBM.png" alt="Results of Model ABM-SBM" width="900">
+src="ABM_SBM.png" alt="Results of Model ABM-SBM" width="900">
 </figure>
 <br>
 
@@ -1177,7 +1177,7 @@ Three results are worth highlighting.
 
 <figure>
 <img
-src="beijing_figures/ABM_wealth.gif" alt="Wealth distribution in Model ABM-SBM" width="650">
+src="ABM_wealth.gif" alt="Wealth distribution in Model ABM-SBM" width="650">
 </figure>
 <br>
 
@@ -1189,7 +1189,7 @@ The figure below shows the results. The macroeconomic behaviour is similar to th
 
 <figure>
 <img
-src="beijing_figures/ABM_OPENSBM.png" alt="Results of Model ABM-OPENSBM" width="900">
+src="ABM_OPENSBM.png" alt="Results of Model ABM-OPENSBM" width="900">
 </figure>
 <br>
 
