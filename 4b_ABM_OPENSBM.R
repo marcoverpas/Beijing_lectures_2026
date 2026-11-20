@@ -158,7 +158,7 @@ for (mc in 1:MC) {
     Llag = L; M_slag = M_s; B_blag = B_b
     WB  = Y - rl * Llag - DA                            # Macro: wage bill = residual
     K   = K + Is - DA                                   # Macro: capital accumulation
-    L   = L + Is - DA                                   # Macro: loans finance net investment
+    L   = L + Is - DA                                   # Macro: loans fund net investment  
     M_s = M_s + (L - Llag)                              # Macro: loans create deposits
     FB  = rl * Llag + rb * B_blag - rm * sum(m)         # Macro: bank profits (m still lagged here)
 

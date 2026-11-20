@@ -128,7 +128,9 @@ In practice, each model is built around two tables. The **balance-sheet matrix**
 
 **Identities, behaviour and the hidden equation.** The columns and rows of the two matrices give the **accounting identities** of the model: for instance, the household column says that disposable income not spent on consumption must be added to the stock of money held. The identities are then closed with **behavioural equations**, usually simple rules of thumb and stock-flow norms describing how each sector spends, saves, invests and allocates its wealth across assets, and with **equilibrium conditions**, which state that the supply of an item is equal to the demand for it (for instance, firms produce what is demanded, and banks supply all the loans that firms demand), together with the choice of the exogenous variables (government spending, interest rates, and so on). Because the matrices are watertight, every model contains one **redundant** (or *hidden*) equation, logically implied by all the others. This is the SFC counterpart of Walras' law. The hidden equation is omitted from the code and used instead to check that the model is correctly specified: if it does not hold in the simulations, an error has been made somewhere. In all the models of this repository, the hidden equation is the equality between the cash demanded by households and the cash supplied by the central bank, $H_h = H_s$.
 
-**Solving the models.** SFC models are dynamic systems, normally written in discrete time as difference equations (although continuous-time versions also exist). Stocks are the cumulated sum of past flows, and flows depend on past stocks. This makes SFC models similar to [system dynamics](https://en.wikipedia.org/wiki/System_dynamics) models, which track stocks, flows and feedback loops over time, and their results are usually presented as dynamic paths after a shock, compared with a baseline scenario. The simplest models can be solved analytically for their *stationary state*, that is, the position where all stocks and flows are constant. In a growing economy, the corresponding notion is the *steady state*, where all stocks and flows grow at the same rate, so that stock-flow ratios are constant. Since the economies of this repository do not grow, the two notions coincide, and we use the two terms interchangeably. Larger models are solved numerically by computer simulation: within each period, the simultaneous equations are solved by iteration (as in the scripts below), and the model is then moved forward one period at a time. The coefficients can be fine-tuned (chosen to obtain a plausible baseline), calibrated (on observed ratios or a target steady state) or estimated econometrically. We return to the last two options in [Section 6](#6---calibration-and-estimation).
+**Solving the models.** SFC models are dynamic systems, normally written in discrete time as difference equations (although continuous-time versions also exist). Stocks are the cumulated sum of past flows, and flows depend on past stocks. This makes SFC models similar to [system dynamics](https://en.wikipedia.org/wiki/System_dynamics) models, which track stocks, flows and feedback loops over time, and their results are usually presented as dynamic paths after a shock, compared with a baseline scenario. The simplest models can be solved analytically for their *stationary state*, that is, the position where all stocks and flows are constant. In a growing economy, the corresponding notion is the *steady state*, where all stocks and flows grow at the same rate, so that stock-flow ratios are constant. Since the economies of this repository do not grow, the two notions coincide, and we use the two terms interchangeably. Larger models are solved numerically by computer simulation: within each period, the simultaneous equations are solved by iteration (as in the scripts below), and the model is then moved forward one period at a time. The coefficients can be fine-tuned (chosen to obtain a plausible baseline), calibrated (on observed ratios or a target steady state) or estimated econometrically. We return to the last two options in [Section 6](#6---calibration-and-estimation). Figure 1 shows the main programming languages and software used to simulate SFC models.
+
+#### Figure 1. Programming languages and software used for SFC modelling
 
 <figure>
 <img
@@ -294,7 +296,7 @@ The central bank returns its profits to the government (23). Government spending
 
 $$H_h = H_s$$
 
-This is the redundant equation of Model SBM. It holds because all the other equations, taken together, imply it. It is checked at the end of the code and in panel a) of the figures below.
+This is the redundant equation of Model SBM. It holds because all the other equations, taken together, imply it. It is checked at the end of the code and in panel a) of Figures 4 and 5.
 
 **The steady state.** In the stationary state all stocks are constant, so the government budget must be balanced ($PSBR = 0$) and firms only replace depreciated capital ($K = L_d = \kappa \cdot Y$). With a single interest rate $r$, bank profits are zero. Imposing these conditions on equations (2), (10) and (25), we obtain the stationary level of national income:
 
@@ -302,28 +304,36 @@ $$Y^{\ast} = \frac{G + r \cdot (B_h^{\ast} + B_b^{\ast}) - \theta \cdot r \cdot 
 
 Strictly speaking, this is not a closed-form solution, but an implicit one, because the stationary stocks of bills and deposits, $B_h^{\ast}$, $B_b^{\ast}$ and $M_h^{\ast}$, depend in turn on national income (through household wealth). However, it shows clearly what determines $Y^{\ast}$. This is the SBM counterpart of the familiar result of Model PC: in the long run, national income is pinned down by **fiscal policy** (government spending and the tax rate), corrected for the interest flows associated with the stocks of public debt and bank money. With the baseline parameters, $Y^{\ast} \approx$ ¥132. The propensities to consume and the portfolio coefficients affect $Y^{\ast}$ only indirectly, through the size of these stocks.
 
-**The model at work.** The animation below represents Model SBM as a **system-dynamics diagram**. The five sectors are boxes, and every flow is a pipe along which tokens travel, its thickness proportional to the size of the flow. The six tanks at the bottom are the stocks: on the left, the bills issued by the government ($-B_s$) and the loans taken by firms ($-L$), both liabilities, which fill downwards; on the right, the real capital of firms ($K$) and the three assets of households (cash $H_h$, bills $B_h$ and deposits $M_h$), which fill upwards. The government buys goods ($G$) and collects taxes ($T$), and finances its deficit ($PSBR$) by issuing bills. Banks grant loans to firms ($dL$), which invest ($I$) and pay wages ($WB$) to households. Households consume ($C$) and split their saving between cash, bills and deposits. Interest flows from the government to households, from firms to banks and from banks to households, while the central bank returns its profits to the government. As the economy approaches its steady state, the deficit closes, net investment stops, and the tanks stop moving. At every date, the three household tanks add up to the bills tank plus the capital tank: $H_h + B_h + M_h = B_s + K$.
+**The model at work.** Figure 2 represents Model SBM as a **system-dynamics diagram**. The five sectors are boxes, and every flow is a pipe along which tokens travel, its thickness proportional to the size of the flow. The six tanks at the bottom are the stocks: on the left, the bills issued by the government ($-B_s$) and the loans taken by firms ($-L$), both liabilities, which fill downwards; on the right, the real capital of firms ($K$) and the three assets of households (cash $H_h$, bills $B_h$ and deposits $M_h$), which fill upwards. The government buys goods ($G$) and collects taxes ($T$), and finances its deficit ($PSBR$) by issuing bills. Banks grant loans to firms ($dL$), which invest ($I$) and pay wages ($WB$) to households. Households consume ($C$) and split their saving between cash, bills and deposits. Interest flows from the government to households, from firms to banks and from banks to households, while the central bank returns its profits to the government. As the economy approaches its steady state, the deficit closes, net investment stops, and the tanks stop moving. At every date, the three household tanks add up to the bills tank plus the capital tank: $H_h + B_h + M_h = B_s + K$.
+
+#### Figure 2. Model SBM as a system-dynamics diagram
 
 <figure>
 <img
 src="beijing_figures/sbm_sd.gif" alt="System-dynamics animation of Model SBM" width="900">
 </figure>
 
-To inspect the plumbing of a single period, we can freeze one snapshot and lay its payments out side by side. The Sankey diagram below shows the transactions-flow matrix of period 20, when the economy is still growing towards its steady state: payers are on the left, transactions in the middle and payees on the right. Since every transaction has exactly one source and one destination, each sector's outflows and inflows balance. The lower part of the diagram shows how saving is channelled: households add to their cash, bills and deposits, banks lend to firms and buy bills, and the government covers its deficit by issuing bills to households, banks and the central bank.
+To inspect the plumbing of a single period, we can freeze one snapshot and lay its payments out side by side. The Sankey diagram of Figure 3 shows the transactions-flow matrix of period 20, when the economy is still growing towards its steady state: payers are on the left, transactions in the middle and payees on the right. Since every transaction has exactly one source and one destination, each sector's outflows and inflows balance. The lower part of the diagram shows how saving is channelled: households add to their cash, bills and deposits, banks lend to firms and buy bills, and the government covers its deficit by issuing bills to households, banks and the central bank.
+
+#### Figure 3. Transactions-flow matrix of Model SBM in period 20 (Sankey diagram)
 
 <figure>
 <img
 src="beijing_figures/SANKEY_SBM.png" alt="Sankey diagram of the transactions-flow matrix of Model SBM" width="900">
 </figure>
 
-Simulated over time, these flows generate the dynamic paths shown below. National income converges monotonically to its steady state of about ¥132, and gross investment settles at about 15% of GDP. The consistency check (panel a) is zero throughout. Panel d) shows the accounting identity $V = B_s + K$ at work: household wealth (about 368) is matched by public debt (about 171) plus fixed capital (about 198).
+Simulated over time, these flows generate the dynamic paths shown in Figure 4. National income converges monotonically to its steady state of about ¥132, and gross investment settles at about 15% of GDP. The consistency check (panel a) is zero throughout. Panel d) shows the accounting identity $V = B_s + K$ at work: household wealth (about 368) is matched by public debt (about 171) plus fixed capital (about 198).
+
+#### Figure 4. Baseline dynamics of Model SBM
 
 <figure>
 <img
 src="beijing_figures/SBM_anim.gif" alt="Baseline dynamics of Model SBM" width="900">
 </figure>
 
-**An experiment: higher government spending.** In the second scenario of the code, government spending rises permanently from 20 to 25 at period 101. In the animation below, the grey line is the baseline and the red one is the shock scenario. The fiscal expansion raises income and consumption through the usual multiplier, and investment follows as firms adjust their capital stock. The government budget moves into deficit (by about 3 on impact), but the deficit closes gradually, because higher income generates higher tax revenue. National income settles at about 165, consistent with the steady-state formula above, while public debt stabilises at a higher level (from about 171 to about 213).
+**An experiment: higher government spending.** In the second scenario of the code, government spending rises permanently from 20 to 25 at period 101. In Figure 5, the grey line is the baseline and the red one is the shock scenario. The fiscal expansion raises income and consumption through the usual multiplier, and investment follows as firms adjust their capital stock. The government budget moves into deficit (by about 3 on impact), but the deficit closes gradually, because higher income generates higher tax revenue. National income settles at about 165, consistent with the steady-state formula above, while public debt stabilises at a higher level (from about 171 to about 213).
+
+#### Figure 5. Model SBM: higher government spending
 
 <figure>
 <img
@@ -532,7 +542,9 @@ Exports depend on foreign income and imports on domestic income, with unit elast
 
 **The hidden equation and the steady state.** The redundant equation is still $H_h = H_s$, which is checked in the code as in Model SBM. In the stationary state, two conditions must now hold at the same time: the government budget must be balanced ($PSBR = 0$), and the current account must be balanced ($CA = 0$), otherwise net foreign assets would keep changing. With a flexible exchange rate, both conditions can be met: the fiscal anchor still pins down national income, while the exchange rate adjusts until the trade balance offsets net interest payments from abroad. With the baseline parameters, national income converges to about 132, almost exactly as in Model SBM, and the domestic currency depreciates by about 19% ($xr \approx 1.19$). This is because, at $xr = 1$, imports (about 26) would exceed exports (20).
 
-**An experiment: higher government spending.** As in Section 2.1, government spending rises from 20 to 25 at period 101. The animation below shows the results. On impact, the multiplier is smaller than in the closed economy (GDP rises by about 11 rather than 13 after one period), because part of the additional demand leaks abroad through imports. The current account moves into deficit and net foreign assets turn negative, as foreign investors buy domestic bills. The deficit triggers a depreciation of the domestic currency, which makes exports more competitive and curbs imports. The current account is gradually brought back into balance, and the exchange rate settles at about 1.37, 15% above its baseline level. In the new steady state, national income is about 165, as in the closed economy: in the long run, the fiscal anchor prevails, and the exchange rate takes care of the external constraint. Public debt rises from about 170 to about 215, of which about 47 is held by the rest of the world.
+**An experiment: higher government spending.** As in Section 2.1, government spending rises from 20 to 25 at period 101. Figure 6 shows the results. On impact, the multiplier is smaller than in the closed economy (GDP rises by about 11 rather than 13 after one period), because part of the additional demand leaks abroad through imports. The current account moves into deficit and net foreign assets turn negative, as foreign investors buy domestic bills. The deficit triggers a depreciation of the domestic currency, which makes exports more competitive and curbs imports. The current account is gradually brought back into balance, and the exchange rate settles at about 1.37, 15% above its baseline level. In the new steady state, national income is about 165, as in the closed economy: in the long run, the fiscal anchor prevails, and the exchange rate takes care of the external constraint. Public debt rises from about 170 to about 215, of which about 47 is held by the rest of the world.
+
+#### Figure 6. Model OPENSBM-FLEX: higher government spending
 
 <figure>
 <img
@@ -566,7 +578,9 @@ Notice that the exchange rate enters the export and import equations with a lag,
 >
 > The file `1b_OPENSBM_FIX.R` contains a version of the model in which the central bank pegs the exchange rate. Equation (37) is dropped, so that the model has 36 equations, and capital gains are always zero. All the coefficients are those of Model OPENSBM-FLEX. With a fixed exchange rate, the baseline reaches a stationary state only for one specific value of the peg, which is calibrated in the code ($\bar{xr} \approx 1.06$). In the early periods, when national income is still low, exports exceed imports and the economy accumulates claims on the rest of the world. In the stationary state, net foreign assets are about 94, and the interest earned on them exactly offsets a trade deficit of about 1.9. Since these claims exceed the foreign bills held by households, the holdings of domestic bills by the rest of the world are negative (about −61): this can be read as foreign reserves accumulated by the central bank to defend the peg.
 >
-> Run the government-spending experiment with this version. The figure below compares the current account and net foreign assets under the two regimes. With a fixed exchange rate, the economy cannot reach a new stationary state: the fiscal anchor requires $PSBR = 0$, while external stability requires $CA = 0$, and there is only one variable (national income) that can adjust. Higher spending generates a permanent trade deficit, which is financed by selling domestic bills to the rest of the world. The interest payments on the growing foreign debt widen the current account deficit, which in turn raises the debt: the **twin deficits** feed each other and diverge.
+> Run the government-spending experiment with this version. Figure 7 compares the current account and net foreign assets under the two regimes. With a fixed exchange rate, the economy cannot reach a new stationary state: the fiscal anchor requires $PSBR = 0$, while external stability requires $CA = 0$, and there is only one variable (national income) that can adjust. Higher spending generates a permanent trade deficit, which is financed by selling domestic bills to the rest of the world. The interest payments on the growing foreign debt widen the current account deficit, which in turn raises the debt: the **twin deficits** feed each other and diverge.
+>
+> #### Figure 7. Current account and net foreign assets under fixed and flexible exchange rates
 >
 > <figure>
 > <img src="beijing_figures/FIX_vs_FLEX.png" alt="Current account and net foreign assets under fixed and flexible exchange rates" width="900">
@@ -659,7 +673,9 @@ The diagonal elements are larger than one, because each industry must produce at
 | **Value added**     | 24.8        | 47.8          | 59.3     |             |            |            | 131.8        |
 | **Total input**     | 46.7        | 99.6          | 98.8     | 92.2        | 19.6       | 20.0       |              |
 
-The same information can be represented as a **network**, where industries are the nodes and technical coefficients are the links. In the figure below, an arrow from industry $i$ to industry $j$ means that good $i$ is used to produce good $j$; its thickness is proportional to $a_{ij}$, and the size of each node is proportional to gross output. Manufacturing is both the main supplier of inputs to the rest of the system (its row of $\mathbf{A}$ has the largest coefficients) and the most input-intensive industry (its column of $\mathbf{A}$ adds up to 0.52, against 0.47 for agriculture and 0.40 for services). This is why it has the largest output multiplier (about 1.98, against 1.89 for agriculture and 1.76 for services). One more unit of final demand for manufactured goods raises total gross output by almost two units.
+The same information can be represented as a **network**, where industries are the nodes and technical coefficients are the links. In Figure 8, an arrow from industry $i$ to industry $j$ means that good $i$ is used to produce good $j$; its thickness is proportional to $a_{ij}$, and the size of each node is proportional to gross output. Manufacturing is both the main supplier of inputs to the rest of the system (its row of $\mathbf{A}$ has the largest coefficients) and the most input-intensive industry (its column of $\mathbf{A}$ adds up to 0.52, against 0.47 for agriculture and 0.40 for services). This is why it has the largest output multiplier (about 1.98, against 1.89 for agriculture and 1.76 for services). One more unit of final demand for manufactured goods raises total gross output by almost two units.
+
+#### Figure 8. Input-output network of Model IO-SBM
 
 <figure>
 <img
@@ -711,7 +727,9 @@ Final demand for the product of each industry is a weighted sum of *real* consum
 
 Notice that the wage rate is the same in all industries, and that the wage bill is still the residual of equation (10). The IO block determines *where* output is produced and *where* people are employed, while the macroeconomic block determines *how much* is produced in total. The two blocks interact through equation (13): the industrial composition of output affects the target capital stock, and therefore investment and national income.
 
-**First experiment: higher government spending.** As in Section 2, government spending rises from 20 to 25 at period 101. The animation below shows GDP and the gross output of the three industries. National income follows the same path as in Model SBM, rising to about 165 in the long run. The effect is not uniform across industries in the short run, though. Since government spending is concentrated on services, the gross output of services rises by 10.2% after one period, against 9.4-9.5% in the other two industries. Employment rises from about 78 to 86. In the long run, all industries grow by about 25%, like GDP: once consumption and investment have adjusted, the composition of final demand returns to its original proportions.
+**First experiment: higher government spending.** As in Section 2, government spending rises from 20 to 25 at period 101. Figure 9 shows GDP and the gross output of the three industries. National income follows the same path as in Model SBM, rising to about 165 in the long run. The effect is not uniform across industries in the short run, though. Since government spending is concentrated on services, the gross output of services rises by 10.2% after one period, against 9.4-9.5% in the other two industries. Employment rises from about 78 to 86. In the long run, all industries grow by about 25%, like GDP: once consumption and investment have adjusted, the composition of final demand returns to its original proportions.
+
+#### Figure 9. Model IO-SBM: higher government spending
 
 <figure>
 <img
@@ -719,7 +737,9 @@ src="beijing_figures/IO_SBM_experiment.gif" alt="Effects of higher government sp
 </figure>
 <br>
 
-**Second experiment: a change in the composition of public spending.** The second experiment is one that only a multi-industry model can address. At period 101, the government moves 30% of its spending from services to manufacturing ($\boldsymbol{\beta}_G$ changes from $[0.10, 0.30, 0.60]$ to $[0.10, 0.60, 0.30]$), while total spending is unchanged. The figure below compares two versions of the model: one with industry-specific capital intensities (red lines), and one with a single, aggregate capital-output ratio, as in Model SBM (grey lines).
+**Second experiment: a change in the composition of public spending.** The second experiment is one that only a multi-industry model can address. At period 101, the government moves 30% of its spending from services to manufacturing ($\boldsymbol{\beta}_G$ changes from $[0.10, 0.30, 0.60]$ to $[0.10, 0.60, 0.30]$), while total spending is unchanged. Figure 10 compares two versions of the model: one with industry-specific capital intensities (red lines), and one with a single, aggregate capital-output ratio, as in Model SBM (grey lines).
+
+#### Figure 10. Model IO-SBM: a change in the composition of public spending
 
 <figure>
 <img
@@ -826,7 +846,9 @@ $$F_f = Y - WB - AF - r_{l,-1} \cdot L_{d,-1} \quad \text{(16)}$$
 
 Third, amortisation funds are set aside at the replacement cost of capital, $AF = p_i \cdot DA$ (19), and the fiscal rule is expressed in real terms (39). The other equations are unchanged: in particular, wealth, income and the portfolio choices of households are still expressed in nominal terms. In the transactions-flow matrix, the only change is a new row recording the distributed profits of firms ($+F_f$ for households, $-F_f$ for the current account of firms).
 
-**An experiment: higher government spending.** Real government spending rises from 20 to 25 at period 101. The animation below shows the results. Real GDP follows a path similar to that of the fixed-price closure, rising from about ¥130 to about ¥163 (at constant prices). As output exceeds its normal level, mark-ups rise, and so do prices: the GDP deflator rises by about 2.5% within four periods. Since the nominal wage rate is fixed, the real wage falls by about 2.4%. The rise in prices is temporary: as normal output catches up with actual output, mark-ups return to their normal levels, and prices and the real wage go back to their baseline levels after about 70 periods.
+**An experiment: higher government spending.** Real government spending rises from 20 to 25 at period 101. Figure 11 shows the results. Real GDP follows a path similar to that of the fixed-price closure, rising from about ¥130 to about ¥163 (at constant prices). As output exceeds its normal level, mark-ups rise, and so do prices: the GDP deflator rises by about 2.5% within four periods. Since the nominal wage rate is fixed, the real wage falls by about 2.4%. The rise in prices is temporary: as normal output catches up with actual output, mark-ups return to their normal levels, and prices and the real wage go back to their baseline levels after about 70 periods.
+
+#### Figure 11. Model IO-SBM with Sraffa-like prices: higher government spending
 
 <figure>
 <img
@@ -834,7 +856,9 @@ src="beijing_figures/IO_SRAFFA_experiment.gif" alt="Effects of higher government
 </figure>
 <br>
 
-The figure below looks more closely at relative prices and distribution. Panel a) shows the gap between current and reproduction prices in the scenario with higher government spending, measured as a difference from the baseline, so that it is zero before the shock. Current prices rise above reproduction prices in all three industries, but not by the same amount: by up to 2.9% in manufacturing, 2.5% in agriculture and 2.0% in services. Since mark-ups apply to intermediate costs, the increase is largest where intermediate inputs weigh most on total costs, and where the normal mark-up is highest. Relative prices therefore change during the adjustment. The fiscal expansion also redistributes income (panel b): the profit share of GDP rises from about 21% to 24% within four periods, and then gradually returns to its normal level.
+Figure 12 looks more closely at relative prices and distribution. Panel a) shows the gap between current and reproduction prices in the scenario with higher government spending, measured as a difference from the baseline, so that it is zero before the shock. Current prices rise above reproduction prices in all three industries, but not by the same amount: by up to 2.9% in manufacturing, 2.5% in agriculture and 2.0% in services. Since mark-ups apply to intermediate costs, the increase is largest where intermediate inputs weigh most on total costs, and where the normal mark-up is highest. Relative prices therefore change during the adjustment. The fiscal expansion also redistributes income (panel b): the profit share of GDP rises from about 21% to 24% within four periods, and then gradually returns to its normal level.
+
+#### Figure 12. Model IO-SBM with Sraffa-like prices: relative prices and the profit share
 
 <figure>
 <img
@@ -900,7 +924,9 @@ $$\mathbf{p} = \left( xr \cdot \mathbf{p}^f \cdot \mathbf{A}_m \cdot \mathbf{M} 
 
 In the code, prices are then divided by their base-period values, so that they are equal to one when $xr = 1$ and mark-ups are at their normal levels (equations (35)-(36) of `2d_IO_OPENSBM_SRAFFA.R`). A depreciation of the domestic currency raises the cost of imported inputs and, through the mark-ups and the inter-industry linkages, all domestic prices: this is the **exchange-rate pass-through**. Consistently, exports and imports now depend on the ratio between the price of imports, $p_m$, and the price of exports, $p_x$, rather than on the nominal exchange rate alone (equations (52)-(53)).
 
-The animation below shows the government-spending experiment in Model IO-OPENSBM with Sraffa-like prices. Because the price-exchange rate loop converges slowly, the model runs for 400 periods, and the shock hits at period 201.
+Figure 13 shows the government-spending experiment in Model IO-OPENSBM with Sraffa-like prices. Because the price-exchange rate loop converges slowly, the model runs for 400 periods, and the shock hits at period 201.
+
+#### Figure 13. Model IO-OPENSBM with Sraffa-like prices: higher government spending
 
 <figure>
 <img
@@ -970,7 +996,9 @@ The energy intensities are $\boldsymbol{\varepsilon} = [4, 3, 1.5]$ EJ per unit 
 
 **The baseline.** The ecological block changes the baseline itself. As the economy grows, emissions rise to a peak of about 24 Gt of CO<sub>2</sub> around period 27, and then decline, as the CO<sub>2</sub> intensity of energy falls while output stabilises. Since temperature depends on *cumulative* emissions, however, it keeps rising: from 1.2°C to about 2.5°C at period 100 and 3.1°C at period 200. As warming reduces the target capital stock, the investment share of GDP falls from about 14% to 9%, and national income is lower than in Model IO-SBM (about 128 against 132 at period 100). Manufacturing generates almost half of all emissions (47%), agriculture about 30% and services 23%.
 
-**An experiment: higher government spending.** The animation below shows the usual increase in government spending at period 101, this time over the whole simulation period. The fiscal expansion raises GDP to about 163 at period 200, slightly less than in Model IO-SBM. Higher output requires more energy and generates more emissions (6.3 against 5.1 Gt at period 200), and the temperature anomaly at period 200 is about 0.1°C higher (3.21°C against 3.10°C). The additional warming further reduces the target capital stock, and the investment share of GDP is slightly lower than in the baseline. The experiment illustrates the basic dilemma of ecological macroeconomics: in the absence of structural change, more output means more emissions and more warming.
+**An experiment: higher government spending.** Figure 14 shows the usual increase in government spending at period 101, this time over the whole simulation period. The fiscal expansion raises GDP to about 163 at period 200, slightly less than in Model IO-SBM. Higher output requires more energy and generates more emissions (6.3 against 5.1 Gt at period 200), and the temperature anomaly at period 200 is about 0.1°C higher (3.21°C against 3.10°C). The additional warming further reduces the target capital stock, and the investment share of GDP is slightly lower than in the baseline. The experiment illustrates the basic dilemma of ecological macroeconomics: in the absence of structural change, more output means more emissions and more warming.
+
+#### Figure 14. Model ECO-IO-SBM: higher government spending
 
 <figure>
 <img
@@ -1077,7 +1105,9 @@ The **physical stock-flow matrix** (Table 12) shows how the flows change the sto
 | Discarded socio-economic stock           |                   |                   |                            | $-DIS$        |
 | **Final stock**                          | $K_m$             | $K_e$             | $CO2_{cum}$                | $K_h$         |
 
-**Results.** Since the matter block has no feedback on the economy, the monetary side and the climate block behave exactly as in Section 4.2. The figure below shows the new information. Panel a) displays CO<sub>2</sub> emissions by industry in the baseline. Panel b) shows that, after the fiscal expansion, extraction and waste rise by about a quarter (extraction from about 43 to 54 Gt at period 200), while recycling covers only about 11% of the material content of output. Panel c) shows that higher output accelerates the depletion of reserves: at period 200, energy reserves are about 68% of their initial level with higher government spending, against 98% in the baseline, and matter reserves about 76% against 92%.
+**Results.** Since the matter block has no feedback on the economy, the monetary side and the climate block behave exactly as in Section 4.2. Figure 15 shows the new information. Panel a) displays CO<sub>2</sub> emissions by industry in the baseline. Panel b) shows that, after the fiscal expansion, extraction and waste rise by about a quarter (extraction from about 43 to 54 Gt at period 200), while recycling covers only about 11% of the material content of output. Panel c) shows that higher output accelerates the depletion of reserves: at period 200, energy reserves are about 68% of their initial level with higher government spending, against 98% in the baseline, and matter reserves about 76% against 92%.
+
+#### Figure 15. Model ECO-IO-SBM-FULL: emissions by industry, matter flows and reserves
 
 <figure>
 <img
@@ -1115,7 +1145,9 @@ Crucially, the models remain **stock-flow consistent**: since money is only ever
 
 > ### 📦 Box L - Emergence: a flock without a leader
 >
-> Watch a flock of starlings wheel across the sky and it is tempting to look for a leader, or a master plan. There is neither. Each bird follows only a few simple rules, looking at its nearest neighbours: **separation** (don't crowd them), **alignment** (head roughly the same way as them), and **cohesion** (don't drift too far from them). No bird can see the whole flock, and nowhere in these rules is the word "flock" written down. Yet the flock appears. This is **emergence**: order at the level of the whole that arises purely from local interaction.
+> Watch a flock of starlings wheel across the sky and it is tempting to look for a leader, or a master plan. There is neither (Figure 16, right). Each bird follows only a few simple rules, looking at its nearest neighbours: **separation** (don't crowd them), **alignment** (head roughly the same way as them), and **cohesion** (don't drift too far from them). No bird can see the whole flock, and nowhere in these rules is the word "flock" written down. Yet the flock appears. This is **emergence**: order at the level of the whole that arises purely from local interaction.
+>
+> #### Figure 16. Deterministic dynamics and emergent order
 >
 > <div align="center">
 > <img src="https://raw.githubusercontent.com/marcoverpas/figures/main/deterministic_vs_emergent.gif" width="720"><br>
@@ -1161,7 +1193,9 @@ The core of the matching process is:
 
 The goods market works like a queue at a shop. For each household, `cumsum(cdq)` is the total demand of all the households ahead of it in the queue *plus* its own demand. Subtracting its own demand, `cdq`, gives `cda`, the goods already claimed by those ahead of it when it reaches the shop. The household is then served its planned demand or what is left, `YC - cda`, whichever is smaller (and nothing if no goods are left).
 
-**Results.** The figure below shows the results of 50 Monte Carlo runs: each thin grey line is a single run, while the bold coloured line is the average across runs. As usual, government spending rises from 20 to 25 at period 101. The redundant equation holds to machine precision in every run ($|H_h - H_s| \approx 10^{-12}$).
+**Results.** Figure 17 shows the results of 50 Monte Carlo runs: each thin grey line is a single run, while the bold coloured line is the average across runs. As usual, government spending rises from 20 to 25 at period 101. The redundant equation holds to machine precision in every run ($|H_h - H_s| \approx 10^{-12}$).
+
+#### Figure 17. Model ABM-SBM: Monte Carlo results
 
 <figure>
 <img
@@ -1173,7 +1207,9 @@ Three results are worth highlighting.
 
 - **Output is higher than in the aggregate model.** Mean GDP settles at about 136 before the shock and 170 after it, against 132 and 165 in Model SBM. When hiring falls short, households are rationed and cannot spend all they planned. The unspent income becomes **involuntary saving**, so that household wealth is higher (about 424 against 368). Through the fiscal anchor, more wealth means more interest-bearing assets and more consumption out of wealth, and hence higher national income. Without frictions and heterogeneity ($s = 0$ and identical households), GDP is about 133 and 166. This is close to, but not exactly equal to, the aggregate result, because households consume out of last period's income and jobs come in whole units.
 - **Involuntary unemployment emerges.** Labour demand is determined by effective demand, not by the number of households willing to work, and the unemployment rate settles at about 24% before the shock and 5% after it. The level of the unemployment rate depends on the size of the workforce, which is a parameter, but its fluctuations and its response to fiscal policy are generated by the model.
-- **Wealth inequality emerges.** Households differ in their propensities to consume and in their luck in the job lottery, so that their wealth differs too. The Gini index of household wealth settles at about 0.12 before the shock and falls to about 0.09 after it, because more households are employed. The animation below shows how the wealth distribution of a single run evolves over time (wealth per household is measured in ¥ on the horizontal axis).
+- **Wealth inequality emerges.** Households differ in their propensities to consume and in their luck in the job lottery, so that their wealth differs too. The Gini index of household wealth settles at about 0.12 before the shock and falls to about 0.09 after it, because more households are employed. Figure 18 shows how the wealth distribution of a single run evolves over time (wealth per household is measured in ¥ on the horizontal axis).
+
+#### Figure 18. Model ABM-SBM: the distribution of household wealth (run 1)
 
 <figure>
 <img
@@ -1185,7 +1221,9 @@ src="beijing_figures/ABM_wealth.gif" alt="Wealth distribution in Model ABM-SBM" 
 
 Model **ABM-OPENSBM** (`4b_ABM_OPENSBM.R`) adds the foreign sector of Model OPENSBM-FLEX to Model ABM-SBM. Each household now also chooses how much to hold in foreign bills, and receives interest and capital gains on them, while exports, imports, the current account and the exchange rate are aggregate. Imports cover part of planned demand, so that only the rest requires domestic workers, and the goods available to the queue of buyers include imported goods.
 
-The figure below shows the results. The macroeconomic behaviour is similar to that of Model OPENSBM-FLEX, with the same upward bias as in Model ABM-SBM: mean GDP is about 136 before the shock and 170 after it, and the exchange rate settles at about 1.23 and 1.42, against 1.19 and 1.37 in the aggregate model. Since income is higher, imports are higher too, and a larger depreciation is needed to balance the current account. Unemployment and wealth inequality behave as in the closed economy.
+Figure 19 shows the results. The macroeconomic behaviour is similar to that of Model OPENSBM-FLEX, with the same upward bias as in Model ABM-SBM: mean GDP is about 136 before the shock and 170 after it, and the exchange rate settles at about 1.23 and 1.42, against 1.19 and 1.37 in the aggregate model. Since income is higher, imports are higher too, and a larger depreciation is needed to balance the current account. Unemployment and wealth inequality behave as in the closed economy.
+
+#### Figure 19. Model ABM-OPENSBM: Monte Carlo results
 
 <figure>
 <img
