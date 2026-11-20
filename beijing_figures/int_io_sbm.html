@@ -434,11 +434,11 @@ function draw() {
   const box = document.getElementById("charts"); box.innerHTML = "";
   const chk = idx.map(i => m.H_h[i] - m.H_s[i]);
   Panel(box, { title: "Consistency check: H_h - H_s", xlim: [idx[0], nPeriods], ylim: [-1, 1] }).line(idx, chk, { col: "#2E8B57", lwd: 2 }).hline(0, { col: "#000", lty: 3 });
-  panel(box, idx, "National income (Y)", [S("Y", "#1874CD")], { vline: 101 });
-  panel(box, idx, "Gross output by industry (x)", [0, 1, 2].map(z => Z("x", z)), { vline: 101, legend: leg, legendPos: "topleft" });
+  panel(box, idx, "National income (Y, ¥)", [S("Y", "#1874CD")], { vline: 101 });
+  panel(box, idx, "Gross output by industry (x, ¥)", [0, 1, 2].map(z => Z("x", z)), { vline: 101, legend: leg, legendPos: "topleft" });
   panel(box, idx, "Employment by industry (N_j)", [0, 1, 2].map(z => Z("Nz", z)), { vline: 101, legend: leg, legendPos: "topleft" });
-  panel(box, idx, "Investment (I)", [S("I", "#CD6600")], { vline: 101 });
-  panel(box, idx, "Wage rate (w = WB / N)", [S("w", "#B22222")], { absMin: 0.05, vline: 101 });
+  panel(box, idx, "Investment (I, ¥)", [S("I", "#CD6600")], { vline: 101 });
+  panel(box, idx, "Wage rate (w = WB / N, ¥ per worker)", [S("w", "#B22222")], { absMin: 0.05, vline: 101 });
 }
 buildControls(SLIDERS, [], draw);
 draw();

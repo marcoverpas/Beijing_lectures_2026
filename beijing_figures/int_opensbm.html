@@ -403,7 +403,7 @@ const SLIDERS = [
   { id: "yw", label: "Foreign income (Y<sub>w</sub>)", min: 150, max: 260, step: 5, value: 200, dec: 0 },
   { id: "lambda20", label: "Autonomous share of foreign bills in wealth (&lambda;<sub>20</sub>)", min: 0, max: 0.2, step: 0.01, value: 0.1, dec: 2 },
   { id: "el", label: "Price elasticity of exports and imports (&epsilon;<sub>1</sub> = &mu;<sub>1</sub>)", min: 0.4, max: 1.4, step: 0.05, value: 0.8, dec: 2 },
-  { id: "phixr", label: "Speed of adjustment of the exchange rate (&phi;)", min: 0.5, max: 6, step: 0.25, value: 3, dec: 2 },
+  { id: "phixr", label: "Speed of adjustment of the exchange rate (&phi;<sub>xr</sub>)", min: 0.5, max: 6, step: 0.25, value: 3, dec: 2 },
 ];
 function draw() {
   const p = readControls(SLIDERS);
@@ -413,13 +413,13 @@ function draw() {
   const box = document.getElementById("charts"); box.innerHTML = "";
   const chk = idx.map(i => m.H_h[i] - m.H_s[i]);
   Panel(box, { title: "Consistency check: H_h - H_s", xlim: [idx[0], nPeriods], ylim: [-1, 1] }).line(idx, chk, { col: "#2E8B57", lwd: 2 }).hline(0, { col: "#000", lty: 3 });
-  panel(box, idx, "National income (Y)", [S("Y", "#1874CD")], { vline: 101 });
+  panel(box, idx, "National income (Y, ¥)", [S("Y", "#1874CD")], { vline: 101 });
   panel(box, idx, "Exchange rate (xr, ¥ per unit of foreign currency)", [S("xr", "#8B008B")], { absMin: 0.05, vline: 101 });
-  panel(box, idx, "Trade balance and current account", [S("TB", "#CD6600"), S("CA", "#B22222", { lty: 1 })], { zero: true, vline: 101,
+  panel(box, idx, "Trade balance and current account (¥)", [S("TB", "#CD6600"), S("CA", "#B22222", { lty: 1 })], { zero: true, vline: 101,
     legend: [{ text: "Trade balance", col: "#CD6600", lwd: 2 }, { text: "Current account", col: "#B22222", lwd: 2 }] });
-  panel(box, idx, "Exports and imports", [S("X", "#2E8B57"), S("IM", "#4682B4")], { vline: 101,
+  panel(box, idx, "Exports and imports (¥)", [S("X", "#2E8B57"), S("IM", "#4682B4")], { vline: 101,
     legend: [{ text: "Exports (X)", col: "#2E8B57", lwd: 2 }, { text: "Imports (IM)", col: "#4682B4", lwd: 2 }] });
-  panel(box, idx, "Net foreign assets and public debt", [S("NETFA", "#B8860B"), S("B_s", "#B22222")], { zero: true, vline: 101,
+  panel(box, idx, "Net foreign assets and public debt (¥)", [S("NETFA", "#B8860B"), S("B_s", "#B22222")], { zero: true, vline: 101,
     legend: [{ text: "Net foreign assets", col: "#B8860B", lwd: 2 }, { text: "Public debt (B_s)", col: "#B22222", lwd: 2 }], legendPos: "left" });
 }
 buildControls(SLIDERS, [], draw);

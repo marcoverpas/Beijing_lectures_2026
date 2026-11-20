@@ -398,23 +398,23 @@ function draw() {
   P("Consistency check: H_h - H_s", [-1, 1]).line(idx, chk, { col: "#2E8B57", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
 
   // b) National income
-  P("National income (Y)", pad_ylim([Y], 5)).line(idx, Y, { col: "#1874CD", lwd: 2 }).hline(m.Y[99], { col: "#000000", lty: 3 });
+  P("National income (Y, ¥)", pad_ylim([Y], 5)).line(idx, Y, { col: "#1874CD", lwd: 2 }).hline(m.Y[99], { col: "#000000", lty: 3 });
 
   // c) Disposable income and consumption
-  P("Disposable income and consumption", pad_ylim([YD, C], 5))
+  P("Disposable income and consumption (¥)", pad_ylim([YD, C], 5))
     .line(idx, YD, { col: "#DF536B", lwd: 2 }).line(idx, C, { col: "#9B30FF", lwd: 2 })
     .legend([{ text: "Disposable income", col: "#DF536B", lwd: 2 }, { text: "Consumption", col: "#9B30FF", lwd: 2 }], "bottomright");
 
   // d) Government balance
-  P("Government balance (-PSBR)", pad_ylim([GB], 1)).line(idx, GB, { col: "#B22222", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
+  P("Government balance (-PSBR, ¥)", pad_ylim([GB], 1)).line(idx, GB, { col: "#B22222", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
 
   // e) Public debt and capital stock
-  P("Public debt and capital stock", pad_ylim([B_s, K], 5))
+  P("Public debt and capital stock (¥)", pad_ylim([B_s, K], 5))
     .line(idx, B_s, { col: "#B22222", lwd: 2 }).line(idx, K, { col: "#CD6600", lwd: 2, lty: 2 })
     .legend([{ text: "Public debt (B_s)", col: "#B22222", lwd: 2 }, { text: "Capital (K)", col: "#CD6600", lwd: 2, lty: 2 }], "bottomright");
 
   // f) Household portfolio
-  P("Household wealth and portfolio", pad_ylim([V, M_h, B_h, H_h], 5))
+  P("Household wealth and portfolio (¥)", pad_ylim([V, M_h, B_h, H_h], 5))
     .line(idx, V, { col: "#000000", lwd: 2 }).line(idx, M_h, { col: "#4682B4", lwd: 2, lty: 2 })
     .line(idx, B_h, { col: "#B8860B", lwd: 2, lty: 3 }).line(idx, H_h, { col: "#2E8B57", lwd: 2, lty: 4 })
     .legend([{ text: "Wealth (V)", col: "#000000", lwd: 2 }, { text: "Deposits (M_h)", col: "#4682B4", lwd: 2, lty: 2 },

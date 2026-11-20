@@ -232,7 +232,7 @@ op = par(mfrow = c(3, 2), mar = c(4, 4, 3, 1))
 
 # a) Output
 matplot(store$Y, type = "l", lty = 1, col = "grey85", font.main = 1,
-        main = "a) Output (GDP)", xlab = "period", ylab = "")
+        main = "a) Output (GDP)", xlab = "period", ylab = "¥")
 lines(rowMeans(store$Y), lwd = 2, col = "dodgerblue")
 segments(1, 131.86, shockStart - 1, 131.86, lty = 2); segments(shockStart, 165.12, nPeriods, 165.12, lty = 2)
 legend("bottomright", c("MC mean", "Aggregate OPENSBM-FLEX"), col = c("dodgerblue", "black"),
@@ -240,7 +240,7 @@ legend("bottomright", c("MC mean", "Aggregate OPENSBM-FLEX"), col = c("dodgerblu
 
 # b) Consumption and investment
 matplot(store$C, type = "l", lty = 1, col = "grey85", font.main = 1,
-        main = "b) Consumption and investment", xlab = "period", ylab = "",
+        main = "b) Consumption and investment", xlab = "period", ylab = "¥",
         ylim = range(0, store$C))
 matlines(store$I, lty = 1, col = "grey85")
 lines(rowMeans(store$C), lwd = 2, col = "aquamarine4")
@@ -254,7 +254,7 @@ lines(rowMeans(store$UR), lwd = 2, col = "salmon")
 
 # d) Household portfolio (MC mean)
 plot(rowMeans(store$V), type = "l", lwd = 2, col = "black", font.main = 1,
-     main = "d) Household wealth and portfolio (MC mean)", xlab = "period", ylab = "",
+     main = "d) Household wealth and portfolio (MC mean)", xlab = "period", ylab = "¥",
      ylim = range(0, 1.45 * rowMeans(store$V)))
 lines(rowMeans(store$M_h), lwd = 2, col = "steelblue", lty = 2)
 lines(rowMeans(store$B_h), lwd = 2, col = "firebrick", lty = 3)
@@ -266,7 +266,7 @@ legend("topright", c("Wealth", "Deposits", "Domestic bills", "Foreign bills", "C
 
 # e) Exchange rate
 matplot(store$XR[3:nPeriods, ], type = "l", lty = 1, col = "grey88", font.main = 1,
-        main = "e) Exchange rate (from period 3)", xlab = "period", ylab = "")
+        main = "e) Exchange rate, ¥ per unit of foreign currency (t > 2)", xlab = "period", ylab = "")
 lines(rowMeans(store$XR[3:nPeriods, ]), lwd = 2, col = "black")
 
 # f) Gini index of household wealth

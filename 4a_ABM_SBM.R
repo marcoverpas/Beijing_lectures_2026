@@ -191,7 +191,7 @@ op = par(mfrow = c(3, 2), mar = c(4, 4, 3, 1))
 
 # a) Output
 matplot(store$Y, type = "l", lty = 1, col = "grey85", font.main = 1,
-        main = "a) Output (GDP)", xlab = "period", ylab = "")
+        main = "a) Output (GDP)", xlab = "period", ylab = "¥")
 lines(rowMeans(store$Y), lwd = 2, col = "dodgerblue")
 segments(1, 131.83, shockStart - 1, 131.83, lty = 2); segments(shockStart, 164.94, nPeriods, 164.94, lty = 2)
 legend("bottomright", c("MC mean", "Aggregate SBM"), col = c("dodgerblue", "black"),
@@ -199,7 +199,7 @@ legend("bottomright", c("MC mean", "Aggregate SBM"), col = c("dodgerblue", "blac
 
 # b) Consumption and investment
 matplot(store$C, type = "l", lty = 1, col = "grey85", font.main = 1,
-        main = "b) Consumption and investment", xlab = "period", ylab = "",
+        main = "b) Consumption and investment", xlab = "period", ylab = "¥",
         ylim = range(0, store$C))
 matlines(store$I, lty = 1, col = "grey85")
 lines(rowMeans(store$C), lwd = 2, col = "aquamarine4")
@@ -213,7 +213,7 @@ lines(rowMeans(store$UR), lwd = 2, col = "salmon")
 
 # d) Household portfolio (MC mean)
 plot(rowMeans(store$V), type = "l", lwd = 2, col = "black", font.main = 1,
-     main = "d) Household wealth and portfolio (MC mean)", xlab = "period", ylab = "",
+     main = "d) Household wealth and portfolio (MC mean)", xlab = "period", ylab = "¥",
      ylim = range(0, 1.45 * rowMeans(store$V)))
 lines(rowMeans(store$M_h), lwd = 2, col = "steelblue", lty = 2)
 lines(rowMeans(store$B_h), lwd = 2, col = "firebrick", lty = 3)
@@ -228,6 +228,6 @@ lines(rowMeans(store$GINI), lwd = 2, col = "darkorange")
 
 # f) Wealth distribution in the last period (MC = 1)
 hist(vHist[nPeriods, ], breaks = 20, col = "lightsteelblue", border = "white", font.main = 1,
-     main = "f) Household wealth, last period (run 1)", xlab = "wealth", ylab = "households")
+     main = "f) Household wealth, last period (run 1)", xlab = "wealth (¥)", ylab = "households")
 
 par(op)
