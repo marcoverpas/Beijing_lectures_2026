@@ -526,7 +526,7 @@ The rest of the world is described by seven equations:
 
 $$\ln X = \varepsilon_0 + \varepsilon_1 \cdot \ln xr_{-1} + \varepsilon_2 \cdot \ln Y_w \quad \text{(31)}$$
 
-$$\ln IM = \mu_0 - \mu_1 \cdot \ln xr_{-1} + \mu_2 \cdot \ln Y \quad \text{(32)}$$
+$$\ln IM = \iota_0 - \iota_1 \cdot \ln xr_{-1} + \iota_2 \cdot \ln Y \quad \text{(32)}$$
 
 $$TB = X - IM \quad \text{(33)}$$
 
@@ -538,7 +538,7 @@ $$B_w = xr \cdot BF_h - NETFA \quad \text{(36)}$$
 
 $$xr = xr_{-1} \cdot \exp \left( -\phi_{xr} \cdot \frac{CA}{Y} \right) \quad \text{(37)}$$
 
-Exports depend on foreign income and imports on domestic income, with unit elasticities ($\varepsilon_2 = \mu_2 = 1$). A depreciation of the domestic currency (a rise in $xr$) makes domestic goods cheaper for foreign buyers and foreign goods dearer for domestic buyers, with a lag of one period (31)-(32). The trade balance (33) plus net interest income from abroad gives the current account (34). Net foreign assets change with the current account and with capital gains (35). The rest of the world is modelled in the simplest possible way: it has no behavioural equations of its own, and its holdings of domestic bills are a residual, which ensures that the foreign financial position of the economy is consistent with its current account (36). Finally, the exchange rate depreciates when the current account is in deficit and appreciates when it is in surplus (37); the coefficient $\phi_{xr} = 3$ sets the speed of adjustment, and the exponential form ensures that $xr$ remains positive. With $\varepsilon_0 = \ln 0.1$, $\mu_0 = \ln 0.2$ and $Y_w = 200$, exports would be ¥20 and imports one-fifth of GDP at $xr = 1$. Unless otherwise stated, the other coefficients are those of Model SBM, while the portfolio coefficients are $\lambda_{10} = 0.15$, $\lambda_{20} = 0.1$ and $\lambda_{11} = \lambda_{12} = \lambda_{21} = \lambda_{22} = 1$.
+Exports depend on foreign income and imports on domestic income, with unit elasticities ($\varepsilon_2 = \iota_2 = 1$). A depreciation of the domestic currency (a rise in $xr$) makes domestic goods cheaper for foreign buyers and foreign goods dearer for domestic buyers, with a lag of one period (31)-(32). The trade balance (33) plus net interest income from abroad gives the current account (34). Net foreign assets change with the current account and with capital gains (35). The rest of the world is modelled in the simplest possible way: it has no behavioural equations of its own, and its holdings of domestic bills are a residual, which ensures that the foreign financial position of the economy is consistent with its current account (36). Finally, the exchange rate depreciates when the current account is in deficit and appreciates when it is in surplus (37); the coefficient $\phi_{xr} = 3$ sets the speed of adjustment, and the exponential form ensures that $xr$ remains positive. With $\varepsilon_0 = \ln 0.1$, $\iota_0 = \ln 0.2$ and $Y_w = 200$, exports would be ¥20 and imports one-fifth of GDP at $xr = 1$. Unless otherwise stated, the other coefficients are those of Model SBM, while the portfolio coefficients are $\lambda_{10} = 0.15$, $\lambda_{20} = 0.1$ and $\lambda_{11} = \lambda_{12} = \lambda_{21} = \lambda_{22} = 1$.
 
 **The hidden equation and the steady state.** The redundant equation is still $H_h = H_s$, which is checked in the code as in Model SBM. In the stationary state, two conditions must now hold at the same time: the government budget must be balanced ($PSBR = 0$), and the current account must be balanced ($CA = 0$), otherwise net foreign assets would keep changing. With a flexible exchange rate, both conditions can be met: the fiscal anchor still pins down national income, while the exchange rate adjusts until the trade balance offsets net interest payments from abroad. With the baseline parameters, national income converges to about ¥132, almost exactly as in Model SBM, and the domestic currency depreciates by about 19% ($xr \approx 1.19$). This is because, at $xr = 1$, imports (about ¥26) would exceed exports (¥20).
 
@@ -659,10 +659,10 @@ The diagonal elements are larger than one, because each industry must produce at
 > | **Industry 2**      | $z_{21}$   | $z_{22}$   | $\cdots$ | $z_{2n}$     | $d_2$        | $x_2$        |
 > | $\vdots$            | $\vdots$   | $\vdots$   | $\ddots$ | $\vdots$     | $\vdots$     | $\vdots$     |
 > | **Industry $n$**    | $z_{n1}$   | $z_{n2}$   | $\cdots$ | $z_{nn}$     | $d_n$        | $x_n$        |
-> | **Value added**     | $v_1$      | $v_2$      | $\cdots$ | $v_n$        |              |              |
+> | **Value added**     | $VA_1$     | $VA_2$     | $\cdots$ | $VA_n$       |              |              |
 > | **Total input**     | $x_1$      | $x_2$      | $\cdots$ | $x_n$        |              |              |
 >
-> Read **along a row**, the table shows how the output of industry $i$ is distributed: the flows $z_{ij}$ sold as inputs to each industry $j$, plus the final demand $d_i$. Read **down a column**, it shows what industry $j$ must buy in order to produce: the same flows $z_{ij}$, plus the value added $v_j$ (wages, profits, interest and depreciation). Since the total output of each industry equals its total input, the sum of value added across industries equals the sum of final demands, that is, GDP measured from the income side equals GDP measured from the expenditure side.
+> Read **along a row**, the table shows how the output of industry $i$ is distributed: the flows $z_{ij}$ sold as inputs to each industry $j$, plus the final demand $d_i$. Read **down a column**, it shows what industry $j$ must buy in order to produce: the same flows $z_{ij}$, plus the value added $VA_j$ (wages, profits, interest and depreciation). Since the total output of each industry equals its total input, the sum of value added across industries equals the sum of final demands, that is, GDP measured from the income side equals GDP measured from the expenditure side.
 >
 > The key assumption is that production uses inputs in **fixed proportions**. The technical coefficients are obtained as $a_{ij} = z_{ij} / x_j$, so that intermediate flows can be written as $z_{ij} = a_{ij} \cdot x_j$, which gives the Leontief system above. In practice, the matrix $\mathbf{A}$ is computed from the IO tables published by national statistical offices, or from multi-country databases. It is a **demand-driven** picture: given any vector of final demand, the Leontief inverse returns the gross output that every industry must produce to satisfy it.
 >
@@ -806,7 +806,7 @@ The operator `%*%` is the matrix product in `R`, while `*` and `/` operate eleme
 
 In Model IO-SBM, all prices are fixed and equal to one. This is a convenient simplification, but it hides two important features of a multi-industry economy: relative prices reflect the technique of production and the distribution of income, and they can change when demand changes. In this section, we close the price system in an alternative way, using **Sraffa-like** prices. The quantity side of the model is unchanged. What changes is how prices are determined, and how nominal and real variables are linked. The code is in `2b_IO_SBM_SRAFFA.R`, and the price equations follow those of the IO-SFC model of Italy developed by [Canelli et al. (2026)](#references), without imported inputs.
 
-**From Sraffa to cost-plus prices.** In [Sraffa's (1960)](#references) system of production prices, $\mathbf{p} = (1 + r) \cdot \mathbf{p} \cdot \mathbf{A} + w \cdot \mathbf{l}$, competition imposes a uniform rate of profit $r$ on the means of production of all industries. (An introduction to Sraffa's price system, from the reproduction of the economy to production prices, is available, in Italian, in [Section 2.3](https://github.com/marcoverpas/analisi_economica/blob/main/README.md#23-sraffa-e-la-ripresa-delle-teorie-del-sovrappi%C3%B9) of my lecture notes on *Analisi Economica*.) Here, we keep the structure of this system, but we replace the uniform rate of profit with industry-specific **mark-ups**, as is common in post-Keynesian pricing theory. Each industry sets its price by applying a mark-up to the cost of its intermediate inputs, and adding the cost of labour. For each of the three industries:
+**From Sraffa to cost-plus prices.** In [Sraffa's (1960)](#references) system of production prices, $\mathbf{p} = (1 + R) \cdot \mathbf{p} \cdot \mathbf{A} + w \cdot \mathbf{l}$, competition imposes a uniform rate of profit $R$ on the means of production of all industries. (An introduction to Sraffa's price system, from the reproduction of the economy to production prices, is available, in Italian, in [Section 2.3](https://github.com/marcoverpas/analisi_economica/blob/main/README.md#23-sraffa-e-la-ripresa-delle-teorie-del-sovrappi%C3%B9) of my lecture notes on *Analisi Economica*.) Here, we keep the structure of this system, but we replace the uniform rate of profit with industry-specific **mark-ups**, as is common in post-Keynesian pricing theory. Each industry sets its price by applying a mark-up to the cost of its intermediate inputs, and adding the cost of labour. For each of the three industries:
 
 $$p_1 = m_1 \cdot (p_1 \cdot a_{11} + p_2 \cdot a_{21} + p_3 \cdot a_{31}) + w \cdot l_1$$
 
@@ -914,7 +914,7 @@ The two closures of Model IO-SBM can be extended to the open economy along the l
 
 $$\mathbf{d} = \boldsymbol{\beta}_C \cdot C + \boldsymbol{\beta}_I \cdot I + \boldsymbol{\beta}_G \cdot G + \boldsymbol{\chi} \cdot X \quad \text{(21)}$$
 
-$$\mathbf{d}^{pat} = \boldsymbol{\psi}_C \odot \boldsymbol{\beta}_C \cdot C + \boldsymbol{\psi}_I \odot \boldsymbol{\beta}_I \cdot I + \boldsymbol{\psi}_G \odot \boldsymbol{\beta}_G \cdot G \quad \text{(22)}$$
+$$\mathbf{d}^{pat} = \boldsymbol{\Psi}_C \odot \boldsymbol{\beta}_C \cdot C + \boldsymbol{\Psi}_I \odot \boldsymbol{\beta}_I \cdot I + \boldsymbol{\Psi}_G \odot \boldsymbol{\beta}_G \cdot G \quad \text{(22)}$$
 
 $$\mathbf{d}^{dom} = \mathbf{d} - \mathbf{d}^{im} \quad \text{(23)}$$
 
@@ -924,7 +924,7 @@ $$\mathbf{im}^{int} = \mathbf{A}_m \cdot \mathbf{x} \quad \text{(25)}$$
 
 $$\mathbf{d}^{im} = \mathbf{d}^{pat} \cdot \frac{IM - \sum_j im^{int}_j}{\sum_j d^{pat}_j} \quad \text{(26)}$$
 
-where $\odot$ denotes the element-by-element (Hadamard) product. Final demand now includes exports (21). The vectors $\boldsymbol{\psi}_C$, $\boldsymbol{\psi}_I$ and $\boldsymbol{\psi}_G$ contain the import contents of each component of demand, which define the *pattern* of final imports across goods (22). Only the part of final demand that is met by domestic production enters the Leontief system (23)-(24), and domestic production in turn requires intermediate imports (25). Total imports are still determined by the aggregate import equation of Model OPENSBM-FLEX. Final imports are therefore obtained as a residual, the difference between total imports and intermediate imports, and are allocated across goods according to the import pattern (26). In other words, the macroeconomic block determines *how much* is imported, while the IO block determines *what* is imported and *which* industries lose domestic demand to foreign producers.
+where $\odot$ denotes the element-by-element (Hadamard) product. Final demand now includes exports (21). The vectors $\boldsymbol{\Psi}_C$, $\boldsymbol{\Psi}_I$ and $\boldsymbol{\Psi}_G$ contain the import contents of each component of demand, which define the *pattern* of final imports across goods (22). Only the part of final demand that is met by domestic production enters the Leontief system (23)-(24), and domestic production in turn requires intermediate imports (25). Total imports are still determined by the aggregate import equation of Model OPENSBM-FLEX. Final imports are therefore obtained as a residual, the difference between total imports and intermediate imports, and are allocated across goods according to the import pattern (26). In other words, the macroeconomic block determines *how much* is imported, while the IO block determines *what* is imported and *which* industries lose domestic demand to foreign producers.
 
 **Fixed prices.** With fixed prices, the open IO model behaves at the macroeconomic level like Model OPENSBM-FLEX. After the increase in government spending, national income rises to about 165, and the domestic currency depreciates by about 15%. The new information concerns industries: since exports are concentrated in manufacturing, the depreciation benefits manufacturing slightly more than the other industries.
 
@@ -990,13 +990,13 @@ $$REN = \sum_j \epsilon_j \cdot \eta_j \cdot x_j \quad \text{(23)}$$
 
 $$NEN = EN - REN \quad \text{(24)}$$
 
-CO<sub>2</sub> emissions are proportional to non-renewable energy (26), with a CO<sub>2</sub> intensity $\beta_e$ that declines at the rate $g_{\beta}$ (25). Emissions are also computed industry by industry (27), and accumulate in the atmosphere (28):
+CO<sub>2</sub> emissions are proportional to non-renewable energy (26), with a CO<sub>2</sub> intensity $\upsilon$ that declines at the rate $g_{\upsilon}$ (25). Emissions are also computed industry by industry (27), and accumulate in the atmosphere (28):
 
-$$\beta_e = \beta_{e,-1} \cdot (1 - g_{\beta}) \quad \text{(25)}$$
+$$\upsilon = \upsilon_{-1} \cdot (1 - g_{\upsilon}) \quad \text{(25)}$$
 
-$$EMIS = \beta_e \cdot NEN \quad \text{(26)}$$
+$$EMIS = \upsilon \cdot NEN \quad \text{(26)}$$
 
-$$EMIS_j = \beta_e \cdot \epsilon_j \cdot (1 - \eta_j) \cdot x_j \quad \text{(27)}$$
+$$EMIS_j = \upsilon \cdot \epsilon_j \cdot (1 - \eta_j) \cdot x_j \quad \text{(27)}$$
 
 $$CO2_{cum} = CO2_{cum,-1} + EMIS \quad \text{(28)}$$
 
@@ -1068,9 +1068,9 @@ The climate block only considers energy and emissions. The full ecological block
 
 **Equations.** The material content of output is the sum of the material intensities $\nu_j$ times gross outputs (31). Part of it is covered by recycled matter (33), which is a share $\rho$ of the discarded socio-economic stock (34); the rest must be extracted (32):
 
-$$X_{mat} = \sum_j \nu_j \cdot x_j \quad \text{(31)}$$
+$$MC = \sum_j \nu_j \cdot x_j \quad \text{(31)}$$
 
-$$MAT = X_{mat} - REC \quad \text{(32)}$$
+$$MAT = MC - REC \quad \text{(32)}$$
 
 $$REC = \rho \cdot DIS \quad \text{(33)}$$
 
@@ -1080,15 +1080,15 @@ A share $\xi_j$ of the consumption goods of each industry is durable, and the st
 
 $$DC_j = DC_{j,-1} + \xi_j \cdot \beta_{C,j} \cdot C - \zeta_j \cdot DC_{j,-1} \quad \text{(35)}$$
 
-$$X_{dur} = \sum_j \nu_j \cdot \xi_j \cdot \beta_{C,j} \cdot C \quad \text{(36)}$$
+$$MC_{dur} = \sum_j \nu_j \cdot \xi_j \cdot \beta_{C,j} \cdot C \quad \text{(36)}$$
 
-$$K_h = K_{h,-1} + X_{dur} - DIS \quad \text{(37)}$$
+$$SES = SES_{-1} + MC_{dur} - DIS \quad \text{(37)}$$
 
-$$WA = MAT - \Delta K_h \quad \text{(38)}$$
+$$WA = MAT - \Delta SES \quad \text{(38)}$$
 
 Finally, resources are converted into reserves at the rates $\sigma_m$ and $\sigma_e$, and reserves are depleted by the extraction of matter and the use of non-renewable energy (39)-(44). The carbon mass of non-renewable energy and the mass of oxygen used in combustion close the material balance (45)-(46):
 
-$$K_m = K_{m,-1} + \sigma_m \cdot RES_{m,-1} - MAT, \qquad K_e = K_{e,-1} + \sigma_e \cdot RES_{e,-1} - NEN$$
+$$RSV_m = RSV_{m,-1} + \sigma_m \cdot RES_{m,-1} - MAT, \qquad RSV_e = RSV_{e,-1} + \sigma_e \cdot RES_{e,-1} - NEN$$
 
 $$CEN = \frac{EMIS}{car}, \qquad O2 = EMIS - CEN$$
 
@@ -1107,9 +1107,9 @@ $$CEN = \frac{EMIS}{car}, \qquad O2 = EMIS - CEN$$
 | **Outputs**                                  |                               |           |
 | Industrial CO<sub>2</sub> emissions          | $-EMIS$                       |           |
 | Discarded socio-economic stock               | $-DIS$                        |           |
-| Non-durable goods and intermediate inputs    | $-(X_{mat} - X_{dur})$        |           |
+| Non-durable goods and intermediate inputs    | $-(MC - MC_{dur})$        |           |
 | Dissipated energy                            |                               | $-EN$     |
-| Change in socio-economic stock               | $-\Delta K_h$                 |           |
+| Change in socio-economic stock               | $-\Delta SES$                 |           |
 | **Total**                                    | 0                             | 0         |
 
 The **physical stock-flow matrix** (Table 12) shows how the flows change the stocks of matter and energy reserves, atmospheric CO<sub>2</sub> and the socio-economic stock (SES).
@@ -1118,13 +1118,13 @@ The **physical stock-flow matrix** (Table 12) shows how the flows change the sto
 
 |                                          | Matter reserves   | Energy reserves   | Atmospheric CO<sub>2</sub> | SES           |
 |:-----------------------------------------|:-----------------:|:-----------------:|:--------------------------:|:-------------:|
-| **Initial stock**                        | $K_{m,-1}$        | $K_{e,-1}$        | $CO2_{cum,-1}$             | $K_{h,-1}$    |
+| **Initial stock**                        | $RSV_{m,-1}$        | $RSV_{e,-1}$        | $CO2_{cum,-1}$             | $SES_{-1}$    |
 | Resources converted into reserves        | $+CONV_m$         | $+CONV_e$         |                            |               |
 | CO<sub>2</sub> emissions                 |                   |                   | $+EMIS$                    |               |
-| Production of durable consumption goods  |                   |                   |                            | $+X_{dur}$    |
+| Production of durable consumption goods  |                   |                   |                            | $+MC_{dur}$    |
 | Extraction of matter / use of energy     | $-MAT$            | $-NEN$            |                            |               |
 | Discarded socio-economic stock           |                   |                   |                            | $-DIS$        |
-| **Final stock**                          | $K_m$             | $K_e$             | $CO2_{cum}$                | $K_h$         |
+| **Final stock**                          | $RSV_m$             | $RSV_e$             | $CO2_{cum}$                | $SES$         |
 
 **Results.** Since the matter block has no feedback on the economy, the monetary side and the climate block behave exactly as in Section 4.2. Figure 15 shows the new information. Panel a) displays CO<sub>2</sub> emissions by industry in the baseline. Panel b) shows that, after the fiscal expansion, extraction and waste rise by about a quarter (extraction from about 43 to 54 Gt at period 200), while recycling covers only about 11% of the material content of output. Panel c) shows that higher output accelerates the depletion of reserves: at period 200, energy reserves are about 68% of their initial level with higher government spending, against 98% in the baseline, and matter reserves about 76% against 92%.
 
@@ -1313,21 +1313,21 @@ The coefficients of the SFC block can be divided into three groups, which are id
 
 **Error correction models.** When the variables are non-stationary but move together in the long run (that is, they are *cointegrated*), standard OLS on the levels can be complemented with an **error correction model** (ECM), which separates the long-run relationship from the short-run dynamics ([Engle and Granger, 1987](#references)). For the consumption function, the long-run relationship is the one of Model SBM, $C = \alpha_1 \cdot YD + \alpha_2 \cdot V_{-1}$, while the short-run equation is:
 
-$$\Delta C = \beta_0 + \beta_1 \cdot \Delta YD - \Phi \cdot (C_{-1} - \alpha_1 \cdot YD_{-1} - \alpha_2 \cdot V_{-2}) + u$$
+$$\Delta C = b_0 + b_1 \cdot \Delta YD - \Phi \cdot (C_{-1} - \alpha_1 \cdot YD_{-1} - \alpha_2 \cdot V_{-2}) + u$$
 
 where $u$ is the error term, the term in brackets is the gap between consumption and its long-run level in the previous period, and $\Phi$, between zero and one, measures how quickly consumption closes it. In the simplest (two-step) procedure, the long-run coefficients are first estimated by OLS on the levels, and the lagged residuals are then used as the error-correction term in an OLS regression on the differences. The ECM can be included in the model as it stands: rewritten in levels, it gives $C$ as a function of past consumption, current and past income and past wealth, and stock-flow consistency is preserved, since consumption still determines saving and wealth through the budget constraint of households.
 
 In empirical SFC models, the ECM is often estimated in a single step. In levels, the equation is:
 
-$$\Delta C = \gamma_0 + \gamma_1 \cdot \Delta YD + \gamma_2 \cdot C_{-1} + \gamma_3 \cdot YD_{-1} + \gamma_4 \cdot V_{-2} + u$$
+$$\Delta C = \Gamma_0 + \Gamma_1 \cdot \Delta YD + \Gamma_2 \cdot C_{-1} + \Gamma_3 \cdot YD_{-1} + \Gamma_4 \cdot V_{-2} + u$$
 
-It is linear in the coefficients, and can be estimated by OLS. The speed of adjustment is $\Phi = -\gamma_2$, and the coefficients of the long-run relationship are recovered afterwards as $\alpha_1 = -\gamma_3 / \gamma_2$ and $\alpha_2 = -\gamma_4 / \gamma_2$, so that they map directly onto the propensities of the model. Two practical points are worth noting. First, a negative and significant $\gamma_2$ is evidence that a long-run relationship exists, but its *t*-statistic must be compared with specific critical values for cointegration tests, which are larger in absolute value than the usual ones. Second, as noted above, the current change in disposable income is determined together with consumption, so that OLS estimates can be biased. Using lagged changes, or instrumenting the current change with its own lags, reduces the problem.
+It is linear in the coefficients, and can be estimated by OLS. The speed of adjustment is $\Phi = -\Gamma_2$, and the coefficients of the long-run relationship are recovered afterwards as $\alpha_1 = -\Gamma_3 / \Gamma_2$ and $\alpha_2 = -\Gamma_4 / \Gamma_2$, so that they map directly onto the propensities of the model. Two practical points are worth noting. First, a negative and significant $\Gamma_2$ is evidence that a long-run relationship exists, but its *t*-statistic must be compared with specific critical values for cointegration tests, which are larger in absolute value than the usual ones. Second, as noted above, the current change in disposable income is determined together with consumption, so that OLS estimates can be biased. Using lagged changes, or instrumenting the current change with its own lags, reduces the problem.
 
 When the variables are trending, the levels version has a drawback: the size of the errors grows with the size of the variables, which in turn grow with the economy (*heteroscedasticity*). OLS estimates of the coefficients remain unbiased, but their standard errors, and therefore the tests, become unreliable. The usual remedy is to estimate the equation in **log-levels**:
 
-$$\Delta \log C = \gamma_0 + \gamma_1 \cdot \Delta \log YD + \gamma_2 \cdot \log C_{-1} + \gamma_3 \cdot \log YD_{-1} + \gamma_4 \cdot \log V_{-2} + u$$
+$$\Delta \log C = \Gamma_0 + \Gamma_1 \cdot \Delta \log YD + \Gamma_2 \cdot \log C_{-1} + \Gamma_3 \cdot \log YD_{-1} + \Gamma_4 \cdot \log V_{-2} + u$$
 
-where the errors are proportional rather than absolute deviations. This comes at a cost. The long-run relationship becomes multiplicative, $C = A \cdot YD^{e_1} \cdot V^{e_2}$, with long-run elasticities $e_1 = -\gamma_3 / \gamma_2$ and $e_2 = -\gamma_4 / \gamma_2$, which do not map directly onto $\alpha_1$ and $\alpha_2$. Logs also cannot be used for variables that may be zero or negative, such as net lending or the net wealth of some sectors. And, in a growing economy, the consumption-income ratio is stable in the long run only if $e_1 + e_2 = 1$. If the estimates do not satisfy this condition, the restriction $\gamma_2 + \gamma_3 + \gamma_4 = 0$ can be imposed. Alternatively, the equation can be kept in levels and divided through by lagged disposable income, or estimated with heteroscedasticity-robust standard errors.
+where the errors are proportional rather than absolute deviations. This comes at a cost. The long-run relationship becomes multiplicative, $\log C = e_0 + e_1 \cdot \log YD + e_2 \cdot \log V$, with long-run elasticities $e_1 = -\Gamma_3 / \Gamma_2$ and $e_2 = -\Gamma_4 / \Gamma_2$, which do not map directly onto $\alpha_1$ and $\alpha_2$. Logs also cannot be used for variables that may be zero or negative, such as net lending or the net wealth of some sectors. And, in a growing economy, the consumption-income ratio is stable in the long run only if $e_1 + e_2 = 1$. If the estimates do not satisfy this condition, the restriction $\Gamma_2 + \Gamma_3 + \Gamma_4 = 0$ can be imposed. Alternatively, the equation can be kept in levels and divided through by lagged disposable income, or estimated with heteroscedasticity-robust standard errors.
 
 **Steady-state restrictions.** Finally, some coefficients can be pinned down by the steady state of the model. For instance, in the stationary state of Model SBM, consumption is equal to disposable income, so that the consumption function implies $V / YD = (1 - \alpha_1) / \alpha_2$. Given an estimate of $\alpha_1$ and the observed wealth-to-income ratio, $\alpha_2$ follows. In our baseline, $V / YD \approx 4$, which is consistent with $\alpha_1 = 0.6$ and $\alpha_2 = 0.1$.
 
@@ -1357,7 +1357,7 @@ The coefficients of the IO block are mostly **calibrated** from input-output tab
 
 **Technical coefficients.** As shown in Box F, the technical coefficients are obtained by dividing each intermediate flow by the gross output of the industry that uses it, $a_{ij} = z_{ij} / x_j$. Since IO tables are in monetary terms, these coefficients are not physical: they are ratios between values, which change when relative prices change, even if the technique of production does not. Deflating the tables with industry-specific price indices reduces, but does not remove, this problem. IO tables that distinguish between domestic and imported inputs give both $\mathbf{A}$ and the matrix of imported-input coefficients, $\mathbf{A}_m$.
 
-**Level of detail and aggregation.** The models in this repository have only three industries because they are teaching tools. In empirical work, the level of disaggregation should be dictated by the research question, not by convenience. The safest strategy is to start from the most disaggregated data available (more than 100 industries in the Chinese benchmark tables, 163 industries per country in Exiobase), and to aggregate them only if, and as far as, the question requires: aggregation can always be done later, while detail lost at the start cannot be recovered. When aggregation is needed, industries are aggregated by summing the corresponding rows and columns of the table *before* computing the coefficients. With an aggregation matrix $\mathbf{S}$, whose element $s_{kj}$ is equal to one if the detailed industry $j$ belongs to the aggregate industry $k$ and to zero otherwise, the aggregated flows are $\mathbf{Z}^{agg} = \mathbf{S} \cdot \mathbf{Z} \cdot \mathbf{S}^T$ and $\mathbf{x}^{agg} = \mathbf{S} \cdot \mathbf{x}$.
+**Level of detail and aggregation.** The models in this repository have only three industries because they are teaching tools. In empirical work, the level of disaggregation should be dictated by the research question, not by convenience. The safest strategy is to start from the most disaggregated data available (more than 100 industries in the Chinese benchmark tables, 163 industries per country in Exiobase), and to aggregate them only if, and as far as, the question requires: aggregation can always be done later, while detail lost at the start cannot be recovered. When aggregation is needed, industries are aggregated by summing the corresponding rows and columns of the table *before* computing the coefficients. With an aggregation matrix $\mathbf{Q}$, whose element $q_{kj}$ is equal to one if the detailed industry $j$ belongs to the aggregate industry $k$ and to zero otherwise, the aggregated flows are $\mathbf{Z}^{agg} = \mathbf{Q} \cdot \mathbf{Z} \cdot \mathbf{Q}^T$ and $\mathbf{x}^{agg} = \mathbf{Q} \cdot \mathbf{x}$.
 
 **Final demand and trade shares.** The composition shares $\boldsymbol{\beta}_C$, $\boldsymbol{\beta}_I$ and $\boldsymbol{\beta}_G$ are the columns of final demand (household consumption, gross fixed capital formation and government consumption), each divided by its total. The export shares $\boldsymbol{\chi}$ are obtained in the same way from the export column, and the import contents $\boldsymbol{\psi}$ from the comparison between the import and total use tables.
 
@@ -1384,7 +1384,7 @@ pr    <- ind$pr;    kappaj <- ind$kappaj
 betaC <- ind$betaC; betaI  <- ind$betaI; betaG <- ind$betaG
 ```
 
-**Changing coefficients.** IO tables are not available every year, and technical coefficients change over time. Between benchmark years, coefficients can be updated with the **RAS method** (or *biproportional scaling*). Starting from an old matrix of technical coefficients, and from the row and column totals of the intermediate flows of the new year (which are usually available), the method multiplies each row of the old matrix by a factor, so that the row totals match the new ones, then each column by another factor, so that the column totals match, and repeats the two steps until both sets of totals are matched. The name comes from the result, $\mathbf{r} \cdot \mathbf{A} \cdot \mathbf{s}$, where $\mathbf{r}$ and $\mathbf{s}$ are the diagonal matrices of the row and column factors ([Miller and Blair, 2009, ch. 7](#references)).
+**Changing coefficients.** IO tables are not available every year, and technical coefficients change over time. Between benchmark years, coefficients can be updated with the **RAS method** (or *biproportional scaling*). Starting from an old matrix of technical coefficients, and from the row and column totals of the intermediate flows of the new year (which are usually available), the method multiplies each row of the old matrix by a factor, so that the row totals match the new ones, then each column by another factor, so that the column totals match, and repeats the two steps until both sets of totals are matched. The name comes from the notation of the original formulation, in which the old matrix is pre-multiplied by a diagonal matrix of row factors and post-multiplied by a diagonal matrix of column factors ([Miller and Blair, 2009, ch. 7](#references)).
 
 ### 6.3 - Agent-based models: moment matching
 
