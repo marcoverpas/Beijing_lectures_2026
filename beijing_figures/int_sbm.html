@@ -9,7 +9,7 @@
   HTML/JavaScript port of 1a_SBM.R: same equations, same parameters.
   Self-contained: no server and no external libraries. It can be opened directly in a
   browser or hosted as a static page (e.g. GitHub Pages).
-  Last change: 16/11/2026
+  Last change: 20/11/2026
 -->
 <style>
   :root {
@@ -368,7 +368,7 @@ const SLIDERS = [
   { id: "theta", label: "Tax rate (&theta;)", min: 0.1, max: 0.4, step: 0.01, value: 0.2, dec: 2 },
   { id: "G", label: "Government spending, exogenous component (G<sub>0</sub>)", min: 10, max: 40, step: 1, value: 20, dec: 0 },
   { id: "r", label: "Interest rate (r<sub>b</sub> = r<sub>m</sub> = r<sub>l</sub>)", min: 0, max: 0.06, step: 0.005, value: 0.02, dec: 3 },
-  { id: "psi", label: "Fiscal rule: spending cut per unit of extra interest bill (&psi;)", min: 0, max: 1, step: 0.05, value: 1, dec: 2 },
+  { id: "psi", label: "Fiscal rule: spending cut per unit of extra interest bill (&psi;; active only when r differs from 2%)", min: 0, max: 1, step: 0.05, value: 1, dec: 2 },
   { id: "kappa", label: "Target capital-output ratio (&kappa;)", min: 1, max: 2, step: 0.05, value: 1.5, dec: 2 },
   { id: "lambda10", label: "Autonomous share of bills in wealth (&lambda;<sub>10</sub>)", min: 0.05, max: 0.5, step: 0.01, value: 0.25, dec: 2 },
 ];
@@ -383,9 +383,10 @@ function pad_ylim(arrs, abs_min = 0, min_frac = 0.08, pad_frac = 0.25) {
 
 function draw() {
   const p = readControls(SLIDERS);
+  greyOut("psi", Math.abs(p.r - rbar) < 1e-9);   // the fiscal rule reacts only to r - rbar
   const m = simulate(p);
   const idx = seq(99, nPeriods), sel = a => idx.map(i => a[i]);
-  const xlim = [1, idx.length];
+  const xlim = [idx[0], nPeriods];   // periods on the horizontal axis
   const box = document.getElementById("charts");
   box.innerHTML = "";
   const P = (title, ylim) => Panel(box, { title, xlim, ylim });
@@ -394,28 +395,28 @@ function draw() {
   const chk = idx.map(i => m.H_h[i] - m.H_s[i]);
 
   // a) Consistency check: H_h - H_s should hug zero
-  P("Consistency check: H_h - H_s", [-1, 1]).series(chk, { col: "#2E8B57", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
+  P("Consistency check: H_h - H_s", [-1, 1]).line(idx, chk, { col: "#2E8B57", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
 
   // b) National income
-  P("National income (Y)", pad_ylim([Y], 5)).series(Y, { col: "#1874CD", lwd: 2 }).hline(m.Y[99], { col: "#000000", lty: 3 });
+  P("National income (Y)", pad_ylim([Y], 5)).line(idx, Y, { col: "#1874CD", lwd: 2 }).hline(m.Y[99], { col: "#000000", lty: 3 });
 
   // c) Disposable income and consumption
   P("Disposable income and consumption", pad_ylim([YD, C], 5))
-    .series(YD, { col: "#DF536B", lwd: 2 }).series(C, { col: "#9B30FF", lwd: 2 })
+    .line(idx, YD, { col: "#DF536B", lwd: 2 }).line(idx, C, { col: "#9B30FF", lwd: 2 })
     .legend([{ text: "Disposable income", col: "#DF536B", lwd: 2 }, { text: "Consumption", col: "#9B30FF", lwd: 2 }], "bottomright");
 
   // d) Government balance
-  P("Government balance (-PSBR)", pad_ylim([GB], 1)).series(GB, { col: "#B22222", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
+  P("Government balance (-PSBR)", pad_ylim([GB], 1)).line(idx, GB, { col: "#B22222", lwd: 2 }).hline(0, { col: "#000000", lty: 3 });
 
   // e) Public debt and capital stock
   P("Public debt and capital stock", pad_ylim([B_s, K], 5))
-    .series(B_s, { col: "#B22222", lwd: 2 }).series(K, { col: "#CD6600", lwd: 2, lty: 2 })
+    .line(idx, B_s, { col: "#B22222", lwd: 2 }).line(idx, K, { col: "#CD6600", lwd: 2, lty: 2 })
     .legend([{ text: "Public debt (B_s)", col: "#B22222", lwd: 2 }, { text: "Capital (K)", col: "#CD6600", lwd: 2, lty: 2 }], "bottomright");
 
   // f) Household portfolio
   P("Household wealth and portfolio", pad_ylim([V, M_h, B_h, H_h], 5))
-    .series(V, { col: "#000000", lwd: 2 }).series(M_h, { col: "#4682B4", lwd: 2, lty: 2 })
-    .series(B_h, { col: "#B8860B", lwd: 2, lty: 3 }).series(H_h, { col: "#2E8B57", lwd: 2, lty: 4 })
+    .line(idx, V, { col: "#000000", lwd: 2 }).line(idx, M_h, { col: "#4682B4", lwd: 2, lty: 2 })
+    .line(idx, B_h, { col: "#B8860B", lwd: 2, lty: 3 }).line(idx, H_h, { col: "#2E8B57", lwd: 2, lty: 4 })
     .legend([{ text: "Wealth (V)", col: "#000000", lwd: 2 }, { text: "Deposits (M_h)", col: "#4682B4", lwd: 2, lty: 2 },
              { text: "Bills (B_h)", col: "#B8860B", lwd: 2, lty: 3 }, { text: "Cash (H_h)", col: "#2E8B57", lwd: 2, lty: 4 }], "bottomright");
 }
