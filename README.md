@@ -555,6 +555,13 @@ src="beijing_figures/OPENSBM_experiment.gif" alt="Effects of higher government s
 **🎮 Interactive version.** A simulation laboratory for Model OPENSBM-FLEX is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html). It allows you to change fiscal policy, the domestic and foreign interest rates, foreign income, the portfolio share of foreign bills, the price elasticity of trade and the speed of adjustment of the exchange rate. (With a high speed of adjustment and high elasticities, the exchange rate can overshoot and the model can break down, as in exercise 4 of Box E.) As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
 [![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html)
+<div align="center">
+<figure>
+<a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html" target="_blank">
+<img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+</a>
+</figure>
+</div>
 
 #### 🛠️ Hands-on: what changes in the code
 
@@ -752,6 +759,13 @@ With a single capital-output ratio, nothing happens at the macroeconomic level: 
 **🎮 Interactive version.** A simulation laboratory for Model IO-SBM with fixed prices is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_io_sbm.html). It allows you to change the level and the composition of public spending, labour productivity in manufacturing, the propensities to consume, the tax rate and the interest rate, and shows gross output and employment by industry. As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
 [![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_io_sbm.html)
+<div align="center">
+<figure>
+<a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_io_sbm.html" target="_blank">
+<img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+</a>
+</figure>
+</div>
 
 #### 🛠️ Hands-on: the IO block in the code
 
@@ -1009,6 +1023,13 @@ src="beijing_figures/ECO_experiment.gif" alt="Effects of higher government spend
 **🎮 Interactive version.** A simulation laboratory for Model ECO-IO-SBM is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_eco_io_sbm.html). It allows you to change public spending, the share of renewable energy, the rate of decline of the CO<sub>2</sub> intensity of energy, the share of consumption spent on services and the sensitivity of investment to warming, and shows emissions, temperature and energy use over the whole simulation period. As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
 [![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_eco_io_sbm.html)
+<div align="center">
+<figure>
+<a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_eco_io_sbm.html" target="_blank">
+<img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+</a>
+</figure>
+</div>
 
 #### 🛠️ Hands-on: the ecological block in the code
 
