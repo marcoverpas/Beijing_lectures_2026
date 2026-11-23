@@ -1,0 +1,23 @@
+{
+  "title": "Money, Interdependencies and the Ecosystem: Hybrid Stock-Flow Consistent Models in R",
+  "upload_type": "lesson",
+  "description": "Lecture material (README and R code) for the course given at the Central University of Finance and Economics (CUFE), Beijing, December 2026. The lectures cover aggregate stock-flow consistent (SFC) models, input-output SFC models with fixed and Sraffa-like prices, ecological IO-SFC models, agent-based SFC models, and their calibration and estimation. Interactive browser versions of the main models are included.",
+  "creators": [
+    {
+      "name": "Veronese Passarella, Marco",
+      "affiliation": "University of L'Aquila; University of Leeds",
+      "orcid": "0000-0001-7652-5952"
+    }
+  ],
+  "license": "cc-by-nc-4.0",
+  "version": "1.0",
+  "language": "eng",
+  "keywords": [
+    "stock-flow consistent models",
+    "input-output analysis",
+    "ecological macroeconomics",
+    "agent-based models",
+    "post-Keynesian economics",
+    "R"
+  ]
+}
