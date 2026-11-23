@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this material, please cite it as below."
+title: "Money, Interdependencies and the Ecosystem: Hybrid Stock-Flow Consistent Models in R"
+type: software
+authors:
+  - family-names: "Veronese Passarella"
+    given-names: "Marco"
+    affiliation: "University of L'Aquila; University of Leeds"
+    orcid: "https://orcid.org/0000-0001-7652-5952"
+version: "1.0"
+date-released: "2026-11-23"
+license: CC-BY-NC-4.0
+repository-code: "https://github.com/marcoverpas/Beijing_lectures_2026"
+keywords:
+  - stock-flow consistent models
+  - input-output analysis
+  - ecological macroeconomics
+  - agent-based models
+  - R
