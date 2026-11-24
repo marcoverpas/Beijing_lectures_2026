@@ -25,6 +25,8 @@ This repository presents a **family of small macroeconomic models** built around
 
 The models are listed in Table 1. Reading down a column shows how the *same* economy can be represented at increasing levels of detail: as economy-wide aggregates, as a set of interconnected **industries**, as an economy embedded in the **ecosystem**, and as a population of heterogeneous interacting **agents** (here, households). Reading across a row shows what changes when the economy trades with the rest of the world, under a fixed or a flexible exchange rate. The input-output model comes with two alternative *closures* of the price system: fixed prices, or Sraffa-like (cost-plus) prices that may diverge temporarily from their reproduction values when demand grows. Similarly, the ecological model comes in two versions: a climate block only, or a full block that also tracks matter, waste and the depletion of natural reserves. Each script is obtained from the previous one by adding a block of equations (and, where needed, modifying a few existing ones), so that the cost and the consequences of every extension can be seen directly in the code. Finally, Section 6 gives some hints on how the coefficients of these models can be calibrated and estimated on real-world data.
 
+Sections 3.4, 4.3, 4.4, 5.3 and 6 are **extra material** (marked 📚): they extend the models of the previous sections or, in the case of Section 6, discuss how to calibrate and estimate them, and can be skipped on a first reading.
+
 - [1 - Introduction](#1---introduction)
   - [1.1 - Getting started with `R` and `RStudio`](#11---getting-started-with-r-and-rstudio)
   - [1.2 - Stock-flow consistent models](#12---stock-flow-consistent-models)
@@ -36,17 +38,17 @@ The models are listed in Table 1. Reading down a column shows how the *same* eco
   - [3.1 - IO models and why to combine them with SFC models](#31---io-models-and-why-to-combine-them-with-sfc-models)
   - [3.2 - Model IO-SBM with fixed prices](#32---model-io-sbm-with-fixed-prices)
   - [3.3 - Closing the price system: Sraffa-like prices](#33---closing-the-price-system-sraffa-like-prices)
-  - [3.4 - Open-economy versions](#34---open-economy-versions)
+  - [3.4 - Open-economy versions](#34---open-economy-versions) 📚
 - [4 - Ecological models](#4---ecological-models)
   - [4.1 - Ecological macroeconomics and ecological SFC models](#41---ecological-macroeconomics-and-ecological-sfc-models)
   - [4.2 - Model ECO-IO-SBM: the climate block](#42---model-eco-io-sbm-the-climate-block)
-  - [4.3 - Model ECO-IO-SBM-FULL: the full ecological block](#43---model-eco-io-sbm-full-the-full-ecological-block)
-  - [4.4 - Open-economy versions](#44---open-economy-versions)
+  - [4.3 - Model ECO-IO-SBM-FULL: the full ecological block](#43---model-eco-io-sbm-full-the-full-ecological-block) 📚
+  - [4.4 - Open-economy versions](#44---open-economy-versions) 📚
 - [5 - Agent-based models](#5---agent-based-models)
   - [5.1 - Agent-based models and AB-SFC models](#51---agent-based-models-and-ab-sfc-models)
   - [5.2 - Model ABM-SBM](#52---model-abm-sbm)
-  - [5.3 - Model ABM-OPENSBM](#53---model-abm-opensbm)
-- [6 - Calibration and estimation](#6---calibration-and-estimation)
+  - [5.3 - Model ABM-OPENSBM](#53---model-abm-opensbm) 📚
+- [6 - Calibration and estimation](#6---calibration-and-estimation) 📚
   - [6.1 - The SFC block](#61---the-sfc-block)
   - [6.2 - The IO block](#62---the-io-block)
   - [6.3 - Agent-based models: moment matching](#63---agent-based-models-moment-matching)
@@ -304,6 +306,8 @@ This is the redundant equation of Model SBM. It holds because all the other equa
 $$Y^{\ast} = \frac{G + r \cdot (B_h^{\ast} + B_b^{\ast}) - \theta \cdot r \cdot (B_h^{\ast} + M_h^{\ast})}{\theta \cdot \left[ 1 - (r + \delta) \cdot \kappa \right]}$$
 
 Strictly speaking, this is not a closed-form solution, but an implicit one, because the stationary stocks of bills and deposits, $B_h^{\ast}$, $B_b^{\ast}$ and $M_h^{\ast}$, depend in turn on national income (through household wealth). However, it shows clearly what determines $Y^{\ast}$. This is the SBM counterpart of the familiar result of Model PC: in the long run, national income is pinned down by **fiscal policy** (government spending and the tax rate), corrected for the interest flows associated with the stocks of public debt and bank money. With the baseline parameters, $Y^{\ast} \approx$ ¥132. The propensities to consume and the portfolio coefficients affect $Y^{\ast}$ only indirectly, through the size of these stocks.
+
+**Why a fiscal anchor?** In the stationary state, the government budget must be balanced, so that national income must reach the level at which tax revenue covers government spending and the interest paid on public debt. Balancing the budget in this way is a standard device of basic SFC models that are not growth models, such as Models SIM and PC of [Godley and Lavoie (2007)](#references). In growth models, the long run is instead driven by autonomous demand growing at a given rate, by a target ratio of public debt to income, or by the investment behaviour of firms. It is important to be clear about what this stationary state is *not*. It is not a supply-side equilibrium, such as a natural level of output or a socially optimal position defined independently of demand, towards which market forces pull the economy. It is the level of income at which aggregate demand, given fiscal policy and the stocks of interest-bearing assets, generates exactly the tax revenue needed to balance the budget. It is therefore defined by aggregate demand, it changes whenever fiscal policy changes, and nothing guarantees that it corresponds to full employment. We keep this device for three reasons. First, it gives all the models in this repository the same, well-defined long-run benchmark, so that each extension can be compared with Model SBM. Second, it keeps the models stationary, so that results can be read as changes in levels rather than in growth rates. Third, it makes the source of the long-run results easy to identify. The price to pay is that many shocks leave national income unchanged in the long run (productivity, technique, foreign income, consumption habits), while shocks that change the stocks of interest-bearing assets change it through interest income (the paradox of thrift, the frictions of the agent-based models). These results should be read as properties of the closure, not as general truths: with a growth closure, the long-run effects of the same shocks would generally differ.
 
 **The model at work.** Figure 2 represents Model SBM as a **system-dynamics diagram**. The five sectors are boxes, and every flow is a pipe along which tokens travel, its thickness proportional to the size of the flow. The six tanks at the bottom are the stocks: on the left, the bills issued by the government ($-B_s$) and the loans taken by firms ($-L$), both liabilities, which fill downwards; on the right, the real capital of firms ($K$) and the three assets of households (cash $H_h$, bills $B_h$ and deposits $M_h$), which fill upwards. The government buys goods ($G$) and collects taxes ($T$), and finances its deficit ($PSBR$) by issuing bills. Banks grant loans to firms ($dL$), which invest ($I$) and pay wages ($WB$) to households. Households consume ($C$) and split their saving between cash, bills and deposits. Interest flows from the government to households, from firms to banks and from banks to households, while the central bank returns its profits to the government. As the economy approaches its steady state, the deficit closes, net investment stops, and the tanks stop moving. At every date, the three household tanks add up to the bills tank plus the capital tank: $H_h + B_h + M_h = B_s + K$.
 
@@ -737,7 +741,7 @@ $$N_j = \frac{x_j}{pr_j} \quad \text{(21)}$$
 
 Final demand for the product of each industry is a weighted sum of *real* consumption, investment and government spending (19). Since all prices are equal to one, real and nominal values coincide in this closure, but the IO block always works with quantities, and this will matter in Section 3.3. In (19), the vectors $\boldsymbol{\beta}_C$, $\boldsymbol{\beta}_I$ and $\boldsymbol{\beta}_G$ contain the shares of each component spent on agricultural goods, manufactured goods and services. Since the elements of each vector add up to one, the sum of final demands is equal to GDP. Consumption is mostly spent on services ($\boldsymbol{\beta}_C = [0.15, 0.35, 0.50]$), investment on manufactured goods ($\boldsymbol{\beta}_I = [0.20, 0.50, 0.30]$) and government spending on services ($\boldsymbol{\beta}_G = [0.10, 0.30, 0.60]$). Gross outputs are obtained from the Leontief inverse (20), and employment in each industry is gross output divided by labour productivity (21), which is highest in manufacturing ($pr_2 = 5$) and lowest in services ($pr_3 = 2.2$).
 
-Notice that the wage rate is the same in all industries, and that the wage bill is still the residual of equation (10). The IO block determines *where* output is produced and *where* people are employed, while the macroeconomic block determines *how much* is produced in total. The two blocks interact through equation (13): the industrial composition of output affects the target capital stock, and therefore investment and national income.
+Notice that the wage rate is the same in all industries, and that the wage bill is still the residual of equation (10). This has a consequence worth noting. Since firms retain no profits and the wage bill is a residual, any change in employment that is not matched by a change in national income changes the wage rate: if labour productivity rises, the same wage bill is shared by fewer workers, and the wage rate rises (exercise 2 of Box G). This is an implication of the accounting closure inherited from Model BMW, not a theory of wages, as nothing in the model describes how wages are set. The closure is changed in Section 3.3, where the nominal wage rate is given and profits become the residual. The IO block determines *where* output is produced and *where* people are employed, while the macroeconomic block determines *how much* is produced in total. The two blocks interact through equation (13): the industrial composition of output affects the target capital stock, and therefore investment and national income.
 
 **First experiment: higher government spending.** As in Section 2, government spending rises from ¥20 to ¥25 at period 101. Figure 9 shows GDP and the gross output of the three industries. National income follows the same path as in Model SBM, rising to about ¥165 in the long run. The effect is not uniform across industries in the short run, though. Since government spending is concentrated on services, the gross output of services rises by 10.2% after one period, against 9.4-9.5% in the other two industries. Employment rises from about 78 to 86. In the long run, all industries grow by about 25%, like GDP: once consumption and investment have adjusted, the composition of final demand returns to its original proportions.
 
@@ -917,6 +921,8 @@ Notice that `lab` is a row vector, which pre-multiplies the inverse matrix, whil
 
 ### 3.4 - Open-economy versions
 
+> 📚 **Extra material.** This section extends the models of Sections 3.2 and 3.3 to the open economy, and can be skipped on a first reading.
+
 The two closures of Model IO-SBM can be extended to the open economy along the lines of Model OPENSBM-FLEX (Section 2.2). The foreign sector is the same: exports depend on foreign income, imports on domestic income, both depend on relative prices, and the exchange rate floats. What the IO structure adds is a description of **which industries export and which goods are imported**, following the treatment of foreign trade in [Canelli et al. (2026)](#references). The code is in `2c_IO_OPENSBM.R` (fixed prices) and `2d_IO_OPENSBM_SRAFFA.R` (Sraffa-like prices). Since the main mechanisms have already been discussed, this section only highlights what is new.
 
 **Trade in the IO block.** Exports are allocated to industries by fixed shares, collected in the vector $\boldsymbol{\chi} = [0.2, 0.6, 0.2]$: most exports are manufactured goods. Imports have two components. **Intermediate imports** are inputs bought abroad by domestic industries, described by a matrix of imported-input coefficients $\mathbf{A}_m$, whose element $a^m_{ij}$ is the amount of foreign good $i$ needed to produce one unit of domestic good $j$. **Final imports** are foreign goods bought directly by households, firms and the government. Their import content differs across goods and components of demand: for instance, 40% of the manufactured goods consumed by households are imported, against 5% of services. In `2c_IO_OPENSBM.R`, the block is:
@@ -1072,6 +1078,8 @@ Notice that `sum(eps_en * x[j, i, ])` is the scalar product between the vector o
 
 ### 4.3 - Model ECO-IO-SBM-FULL: the full ecological block
 
+> 📚 **Extra material.** This section extends the climate block of Section 4.2 to matter, and can be skipped on a first reading.
+
 The climate block only considers energy and emissions. The full ecological block of Model **ECO-IO-SBM-FULL**, in `3b_ECO_IO_SBM_FULL.R`, also tracks **matter**: the extraction of raw materials, the accumulation of durable goods, their discard, recycling and waste, and the depletion of matter and energy reserves. The model has 56 equations, and the additional ones follow [Dafermos et al. (2017)](#references) and Model ECO-3IO-PC of the [Florence keynote speech](https://github.com/marcoverpas/keynote_speech_Florence#23---model-eco-3io-pc). The key additional assumptions are:
 
 1. Production requires matter, in fixed proportions that differ across industries
@@ -1150,6 +1158,8 @@ src="beijing_figures/ECO_flows.png" alt="Emissions by industry, matter flows and
 <br>
 
 ### 4.4 - Open-economy versions
+
+> 📚 **Extra material.** This section extends the ecological models of Sections 4.2 and 4.3 to the open economy, and can be skipped on a first reading.
 
 The open-economy versions, Model ECO-IO-OPENSBM (`3c_ECO_IO_OPENSBM_CLIMATE.R`, 53 equations) and Model ECO-IO-OPENSBM-FULL (`3d_ECO_IO_OPENSBM_FULL.R`, 69 equations), add the ecological blocks to the fixed-price open IO model of Section 3.4. Since the ecological block is computed from domestic gross output, emissions are **production-based**: the emissions generated abroad to produce the goods imported by the domestic economy are not counted, while those generated at home to produce exports are. This is the standard convention in national emission inventories, but it can give a misleading picture of the environmental responsibility of an economy, since part of the emissions associated with its consumption may be "outsourced" to the rest of the world (carbon leakage). The distinction between production-based and consumption-based emissions is particularly relevant for an export-oriented economy like China.
 
@@ -1255,6 +1265,8 @@ src="beijing_figures/ABM_wealth.gif" alt="Wealth distribution in Model ABM-SBM" 
 
 ### 5.3 - Model ABM-OPENSBM
 
+> 📚 **Extra material.** This section extends Model ABM-SBM of Section 5.2 to the open economy, and can be skipped on a first reading.
+
 Model **ABM-OPENSBM** (`4b_ABM_OPENSBM.R`) adds the foreign sector of Model OPENSBM-FLEX to Model ABM-SBM. Each household now also chooses how much to hold in foreign bills, and receives interest and capital gains on them, while exports, imports, the current account and the exchange rate are aggregate. Imports cover part of planned demand, so that only the rest requires domestic workers, and the goods available to the queue of buyers include imported goods.
 
 Figure 19 shows the results. The macroeconomic behaviour is similar to that of Model OPENSBM-FLEX, with the same upward bias as in Model ABM-SBM: mean GDP is about ¥136 before the shock and ¥170 after it, and the exchange rate settles at about 1.23 and 1.42, against 1.19 and 1.37 in the aggregate model. Since income is higher, imports are higher too, and a larger depreciation is needed to balance the current account. Unemployment and wealth inequality behave as in the closed economy.
@@ -1279,6 +1291,8 @@ src="beijing_figures/ABM_OPENSBM.png" alt="Results of Model ABM-OPENSBM" width="
 ---
 
 ## 6 - Calibration and estimation
+
+> 📚 **Extra material.** This section discusses how the models presented so far can be anchored to real-world data, and can be skipped on a first reading.
 
 The models presented so far are **theoretical**: their coefficients have been chosen to produce a sensible baseline, not to describe a specific economy. To use them for policy analysis, their coefficients must be anchored to real-world data. This section explains, in simple terms, how this can be done for the SFC block (Section 6.1), the IO block (Section 6.2) and the agent-based models (Section 6.3).
 
