@@ -2,7 +2,7 @@
 
 These lectures are delivered at the [Central University of Finance and Economics](https://www.cufe.edu.cn/) (CUFE), Beijing, in December 2026, as part of the *International Scholar Project*.
 
-*Last update: 20 November 2026.*
+*Last update: 24 November 2026.*
 
 <div align="center">
 <figure>
@@ -52,7 +52,6 @@ The models are listed in Table 1. Reading down a column shows how the *same* eco
   - [6.3 - Agent-based models: moment matching](#63---agent-based-models-moment-matching)
 - [7 - Concluding remarks](#7---concluding-remarks)
 - [References](#references)
-- [Answers to the exercises](#answers-to-the-exercises)
 
 All code has been developed for an `R` environment and is available in this repository. Similar lectures and further material of interest are available in these companion repositories:
 - [Leeds lectures, 2026](https://github.com/marcoverpas/Leeds_lectures_2026) - nine small models (SIM, PC and BMW, each in aggregate, input-output and agent-based form), which these lectures extend (NARTI training seminar, University of Leeds).
@@ -439,6 +438,8 @@ Notice that the order of the equations does not matter for the solution: since t
 > 1. **The paradox of thrift.** Lower the autonomous propensity to consume out of income, `alpha10`, in the second scenario. Compare the short-run and the long-run effects on national income, and explain them using the steady-state formula above.
 > 1. **The portfolio of households.** Raise `lambda10`. How does the composition of household wealth change? What happens to the bills held by banks and to the cash issued by the central bank?
 > 1. **Breaking an identity.** The safest way to see what happens when a model is not stock-flow consistent is to change one of its identities. In equation (25), drop the central bank profits, `F_cb[j, i]`, from the borrowing requirement of the government, as if the profits paid by the central bank were never received. Run the model again and look at panel a): what happens to the consistency check $H_h - H_s$, and why?
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-c---model-sbm).
 
 ### 2.2 - The open economy: Model OPENSBM-FLEX
 
@@ -602,6 +603,8 @@ Notice that the exchange rate enters the export and import equations with a lag,
 > 1. **The twin deficits.** Run the government-spending experiment with `1b_OPENSBM_FIX.R` (Box D). Why does national income stop growing at about ¥134, while foreign debt keeps rising?
 > 1. **Policy under a peg.** Which policy rules (for instance, for government spending, taxes or the interest rate) could restore a stationary state under a fixed exchange rate?
 > 1. **Foreign reserves.** In `1b_OPENSBM_FIX.R`, foreign reserves are only implicit. How would you modify the balance-sheet and transactions-flow matrices to record them explicitly in the column of the central bank?
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-e---models-opensbm-flex-and-opensbm-fix).
 
 ---
 
@@ -801,6 +804,8 @@ The operator `%*%` is the matrix product in `R`, while `*` and `/` operate eleme
 > 1. **Productivity growth.** Raise labour productivity in manufacturing from 5 to 6 in the second scenario. What happens to employment, the wage rate and GDP? Why does national income not change?
 > 1. **A change in technique.** Raise the technical coefficient $a_{21}$ (manufactured goods used in agriculture) from 0.21 to 0.30, setting `A[2, 1] <- 0.30; Leontief <- solve(diag(nIndustries) - A)` in the second scenario (the Leontief inverse must be recomputed, since it is calculated only once at the top of the script). How do the Leontief inverse and the output multipliers change? What happens to gross output and to the capital stock?
 > 1. **Multipliers.** Compute the output multipliers, `colSums(Leontief)`, and the employment multipliers, `(1 / pr) %*% Leontief`. Which industry has the largest effect on total output, and which on total employment? Explain the difference.
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-g---model-io-sbm).
 
 ### 3.3 - Closing the price system: Sraffa-like prices
 
@@ -905,6 +910,8 @@ Notice that `lab` is a row vector, which pre-multiplies the inverse matrix, whil
 > 1. **Productivity growth, again.** Raise labour productivity in manufacturing from 5 to 6, as in exercise 2 of Box G. Since prices depend on labour coefficients, set `lab[2] <- 1 / 6` in the second scenario. Unlike the fixed-price closure, prices now change: which prices fall, and by how much? What happens to the real wage and to real GDP?
 > 1. **Nominal wages.** Raise the nominal wage rate `wbar` from 1 to 1.1 in the second scenario. What happens to relative prices? And to real variables?
 > 1. **Money illusion.** Add the correction for inflation to the consumption function, replacing `YD[j, i]` with `(YD[j, i] - (p_c[j, i] / p_c[j, i - 1] - 1) * V[j, i - 1])` in equation (5). Run the government-spending experiment: what happens, and why? Now set `mup1 <- 0.05`, run the experiment again, and then repeat exercise 4. How do the results compare with those obtained without the correction?
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-h---model-io-sbm-with-sraffa-like-prices).
 
 ### 3.4 - Open-economy versions
 
@@ -955,6 +962,8 @@ The results differ markedly from those of the fixed-price closure. First, the do
 > 1. **Import content.** In `2c_IO_OPENSBM.R`, raise the import content of consumption to `psiC <- c(0.30, 0.60, 0.10)` in the second scenario (keep `G0` unchanged). What happens to gross output by industry and to national income? Why is national income almost unaffected? (Hint: which equation determines total imports?)
 > 1. **Pass-through.** Compare the government-spending experiment in `2c_IO_OPENSBM.R` and `2d_IO_OPENSBM_SRAFFA.R`. Why does the exchange rate depreciate so much more when prices are Sraffa-like? (Hint: plot the ratio `p_m / p_x` in the two scenarios.)
 > 1. **A foreign boom.** Raise foreign income `yw` from 200 to 220 in the second scenario of `2d_IO_OPENSBM_SRAFFA.R`. What happens to the exchange rate, the consumer price index and the real wage? Who gains from the foreign boom?
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-i---open-io-models).
 
 ---
 
@@ -1056,6 +1065,8 @@ Notice that `sum(eps_en * x[j, i, ])` is the scalar product between the vector o
 > 1. **A greener energy mix.** Raise the share of renewable energy to 30% in all industries from period 101, setting `eta_en <- c(0.3, 0.3, 0.3)` in the second scenario (keep `G0` unchanged). Compare the effect on temperature with that of the fiscal expansion.
 > 1. **Structural change.** Shift consumption towards services, setting `betaC <- c(0.10, 0.25, 0.65)` in the second scenario. What happens to emissions and temperature? And to GDP?
 > 1. **No feedback.** Set `omega1 <- 0`. How much lower is GDP in the baseline because of climate change? Is the temperature at period 200 higher or lower without the feedback? Why?
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-j---model-eco-io-sbm-climate-block).
 
 ### 4.3 - Model ECO-IO-SBM-FULL: the full ecological block
 
@@ -1147,6 +1158,8 @@ In the baseline, the gross output of the open economy is larger than that of the
 > 1. **Recycling.** Raise the recycling rate `rho_dis` from 0.5 to 0.8 in the second scenario of `3b_ECO_IO_SBM_FULL.R` (keep `G0` unchanged). What happens to extraction, waste and matter reserves? Does GDP change?
 > 1. **Durability.** Halve the discard rates of durable goods, setting `zeta_dc <- c(0.025, 0.035, 0.020) / 2` in the second scenario. What happens to the socio-economic stock, discards and waste?
 > 1. **The physical flow matrix.** After running `3b_ECO_IO_SBM_FULL.R`, check that the matter column of Table 11 adds up to zero in every period: `MAT + REC + CEN + O2 - EMIS - DIS - (XMAT - XDUR) - (KH - KH_lag)`, where `KH_lag` is the socio-economic stock of the previous period.
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-k---full-ecological-block).
 
 ---
 
@@ -1258,6 +1271,8 @@ src="beijing_figures/ABM_OPENSBM.png" alt="Results of Model ABM-OPENSBM" width="
 > 1. **More friction.** Set `s <- 0.3`. What happens to the dispersion of the Monte Carlo runs, to mean GDP and to household wealth? Why does more friction lead to *higher* output?
 > 1. **More heterogeneity.** Set `alpha1d <- 0.2`. What happens to the Gini index? And to mean GDP?
 > 1. **A larger workforce.** Set `nHouseholds <- 250`. What happens to the unemployment rate and to GDP? What does this tell you about the nature of unemployment in the model?
+>
+> 👉 **Answers:** [here](ANSWERS.md#box-m---agent-based-models).
 
 ---
 
@@ -1458,67 +1473,3 @@ Further material is available in the companion repositories listed in the [Overv
 - Veronese Passarella, M. (2025b). **Destabilizing a Stable Economy: Minsky Meets Graziani's Monetary Circuit**. *International Journal of Political Economy*, 54 (3): 338-355.
 - Zezza, F. (2026). **OPENSIMPLEST: The Smallest SFC Open Economy Model**. Levy Economics Institute of Bard College, [Working Paper No. 1105](https://www.levyinstitute.org/publications/opensimplest-the-smallest-sfc-open-economy-model/).
 - Zezza, G., and Zezza, F. (2019). **On the design of empirical stock-flow consistent models**. *European Journal of Economics and Economic Policies: Intervention*, 16 (1): 134-158.
-
----
-
-## Answers to the exercises
-
-The answers below are short and refer to the default calibration of the models. The numbers are rounded, and $t$ denotes the period.
-
-### Box C - Model SBM
-
-1. **Monetary policy.** With the default fiscal rule ($\psi = 1$), GDP falls by about 6.5% on impact and remains below its baseline level until $t = 167$; at $t = 200$ it is only 0.7% higher. Higher interest rates reduce the propensity to consume, while the fiscal rule offsets the higher interest bill with lower spending. With `psi <- 0`, the fall on impact is smaller (-4.1%) and GDP rises above its baseline level from $t = 115$, ending 12.9% higher. The reason is the fiscal anchor: the government pays more interest to households, public debt rises (from about ¥171 to about ¥246), and national income must rise until taxes cover the higher interest bill. With `alpha11 <- 0`, the negative effect on consumption disappears: with $\psi = 1$, GDP falls only slightly (-1.4% on impact, -2.1% in the long run), because of lower government spending; with $\psi = 0$, the rate rise is expansionary from the start (+1.1% on impact, +7.2% in the long run).
-1. **The paradox of thrift.** Lowering `alpha10` from 0.68 to 0.63 reduces GDP in the short run (about ¥122 against ¥132 after one period), but *raises* it in the long run (about ¥137 against ¥132). Households accumulate more wealth (about ¥434 against ¥369), hold more bills and receive more interest, and the steady-state formula shows that national income rises with the stock of interest-bearing assets. The paradox of thrift holds in the short run, but it is reversed in the long run.
-1. **The portfolio of households.** Raising `lambda10` from 0.25 to 0.35 raises the bills held by households (from about ¥100 to ¥136) and reduces their deposits (from about ¥251 to ¥214). Since banks have fewer deposits, they hold fewer bills (from about ¥53 to ¥16). Cash and the bills held by the central bank do not change, because the demand for cash depends on consumption. National income and wealth are unchanged, since all assets yield the same interest rate.
-1. **Breaking an identity.** The consistency check, $H_h - H_s$, is no longer zero: it becomes negative and grows over time (about -19 at $t = 50$, -82 at $t = 100$ and -710 at $t = 200$). The central bank still pays its profits, but the government no longer records them as revenue, so that it issues more bills than it needs. The central bank buys the excess bills and issues cash that no household has demanded, so that $H_s$ exceeds $H_h$; and since the excess bills earn interest, the gap snowballs. Money is leaking out of the accounts: this is how the hidden equation helps to detect mistakes in the code.
-
-### Box E - Models OPENSBM-FLEX and OPENSBM-FIX
-
-1. **A foreign boom.** Exports and GDP rise on impact (by about ¥1.9), and the current account moves into surplus. The domestic currency appreciates (from about 1.19 to 1.12), which partly reverses the rise in exports. In the long run, GDP is unchanged: unlike a fiscal expansion, a foreign boom does not change the fiscal anchor, and the exchange rate absorbs its effects.
-1. **Foreign monetary policy.** Households move part of their wealth from domestic to foreign bills (from about ¥37 to ¥41). Higher interest income from abroad improves the current account, and the domestic currency appreciates slightly. Exports fall a little, and GDP is slightly lower in the long run.
-1. **Domestic monetary policy.** The fall in GDP after one period is smaller than in the closed economy (about ¥6.7 against ¥8.5), because part of the fall in demand is met by lower imports. The current account improves, and the domestic currency appreciates in the short run. In the long run, the currency ends up slightly weaker than in the baseline, as the interest flows associated with higher rates worsen the current account.
-1. **The speed of adjustment.** With `phixr <- 1`, the exchange rate adjusts slowly, the current account deficit is larger and lasts longer, and the economy has not yet reached its new steady state at $t = 200$. With `phixr <- 5`, the exchange rate adjusts faster and the current account deficit is smaller. The long-run outcome is the same. With `phixr <- 10`, the exchange rate overreacts to every imbalance, the oscillations grow, and the model breaks down within a few periods.
-1. **The twin deficits.** National income stops growing because the private sector reaches its stationary state. From then on, the government deficit is exactly matched by the current account deficit (the *twin deficits*): at $t = 200$, both are about ¥18. Both deficits are financed by selling domestic bills to the rest of the world, and the growing interest payments on these bills keep widening them.
-1. **Policy under a peg.** Any rule that makes an additional variable respond to the external imbalance can restore a stationary state, for instance government spending or the tax rate reacting to the current account or to foreign debt, or an interest rate rule. Under a fixed exchange rate, the burden of external adjustment falls on domestic policy.
-1. **Foreign reserves.** One should add a row for foreign reserves in Table 7, with $+xr \cdot R$ in the column of the central bank and $-xr \cdot R$ in that of the rest of the world, and a corresponding row for the change in reserves in Table 8. The central bank would then buy or sell reserves to keep the exchange rate fixed, and its holdings of domestic bills would change accordingly.
-
-### Box G - Model IO-SBM
-
-1. **Changing consumption habits.** GDP falls by about ¥2.6 on impact and ¥3.6 after ten periods, as demand shifts towards services, the least capital-intensive industry, and investment falls (by about 7%). In the long run, GDP returns to its baseline level, but investment remains lower and consumption higher. Employment *rises*, because services are the most labour-intensive industry.
-1. **Productivity growth.** Employment in manufacturing falls (from about 20 to 17), and total employment falls from about 78 to 75. GDP does not change, because productivity does not affect any component of demand. Since the wage bill is a residual, the same wage bill is shared by fewer workers, and the wage rate rises (from about ¥1.39 to ¥1.45 per worker).
-1. **A change in technique.** Since `Leontief` is computed only once, it must be recomputed after changing $\mathbf{A}$: set `A[2, 1] <- 0.30; Leontief <- solve(diag(nIndustries) - A)` in the second scenario. The output multiplier of agriculture rises from about 1.89 to 2.11 (and slightly for the other industries too, through indirect effects). Gross output rises in all industries, most of all in manufacturing, and so do the target capital stock and investment (by about 5%). GDP rises in the short run but not in the long run.
-1. **Multipliers.** Manufacturing has the largest output multiplier (about 1.98), because it is the most input-intensive industry and the main supplier of inputs. Services have the largest employment multiplier (about 0.68, against 0.50 for manufacturing), because labour productivity is lowest in services.
-
-### Box H - Model IO-SBM with Sraffa-like prices
-
-1. **Market power.** The reproduction price of manufactured goods rises by about 30%, and those of agricultural goods and services by about 14% and 12%, because manufactured goods are used as inputs by all industries. The real wage falls by about 16%, the profit share rises from about 21% to 30%, and real GDP is slightly lower.
-1. **Rigid mark-ups.** Current prices never depart from reproduction prices, and the real wage does not change after the fiscal expansion. Real GDP rises more than with flexible mark-ups (to about ¥165 against ¥163), since real consumption is not eroded by higher prices.
-1. **Productivity growth, again.** All prices fall, because manufactured goods are inputs to all industries: by about 7% in manufacturing, 3.4% in agriculture and 2.8% in services. The real wage rises by about 5%. Real GDP rises by about 3% in the short run, because lower prices raise real disposable income and the real value of wealth, but the effect fades away, and in the long run real GDP is almost unchanged, while employment falls. Productivity growth is now shared with workers through lower prices.
-1. **Nominal wages.** All prices rise by 10%, so relative prices and the real wage do not change. Real GDP falls by about 5% in the short run, because the rise in prices reduces the real value of household wealth, and then returns close to its baseline level (slightly above it at $t = 200$).
-1. **Money illusion.** With the correction and `mup1 <- 0.2`, the model cannot even be run: the baseline itself explodes after a few periods, because inflation, driven by the mark-ups, causes large swings in consumption, which feed back on output and on the mark-ups. With `mup1 <- 0.05`, the model is stable, and the government-spending experiment gives results close to those without the correction (real GDP rises from about ¥131 to ¥164). However, the 10% rise in the nominal wage now reduces real GDP by about one third on impact, against about 5% without the correction: since wealth is almost three times national income, the inflation term $\pi \cdot V_{-1} / p_c$ is large, and households cut their consumption at once.
-
-### Box I - Open IO models
-
-1. **Import content.** Gross output and GDP are almost unchanged. Total imports are determined by the aggregate import equation, and final imports are a residual: a higher import content only changes the *composition* of final imports across goods, not their total. A bottom-up treatment, in which total imports are obtained from the import contents, would give a different answer.
-1. **Pass-through.** In Model IO-OPENSBM with fixed prices the currency depreciates by about 15%, with Sraffa-like prices by about 81%. With Sraffa-like prices, the depreciation raises the cost of imported inputs and therefore the price of exports, so that the ratio $p_m / p_x$ rises much less than the exchange rate (by about 52%). A larger nominal depreciation is needed to restore the current account.
-1. **A foreign boom.** The domestic currency appreciates (by about 21%), the consumer price index falls by about 5%, and the real wage rises by about 5%, while the profit share falls slightly. Real GDP rises on impact, but is lower in the long run: with better terms of trade, the economy needs to export fewer goods to pay for its imports. Workers gain from the foreign boom.
-
-### Box J - Model ECO-IO-SBM (climate block)
-
-1. **Faster decarbonisation.** Emissions fall much faster, and the temperature anomaly at period 200 is about 2.2°C instead of 3.1°C in the baseline. Since warming is lower, the target capital stock is reduced less (the climate factor is about 0.80 instead of 0.62), and GDP is slightly higher.
-1. **A greener energy mix.** Emissions fall (about 4.2 against 5.1 Gt at period 200), and the temperature anomaly at period 200 is about 0.1°C lower than in the baseline (2.99°C against 3.10°C). The effect is roughly the same size, with the opposite sign, as that of the fiscal expansion.
-1. **Structural change.** Since services are the least energy-intensive industry, emissions fall (about 4.8 against 5.1 Gt at period 200) and the temperature is slightly lower (3.06°C against 3.10°C). GDP falls during the transition, because services are also the least capital-intensive industry, but it is slightly higher in the long run, because warming is lower.
-1. **No feedback.** Without the feedback, the baseline is the same as in Model IO-SBM: GDP is about ¥4 higher at period 100 (¥132 against ¥128), and the investment share stays at about 15%. The temperature at period 200 is *higher* (3.15°C against 3.10°C), because higher output generates more emissions. In this model, the climate feedback slightly slows down warming, by reducing output.
-
-### Box K - Full ecological block
-
-1. **Recycling.** Recycling rises (from about 5.3 to 8.6 Gt at period 200), so that extraction and waste fall (to about 40 Gt, against 43 Gt), and matter reserves are depleted more slowly. GDP does not change, because the matter block has no feedback on the economy.
-1. **Durability.** The socio-economic stock grows much larger (about 572 against 321 Gt at period 200), and discards and waste fall slightly. Since there is less discarded stock, recycling also falls, and extraction rises slightly: higher durability alone does not reduce extraction in the short run.
-1. **The physical flow matrix.** The matter column adds up to zero (up to rounding errors of the order of $10^{-14}$) in every period: this is the physical counterpart of the hidden equation.
-
-### Box M - Agent-based models
-
-1. **Back to the aggregate model.** Mean GDP is about ¥133 before the shock and ¥166 after it, very close to the results of Model SBM (¥132 and ¥165), and the Monte Carlo runs no longer differ from one another. The results are not identical because households plan their consumption out of last period's disposable income (rather than current income, as in Model SBM), and because workers come in whole units.
-1. **More friction.** The Monte Carlo runs become much more dispersed (the standard deviation of GDP across runs at period 100 rises from about ¥5 to ¥16), and mean GDP *rises* (to about ¥143 and ¥176). More frequent rationing means more involuntary saving, so that household wealth is much higher (about ¥529 against ¥424 before the shock). Through the fiscal anchor, higher wealth means more interest income and more consumption out of wealth, and hence higher income.
-1. **More heterogeneity.** The Gini index of wealth rises (from about 0.12 to 0.18 before the shock), while mean GDP is virtually unchanged: in this model, a wider dispersion of propensities around the same mean changes the distribution of wealth, but not aggregate demand.
-1. **A larger workforce.** The unemployment rate rises sharply (to about 46% before the shock and 32% after it), while GDP does not change. Unemployment is involuntary and demand-determined: employment depends on effective demand, not on the number of people willing to work.
