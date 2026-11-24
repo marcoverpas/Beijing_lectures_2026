@@ -438,7 +438,7 @@ function draw() {
   panel(box, idx, "Gross output by industry (x, ¥)", [0, 1, 2].map(z => Z("x", z)), { vline: 101, legend: leg, legendPos: "topleft" });
   panel(box, idx, "Employment by industry (N_j)", [0, 1, 2].map(z => Z("Nz", z)), { vline: 101, legend: leg, legendPos: "topleft" });
   panel(box, idx, "Investment (I, ¥)", [S("I", "#CD6600")], { vline: 101 });
-  panel(box, idx, "Wage rate (w = WB / N, ¥ per worker)", [S("w", "#B22222")], { absMin: 0.05, vline: 101 });
+  panel(box, idx, "Income per worker (w = WB / N, ¥)", [S("w", "#B22222")], { absMin: 0.05, vline: 101 });
 }
 buildControls(SLIDERS, [], draw);
 draw();
