@@ -180,6 +180,8 @@ This section presents the two benchmark models of the repository: Model SBM, a c
 
 ### 2.1 - Model SBM
 
+📄 **R code:** [`1a_SBM.R`](1a_SBM.R)
+
 Model **SBM** ("**S**tate and **B**ank **M**oney") combines Model PC and Model BMW of [Godley and Lavoie (2007, ch. 4 and 7)](#references). Both models are presented step by step in the Leeds lectures (Sections [1.3](https://github.com/marcoverpas/Leeds_lectures_2026#13---model-pc) and [1.4](https://github.com/marcoverpas/Leeds_lectures_2026#14---model-bmw)) and in the Macerata PhD lectures (Sections [B2](https://github.com/marcoverpas/PhD_Lectures_Macerata_2025#b2_model_pc) and [B3](https://github.com/marcoverpas/PhD_Lectures_Macerata_2025#b3_model_bmw)), which also include interactive versions of the models. Households can hold their wealth in three forms: cash issued by the central bank, bills issued by the government, and deposits issued by private banks. Firms finance their production and investment plans by borrowing from banks, so that bank lending creates deposits. The government finances its deficit by issuing bills, part of which are bought by banks and the central bank.
 
 The key assumptions of Model SBM are:
@@ -455,6 +457,8 @@ Notice that the order of the equations does not matter for the solution: since t
 
 ### 2.2 - The open economy: Model OPENSBM-FLEX
 
+📄 **R code:** [`1c_OPENSBM_FLEX.R`](1c_OPENSBM_FLEX.R) (flexible exchange rate) · [`1b_OPENSBM_FIX.R`](1b_OPENSBM_FIX.R) (fixed exchange rate, Box D)
+
 Model **OPENSBM-FLEX** opens Model SBM to the rest of the world. Following [Zezza (2026)](#references), the rest of the world is a single aggregate sector, whose income and interest rate are given. The domestic economy exports goods to it and imports goods from it. Domestic households can hold foreign bills, while foreign investors hold domestic government bills. The exchange rate floats: the domestic currency depreciates when the economy runs a current account deficit, and appreciates when it runs a surplus.
 
 The key additional assumptions are:
@@ -719,6 +723,8 @@ What the IO block also requires is a decision about **prices**. With several goo
 
 ### 3.2 - Model IO-SBM with fixed prices
 
+📄 **R code:** [`2a_IO_SBM.R`](2a_IO_SBM.R)
+
 Model **IO-SBM** is Model SBM with the three-industry IO core introduced in Section 3.1. In this first closure, all prices are fixed and equal to one, so that nominal and real variables coincide.
 
 The key additional assumptions are:
@@ -820,6 +826,8 @@ The operator `%*%` is the matrix product in `R`, while `*` and `/` operate eleme
 > 👉 **Answers:** [here](ANSWERS.md#box-g---model-io-sbm).
 
 ### 3.3 - Closing the price system: Sraffa-like prices
+
+📄 **R code:** [`2b_IO_SBM_SRAFFA.R`](2b_IO_SBM_SRAFFA.R)
 
 In Model IO-SBM, all prices are fixed and equal to one. This is a convenient simplification, but it hides two important features of a multi-industry economy: relative prices reflect the technique of production and the distribution of income, and they can change when demand changes. In this section, we close the price system in an alternative way, using **Sraffa-like** prices. The quantity side of the model is unchanged. What changes is how prices are determined, and how nominal and real variables are linked. The code is in `2b_IO_SBM_SRAFFA.R`, and the price equations follow those of the IO-SFC model of Italy developed by [Canelli et al. (2026)](#references), without imported inputs.
 
@@ -929,6 +937,8 @@ Notice that `lab` is a row vector, which pre-multiplies the inverse matrix, whil
 
 > 📚 **Extra material.** This section extends the models of Sections 3.2 and 3.3 to the open economy, and can be skipped on a first reading.
 
+📄 **R code:** [`2c_IO_OPENSBM.R`](2c_IO_OPENSBM.R) (fixed prices) · [`2d_IO_OPENSBM_SRAFFA.R`](2d_IO_OPENSBM_SRAFFA.R) (Sraffa-like prices)
+
 The two closures of Model IO-SBM can be extended to the open economy along the lines of Model OPENSBM-FLEX (Section 2.2). The foreign sector is the same: exports depend on foreign income, imports on domestic income, both depend on relative prices, and the exchange rate floats. What the IO structure adds is a description of **which industries export and which goods are imported**, following the treatment of foreign trade in [Canelli et al. (2026)](#references). The code is in `2c_IO_OPENSBM.R` (fixed prices) and `2d_IO_OPENSBM_SRAFFA.R` (Sraffa-like prices). Since the main mechanisms have already been discussed, this section only highlights what is new.
 
 **Trade in the IO block.** Exports are allocated to industries by fixed shares, collected in the vector $\boldsymbol{\chi} = [0.2, 0.6, 0.2]$: most exports are manufactured goods. Imports have two components. **Intermediate imports** are inputs bought abroad by domestic industries, described by a matrix of imported-input coefficients $\mathbf{A}_m$, whose element $a^m_{ij}$ is the amount of foreign good $i$ needed to produce one unit of domestic good $j$. **Final imports** are foreign goods bought directly by households, firms and the government. Their import content differs across goods and components of demand: for instance, 40% of the manufactured goods consumed by households are imported, against 5% of services. In `2c_IO_OPENSBM.R`, the block is:
@@ -996,6 +1006,8 @@ The IO structure is a natural partner for the ecological block. Energy and mater
 **Feedbacks and the fiscal anchor.** An ecological model must also say how environmental damage affects the economy. Following the literature, the most common choice is to let warming destroy part of the capital stock, or reduce productivity or demand. In Model SBM, however, the long-run level of national income is pinned down by the fiscal anchor (Section 2.1), and some of these channels can paradoxically *raise* long-run output: for instance, if climate change destroys capital, firms must invest more to replace it, which raises demand. In our models, we therefore let warming affect the **investment decisions** of firms: the higher the temperature anomaly, the lower the target capital stock. This captures, in a very stylised way, the idea that a warmer and riskier world makes firms less willing to accumulate capital. As shown below, it lowers both investment and national income.
 
 ### 4.2 - Model ECO-IO-SBM: the climate block
+
+📄 **R code:** [`3a_ECO_IO_SBM_CLIMATE.R`](3a_ECO_IO_SBM_CLIMATE.R)
 
 Model **ECO-IO-SBM** with the climate block is Model IO-SBM plus nine equations. The code is in `3a_ECO_IO_SBM_CLIMATE.R`, and the model has 40 equations. The key additional assumptions are:
 
@@ -1086,6 +1098,8 @@ Notice that `sum(eps_en * x[j, i, ])` is the scalar product between the vector o
 
 > 📚 **Extra material.** This section extends the climate block of Section 4.2 to matter, and can be skipped on a first reading.
 
+📄 **R code:** [`3b_ECO_IO_SBM_FULL.R`](3b_ECO_IO_SBM_FULL.R)
+
 The climate block only considers energy and emissions. The full ecological block of Model **ECO-IO-SBM-FULL**, in `3b_ECO_IO_SBM_FULL.R`, also tracks **matter**: the extraction of raw materials, the accumulation of durable goods, their discard, recycling and waste, and the depletion of matter and energy reserves. The model has 56 equations, and the additional ones follow [Dafermos et al. (2017)](#references) and Model ECO-3IO-PC of the [Florence keynote speech](https://github.com/marcoverpas/keynote_speech_Florence#23---model-eco-3io-pc). The key additional assumptions are:
 
 1. Production requires matter, in fixed proportions that differ across industries
@@ -1167,6 +1181,8 @@ src="beijing_figures/ECO_flows.png" alt="Emissions by industry, matter flows and
 
 > 📚 **Extra material.** This section extends the ecological models of Sections 4.2 and 4.3 to the open economy, and can be skipped on a first reading.
 
+📄 **R code:** [`3c_ECO_IO_OPENSBM_CLIMATE.R`](3c_ECO_IO_OPENSBM_CLIMATE.R) (climate block) · [`3d_ECO_IO_OPENSBM_FULL.R`](3d_ECO_IO_OPENSBM_FULL.R) (full ecological block)
+
 The open-economy versions, Model ECO-IO-OPENSBM (`3c_ECO_IO_OPENSBM_CLIMATE.R`, 53 equations) and Model ECO-IO-OPENSBM-FULL (`3d_ECO_IO_OPENSBM_FULL.R`, 69 equations), add the ecological blocks to the fixed-price open IO model of Section 3.4. Since the ecological block is computed from domestic gross output, emissions are **production-based**: the emissions generated abroad to produce the goods imported by the domestic economy are not counted, while those generated at home to produce exports are. This is the standard convention in national emission inventories, but it can give a misleading picture of the environmental responsibility of an economy, since part of the emissions associated with its consumption may be "outsourced" to the rest of the world (carbon leakage). The distinction between production-based and consumption-based emissions is particularly relevant for an export-oriented economy like China.
 
 In the baseline, the gross output of the open economy is larger than that of the closed economy, because domestic industries also produce for export, and exports are concentrated in energy-intensive manufacturing. As a result, emissions are higher, and the temperature anomaly at period 200 is about 3.24°C, against 3.10°C. The fiscal expansion raises it to about 3.37°C. Model ECO-IO-OPENSBM-FULL behaves in the same way, with the addition of the matter block. Extending these models with consumption-based emissions would require a description of the technology of the rest of the world, for instance through a multi-regional IO table: this is a natural next step, which we leave to the reader.
@@ -1212,6 +1228,8 @@ Crucially, the models remain **stock-flow consistent**: since money is only ever
 > On the **left**, every particle obeys the same differential equations ([Lorenz, 1963](#references)): the motion is intricate, even chaotic, but the shape was written into the equations from the start. This is complexity, but not emergence. On the **right**, the birds are told nothing about any global shape ([Reynolds, 1987](#references)). Switch the interaction off, and the flock dissolves: the pattern lived in the *interaction*, not in the birds. In the models below, involuntary unemployment, rationing and wealth inequality are the economic counterparts of the flock: no household is told to produce them.
 
 ### 5.2 - Model ABM-SBM
+
+📄 **R code:** [`4a_ABM_SBM.R`](4a_ABM_SBM.R)
 
 Model **ABM-SBM** (`4a_ABM_SBM.R`) is Model SBM populated by 180 households. Each household holds its own cash, bills and deposits, earns its own income, and has its own autonomous propensity to consume, $\alpha_{10,i}$, drawn from a uniform distribution between 0.58 and 0.78. As in Model SBM, the propensity to consume falls when the interest rate rises. The firm, banking and public sectors are aggregate, and follow the equations of Model SBM. Each period unfolds as a sequence of "ticks":
 
@@ -1272,6 +1290,8 @@ src="beijing_figures/ABM_wealth.gif" alt="Wealth distribution in Model ABM-SBM" 
 ### 5.3 - Model ABM-OPENSBM
 
 > 📚 **Extra material.** This section extends Model ABM-SBM of Section 5.2 to the open economy, and can be skipped on a first reading.
+
+📄 **R code:** [`4b_ABM_OPENSBM.R`](4b_ABM_OPENSBM.R)
 
 Model **ABM-OPENSBM** (`4b_ABM_OPENSBM.R`) adds the foreign sector of Model OPENSBM-FLEX to Model ABM-SBM. Each household now also chooses how much to hold in foreign bills, and receives interest and capital gains on them, while exports, imports, the current account and the exchange rate are aggregate. Imports cover part of planned demand, so that only the rest requires domestic workers, and the goods available to the queue of buyers include imported goods.
 
