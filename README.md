@@ -61,6 +61,8 @@ All code has been developed for an `R` environment and is available in this repo
 - [Keynote speech, Florence, 2025](https://github.com/marcoverpas/keynote_speech_Florence) - how to extend SFC models with ecological variables (matter, energy, emissions, temperature) to analyse the low-carbon transition (University of Florence).
 - [Analisi Economica](https://github.com/marcoverpas/analisi_economica) - lecture notes on production, distribution, conflict and money, from the classical surplus approach and Sraffa's price system to modern modelling developments (in Italian, University of L'Aquila).
 
+:robot: *These lectures were prepared with the assistance of Claude (Anthropic).*
+
 :unlock: :copyright: *Note*: Except where otherwise credited, all the material in this repository is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1). You are encouraged to use it for non-commercial purposes, provided that proper credit is given.
 
 ---
