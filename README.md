@@ -1474,7 +1474,14 @@ Lastly, a few words on **Artificial Intelligence** (AI). AI is transforming the 
 
 If SFC, IO, agent-based and other monetary-production approaches are to offer a credible alternative to mainstream methods, it will not be by matching them in mathematical elaboration. It will be by offering models that are fully consistent, economically transparent, and no more complex than the question requires: models that a student can open, read and understand.
 
-Further material is available in the companion repositories listed in the [Overview](#overview): the [Leeds lectures](https://github.com/marcoverpas/Leeds_lectures_2026) for the toy models in aggregate, input-output and agent-based form; the [Six lectures on SFC models](https://github.com/marcoverpas/Six_lectures_on_sfc_models) for multi-area and empirical models; the [Macerata PhD lectures](https://github.com/marcoverpas/PhD_Lectures_Macerata_2025) for the links between SFC models and the monetary circuit theory; and the [EAEPE Summer School](https://github.com/marcoverpas/EAEPE_summer_school_2024) and the [Florence keynote speech](https://github.com/marcoverpas/keynote_speech_Florence) for ecological SFC models.
+> ### 📦 Box N - Further material
+>
+> The companion repositories listed in the [Overview](#overview) cover what these lectures leave out:
+>
+> - [Leeds lectures](https://github.com/marcoverpas/Leeds_lectures_2026): the toy models (SIM, PC, BMW) in aggregate, input-output and agent-based form;
+> - [Six lectures on SFC models](https://github.com/marcoverpas/Six_lectures_on_sfc_models): multi-area and empirical models;
+> - [Macerata PhD lectures](https://github.com/marcoverpas/PhD_Lectures_Macerata_2025): the links between SFC models and the monetary circuit theory;
+> - [EAEPE Summer School](https://github.com/marcoverpas/EAEPE_summer_school_2024) and [Florence keynote speech](https://github.com/marcoverpas/keynote_speech_Florence): ecological SFC models.
 
 ---
 
