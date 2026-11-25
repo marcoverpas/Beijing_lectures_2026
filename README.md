@@ -695,15 +695,25 @@ The diagonal elements are larger than one, because each industry must produce at
 
 |                     | Agriculture | Manufacturing | Services | Consumption | Investment | Government | Total output |
 |:--------------------|:-----------:|:-------------:|:--------:|:-----------:|:----------:|:----------:|:------------:|
-| **Agriculture**     | 5.1         | 12.0          | 9.9      | 13.8        | 3.9        | 2.0        | 46.7         |
+| **Agriculture**     | 5.1         | 11.9          | 9.9      | 13.8        | 3.9        | 2.0        | 46.7         |
 | **Manufacturing**   | 9.8         | 21.9          | 19.8     | 32.3        | 9.8        | 6.0        | 99.6         |
 | **Services**        | 7.0         | 17.9          | 9.9      | 46.1        | 5.9        | 12.0       | 98.8         |
 | **Value added**     | 24.8        | 47.8          | 59.3     |             |            |            | 131.8        |
 | **Total input**     | 46.7        | 99.6          | 98.8     | 92.2        | 19.6       | 20.0       |              |
 
-The same information can be represented as a **network**, where industries are the nodes and technical coefficients are the links. In Figure 8, an arrow from industry $i$ to industry $j$ means that good $i$ is used to produce good $j$; its thickness is proportional to $a_{ij}$, and the size of each node is proportional to gross output. Manufacturing is both the main supplier of inputs to the rest of the system (its row of $\mathbf{A}$ has the largest coefficients) and the most input-intensive industry (its column of $\mathbf{A}$ adds up to 0.52, against 0.47 for agriculture and 0.40 for services). This is why it has the largest output multiplier (about 1.98, against 1.89 for agriculture and 1.76 for services). One more unit of final demand for manufactured goods raises total gross output by almost two units.
+Figure 8A shows the same table as a **Sankey diagram**: each product, on the left, is split between the three industries that use it as an input and the three components of final demand, on the right, and the width of each band is proportional to the value of the flow. Manufacturing is the main supplier of intermediate inputs (about half of its output, ¥51.5 out of ¥99.6), while services go mostly to final demand (about two thirds of their output).
 
-#### Figure 8. Input-output network of Model IO-SBM
+#### Figure 8A. Uses of products in Model IO-SBM (baseline, period 100, ¥)
+
+<figure>
+<img
+src="beijing_figures/SANKEY_IO.png" alt="Sankey diagram of the uses of products in Model IO-SBM" width="750">
+</figure>
+<br>
+
+The same information can be represented as a **network**, where industries are the nodes and technical coefficients are the links. In Figure 8B, an arrow from industry $i$ to industry $j$ means that good $i$ is used to produce good $j$; its thickness is proportional to $a_{ij}$, and the size of each node is proportional to gross output. Manufacturing is both the main supplier of inputs to the rest of the system (its row of $\mathbf{A}$ has the largest coefficients) and the most input-intensive industry (its column of $\mathbf{A}$ adds up to 0.52, against 0.47 for agriculture and 0.40 for services). This is why it has the largest output multiplier (about 1.98, against 1.89 for agriculture and 1.76 for services). One more unit of final demand for manufactured goods raises total gross output by almost two units.
+
+#### Figure 8B. Input-output network of Model IO-SBM
 
 <figure>
 <img
