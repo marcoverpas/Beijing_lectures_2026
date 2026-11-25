@@ -131,6 +131,8 @@ In practice, each model is built around two tables. The **balance-sheet matrix**
 
 **Identities, behaviour and the hidden equation.** The columns and rows of the two matrices give the **accounting identities** of the model: for instance, the household column says that disposable income not spent on consumption must be added to the stock of money held. The identities are then closed with **behavioural equations**, usually simple rules of thumb and stock-flow norms describing how each sector spends, saves, invests and allocates its wealth across assets, and with **equilibrium conditions**, which state that the supply of an item is equal to the demand for it (for instance, firms produce what is demanded, and banks supply all the loans that firms demand), together with the choice of the exogenous variables (government spending, interest rates, and so on). Because the matrices are watertight, every model contains one **redundant** (or *hidden*) equation, logically implied by all the others. This is the SFC counterpart of Walras' law. The hidden equation is omitted from the code and used instead to check that the model is correctly specified: if it does not hold in the simulations, an error has been made somewhere. In all the models of this repository, the hidden equation is the equality between the cash demanded by households and the cash supplied by the central bank, $H_h = H_s$.
 
+In the models presented in class (Sections 2.1, 2.2, 3.2, 3.3 and 4.2), each numbered equation is followed by its type: **[I]** for identities, **[B]** for behavioural equations and **[E]** for equilibrium conditions. Technical relations, such as employment given labour productivity, depreciation, or energy use and emissions given their intensities, are classed as behavioural.
+
 **Solving the models.** SFC models are dynamic systems, normally written in discrete time as difference equations (although continuous-time versions also exist). Stocks are the cumulated sum of past flows, and flows depend on past stocks. This makes SFC models similar to [system dynamics](https://en.wikipedia.org/wiki/System_dynamics) models, which track stocks, flows and feedback loops over time, and their results are usually presented as dynamic paths after a shock, compared with a baseline scenario. The simplest models can be solved analytically for their *stationary state*, that is, the position where all stocks and flows are constant. In a growing economy, the corresponding notion is the *steady state*, where all stocks and flows grow at the same rate, so that stock-flow ratios are constant. Since the economies of this repository do not grow, the two notions coincide, and we use the two terms interchangeably. Larger models are solved numerically by computer simulation: within each period, the simultaneous equations are solved by iteration (as in the scripts below), and the model is then moved forward one period at a time. The coefficients can be fine-tuned (chosen to obtain a plausible baseline), calibrated (on observed ratios or a target steady state) or estimated econometrically. We return to the last two options in [Section 6](#6---calibration-and-estimation). Figure 1 shows the main programming languages and software used to simulate SFC models.
 
 #### Figure 1. Programming languages and software used for SFC modelling
@@ -233,43 +235,43 @@ The net worth of firms is zero because loans and capital grow in step ($\Delta L
 
 **Equations.** Completing the accounting identities with behavioural equations, we obtain the following system of 28 difference equations (the numbers match those of the script of the model, `1a_SBM.R`). For households:
 
-$$YD = WB + F_b - T + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1} \quad \text{(1)}$$
+$$YD = WB + F_b - T + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1} \quad \text{(1) [I]}$$
 
-$$T = \theta \cdot (WB + F_b + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1}) \quad \text{(2)}$$
+$$T = \theta \cdot (WB + F_b + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1}) \quad \text{(2) [B]}$$
 
-$$V = V_{-1} + YD - C \quad \text{(3)}$$
+$$V = V_{-1} + YD - C \quad \text{(3) [I]}$$
 
-$$\alpha_1 = \alpha_{10} - \alpha_{11} \cdot r_{b,-1} \quad \text{(4)}$$
+$$\alpha_1 = \alpha_{10} - \alpha_{11} \cdot r_{b,-1} \quad \text{(4) [B]}$$
 
-$$C = \alpha_1 \cdot YD + \alpha_2 \cdot V_{-1} \quad \text{(5)}$$
+$$C = \alpha_1 \cdot YD + \alpha_2 \cdot V_{-1} \quad \text{(5) [B]}$$
 
-$$H_h = \lambda_c \cdot C_{-1} \quad \text{(6)}$$
+$$H_h = \lambda_c \cdot C_{-1} \quad \text{(6) [B]}$$
 
-$$B_h = V \cdot (\lambda_{10} + \lambda_{11} \cdot r_b) \quad \text{(7)}$$
+$$B_h = V \cdot (\lambda_{10} + \lambda_{11} \cdot r_b) \quad \text{(7) [B]}$$
 
-$$M_h = V - H_h - B_h \quad \text{(8)}$$
+$$M_h = V - H_h - B_h \quad \text{(8) [I]}$$
 
 Equation (1) defines disposable income as the sum of wages, distributed bank profits and interest income, net of taxes. Taxes are levied on all household income (2). Wealth accumulates through saving (3). Consumption depends on disposable income and on past wealth (5), and the propensity to consume out of income falls when the interest rate rises (4), as in Model PCEX2 of [Godley and Lavoie (2007, ch. 4)](#references). Without equation (4), a higher interest rate would only raise the interest income of households, and its effect on demand would always be expansionary. Households hold cash in proportion to their (past) spending, for transaction purposes (6), and allocate a share of their wealth to bills, which is higher the higher the interest rate (7). Deposits are the *buffer stock*: they absorb any unexpected change in wealth (8). For firms:
 
-$$Y = C + I + G \quad \text{(9)}$$
+$$Y = C + I + G \quad \text{(9) [E]}$$
 
-$$WB = Y - r_{l,-1} \cdot L_{d,-1} - AF \quad \text{(10)}$$
+$$WB = Y - r_{l,-1} \cdot L_{d,-1} - AF \quad \text{(10) [I]}$$
 
-$$N = \frac{Y}{pr} \quad \text{(11)}$$
+$$N = \frac{Y}{pr} \quad \text{(11) [B]}$$
 
-$$w = \frac{WB}{N} \quad \text{(12)}$$
+$$w = \frac{WB}{N} \quad \text{(12) [I]}$$
 
-$$K^T = \kappa \cdot Y_{-1} \quad \text{(13)}$$
+$$K^T = \kappa \cdot Y_{-1} \quad \text{(13) [B]}$$
 
-$$DA = \delta \cdot K_{-1} \quad \text{(14)}$$
+$$DA = \delta \cdot K_{-1} \quad \text{(14) [B]}$$
 
-$$AF = DA \quad \text{(15)}$$
+$$AF = DA \quad \text{(15) [B]}$$
 
-$$I = \gamma \cdot (K^T - K_{-1}) + DA \quad \text{(16)}$$
+$$I = \gamma \cdot (K^T - K_{-1}) + DA \quad \text{(16) [B]}$$
 
-$$K = K_{-1} + I - DA \quad \text{(17)}$$
+$$K = K_{-1} + I - DA \quad \text{(17) [I]}$$
 
-$$L_d = L_{d,-1} + I - AF \quad \text{(18)}$$
+$$L_d = L_{d,-1} + I - AF \quad \text{(18) [I]}$$
 
 Output is demand-determined (9). As in Model BMW, the wage bill is what is left of sales after paying interest on loans and setting aside amortisation funds (10), so that firms retain no profits. Employment depends on output and labour productivity (11), and the average wage rate is obtained residually (12). Firms want a capital stock proportional to past output (13), replace depreciated capital (14)-(15), and close a fraction of the gap between target and actual capital each period (16). Net investment adds to the capital stock (17) and is funded by new loans (18).
 
@@ -277,27 +279,27 @@ Following Model BMW, we call $WB$ the wage bill. However, since firms retain no 
 
 For banks:
 
-$$L_s = L_{s,-1} + \Delta L_d \quad \text{(19)}$$
+$$L_s = L_{s,-1} + \Delta L_d \quad \text{(19) [E]}$$
 
-$$M_s = M_{s,-1} + \Delta L_s \quad \text{(20)}$$
+$$M_s = M_{s,-1} + \Delta L_s \quad \text{(20) [I]}$$
 
-$$B_b = M_h - M_s \quad \text{(21)}$$
+$$B_b = M_h - M_s \quad \text{(21) [I]}$$
 
-$$F_b = r_{l,-1} \cdot L_{s,-1} + r_{b,-1} \cdot B_{b,-1} - r_{m,-1} \cdot M_{h,-1} \quad \text{(22)}$$
+$$F_b = r_{l,-1} \cdot L_{s,-1} + r_{b,-1} \cdot B_{b,-1} - r_{m,-1} \cdot M_{h,-1} \quad \text{(22) [I]}$$
 
 Banks grant all the loans that firms demand (19), and every new loan creates a deposit of the same amount (20): this is the *endogenous money* mechanism of Model BMW, and $M_s$ measures the deposits created by lending. In Model BMW, where there are no bills and no central bank, the deposits held by households are necessarily equal to those created by lending, and $M_h = M_s$ is the hidden equation. In Model SBM, households decide how many deposits they want to hold, so that deposits held and deposits created by lending need not coincide: banks invest the difference in government bills or, if it is negative, borrow from the central bank (21). Bank profits are distributed to households (22); with a single interest rate they are zero. Finally, for the government and the central bank:
 
-$$F_{cb} = r_{b,-1} \cdot B_{cb,-1} \quad \text{(23)}$$
+$$F_{cb} = r_{b,-1} \cdot B_{cb,-1} \quad \text{(23) [I]}$$
 
-$$G = G_0 - \psi \cdot (r_{b,-1} - \bar{r}) \cdot B_{s,-1} \quad \text{(24)}$$
+$$G = G_0 - \psi \cdot (r_{b,-1} - \bar{r}) \cdot B_{s,-1} \quad \text{(24) [B]}$$
 
-$$PSBR = G + r_{b,-1} \cdot B_{s,-1} - T - F_{cb} \quad \text{(25)}$$
+$$PSBR = G + r_{b,-1} \cdot B_{s,-1} - T - F_{cb} \quad \text{(25) [I]}$$
 
-$$B_s = B_{s,-1} + PSBR \quad \text{(26)}$$
+$$B_s = B_{s,-1} + PSBR \quad \text{(26) [I]}$$
 
-$$B_{cb} = B_s - B_h - B_b \quad \text{(27)}$$
+$$B_{cb} = B_s - B_h - B_b \quad \text{(27) [E]}$$
 
-$$H_s = H_{s,-1} + \Delta B_{cb} \quad \text{(28)}$$
+$$H_s = H_{s,-1} + \Delta B_{cb} \quad \text{(28) [I]}$$
 
 The central bank returns its profits to the government (23). Government spending follows a simple **fiscal rule** (24): when the interest rate rises above its reference value $\bar{r}$, the government cuts its spending by a share $\psi$ of the additional interest bill on public debt. With $\psi = 1$, spending plus interest payments equals what it would be at the reference rate, $G_0 + \bar{r} \cdot B_{s,-1}$; with $\psi = 0$, spending is entirely exogenous, as in Model PC. At the reference interest rate, $G = G_0$. The public sector borrowing requirement (25) is financed by issuing bills (26). The central bank buys all the bills that households and banks do not want (27), paying for them with newly issued cash (28). The exogenous component of government spending $G_0$, the interest rates ($r_b = r_m = r_l$) and all the coefficients are exogenous. The coefficients $\alpha_{10} = 0.68$ and $\alpha_{11} = 4$ give $\alpha_1 = 0.6$ at the baseline interest rate of 2%.
 
@@ -517,43 +519,43 @@ The column of the rest of the world in Table 8 shows that the current account of
 
 **Equations.** Model OPENSBM-FLEX has 37 equations (the numbers match those of the script of the model, `1c_OPENSBM_FLEX.R`). The equations of firms, banks and the government are those of Model SBM; below we only report the equations that change or are added. For households:
 
-$$YD = WB + F_b - T + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1} + xr \cdot r_{w,-1} \cdot BF_{h,-1} \quad \text{(1)}$$
+$$YD = WB + F_b - T + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1} + xr \cdot r_{w,-1} \cdot BF_{h,-1} \quad \text{(1) [I]}$$
 
-$$CG = \Delta xr \cdot BF_{h,-1} \quad \text{(2)}$$
+$$CG = \Delta xr \cdot BF_{h,-1} \quad \text{(2) [I]}$$
 
-$$T = \theta \cdot (WB + F_b + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1} + xr \cdot r_{w,-1} \cdot BF_{h,-1}) \quad \text{(3)}$$
+$$T = \theta \cdot (WB + F_b + r_{b,-1} \cdot B_{h,-1} + r_{m,-1} \cdot M_{h,-1} + xr \cdot r_{w,-1} \cdot BF_{h,-1}) \quad \text{(3) [B]}$$
 
-$$V = V_{-1} + YD - C + CG \quad \text{(4)}$$
+$$V = V_{-1} + YD - C + CG \quad \text{(4) [I]}$$
 
-$$B_h = V \cdot (\lambda_{10} + \lambda_{11} \cdot r_b - \lambda_{12} \cdot r_w) \quad \text{(8)}$$
+$$B_h = V \cdot (\lambda_{10} + \lambda_{11} \cdot r_b - \lambda_{12} \cdot r_w) \quad \text{(8) [B]}$$
 
-$$BF_h = \frac{V}{xr} \cdot (\lambda_{20} - \lambda_{21} \cdot r_b + \lambda_{22} \cdot r_w) \quad \text{(9)}$$
+$$BF_h = \frac{V}{xr} \cdot (\lambda_{20} - \lambda_{21} \cdot r_b + \lambda_{22} \cdot r_w) \quad \text{(9) [B]}$$
 
-$$M_h = V - H_h - B_h - xr \cdot BF_h \quad \text{(10)}$$
+$$M_h = V - H_h - B_h - xr \cdot BF_h \quad \text{(10) [I]}$$
 
 Disposable income now includes the interest earned on foreign bills, converted into domestic currency (1), which is also taxed (3). Capital gains on foreign bills (2) are not part of disposable income, but they are added to saving to obtain the change in household wealth (4). Consumption still depends on disposable income, so that a depreciation raises household wealth without directly raising consumption. Households now choose between domestic and foreign bills on the basis of the two interest rates, following [Tobin's (1982)](#references) portfolio approach (8)-(9), while deposits remain the buffer stock (10). Firms sell to foreign buyers and domestic demand partly leaks abroad:
 
-$$Y = C + I + G + X - IM \quad \text{(11)}$$
+$$Y = C + I + G + X - IM \quad \text{(11) [E]}$$
 
 Since domestic bills are now also held by the rest of the world, the central bank buys what is left after households, banks *and* foreign investors have satisfied their demand:
 
-$$B_{cb} = B_s - B_h - B_b - B_w \quad \text{(29)}$$
+$$B_{cb} = B_s - B_h - B_b - B_w \quad \text{(29) [E]}$$
 
 The rest of the world is described by seven equations:
 
-$$\ln X = \varepsilon_0 + \varepsilon_1 \cdot \ln xr_{-1} + \varepsilon_2 \cdot \ln Y_w \quad \text{(31)}$$
+$$\ln X = \varepsilon_0 + \varepsilon_1 \cdot \ln xr_{-1} + \varepsilon_2 \cdot \ln Y_w \quad \text{(31) [B]}$$
 
-$$\ln IM = \iota_0 - \iota_1 \cdot \ln xr_{-1} + \iota_2 \cdot \ln Y \quad \text{(32)}$$
+$$\ln IM = \iota_0 - \iota_1 \cdot \ln xr_{-1} + \iota_2 \cdot \ln Y \quad \text{(32) [B]}$$
 
-$$TB = X - IM \quad \text{(33)}$$
+$$TB = X - IM \quad \text{(33) [I]}$$
 
-$$CA = TB + xr \cdot r_{w,-1} \cdot BF_{h,-1} - r_{b,-1} \cdot B_{w,-1} \quad \text{(34)}$$
+$$CA = TB + xr \cdot r_{w,-1} \cdot BF_{h,-1} - r_{b,-1} \cdot B_{w,-1} \quad \text{(34) [I]}$$
 
-$$NETFA = NETFA_{-1} + CA + CG \quad \text{(35)}$$
+$$NETFA = NETFA_{-1} + CA + CG \quad \text{(35) [I]}$$
 
-$$B_w = xr \cdot BF_h - NETFA \quad \text{(36)}$$
+$$B_w = xr \cdot BF_h - NETFA \quad \text{(36) [I]}$$
 
-$$xr = xr_{-1} \cdot \exp \left( -\phi_{xr} \cdot \frac{CA}{Y} \right) \quad \text{(37)}$$
+$$xr = xr_{-1} \cdot \exp \left( -\phi_{xr} \cdot \frac{CA}{Y} \right) \quad \text{(37) [B]}$$
 
 Exports depend on foreign income and imports on domestic income, with unit elasticities ($\varepsilon_2 = \iota_2 = 1$). A depreciation of the domestic currency (a rise in $xr$) makes domestic goods cheaper for foreign buyers and foreign goods dearer for domestic buyers, with a lag of one period (31)-(32). The trade balance (33) plus net interest income from abroad gives the current account (34). Net foreign assets change with the current account and with capital gains (35). The rest of the world is modelled in the simplest possible way: it has no behavioural equations of its own, and its holdings of domestic bills are a residual, which ensures that the foreign financial position of the economy is consistent with its current account (36). Finally, the exchange rate depreciates when the current account is in deficit and appreciates when it is in surplus (37); the coefficient $\phi_{xr} = 3$ sets the speed of adjustment, and the exponential form ensures that $xr$ remains positive. With $\varepsilon_0 = \ln 0.1$, $\iota_0 = \ln 0.2$ and $Y_w = 200$, exports would be ¥20 and imports one-fifth of GDP at $xr = 1$. Unless otherwise stated, the other coefficients are those of Model SBM, while the portfolio coefficients are $\lambda_{10} = 0.15$, $\lambda_{20} = 0.1$ and $\lambda_{11} = \lambda_{12} = \lambda_{21} = \lambda_{22} = 1$.
 
@@ -739,17 +741,17 @@ Since the three industries are consolidated in a single firm sector, the balance
 
 **Equations.** Model IO-SBM has 31 equations (the numbers match those of the script of the model, `2a_IO_SBM.R`). The equations of households, banks and the government are those of Model SBM. Two equations of firms change. Total employment is now the sum of employment in the three industries, and the target capital stock depends on the gross output of each industry, as explained in Section 3.1:
 
-$$N = \sum_j N_j \quad \text{(11)}$$
+$$N = \sum_j N_j \quad \text{(11) [I]}$$
 
-$$K^T = \sum_j \kappa_j \cdot x_{j,-1} \quad \text{(13)}$$
+$$K^T = \sum_j \kappa_j \cdot x_{j,-1} \quad \text{(13) [B]}$$
 
 The new block describing the **industrial structure** consists of three vector equations:
 
-$$\mathbf{d} = \boldsymbol{\beta}_C \cdot C + \boldsymbol{\beta}_I \cdot I + \boldsymbol{\beta}_G \cdot G \quad \text{(19)}$$
+$$\mathbf{d} = \boldsymbol{\beta}_C \cdot C + \boldsymbol{\beta}_I \cdot I + \boldsymbol{\beta}_G \cdot G \quad \text{(19) [B]}$$
 
-$$\mathbf{x} = (\mathbf{I} - \mathbf{A})^{-1} \cdot \mathbf{d} \quad \text{(20)}$$
+$$\mathbf{x} = (\mathbf{I} - \mathbf{A})^{-1} \cdot \mathbf{d} \quad \text{(20) [E]}$$
 
-$$N_j = \frac{x_j}{pr_j} \quad \text{(21)}$$
+$$N_j = \frac{x_j}{pr_j} \quad \text{(21) [B]}$$
 
 Final demand for the product of each industry is a weighted sum of *real* consumption, investment and government spending (19). Since all prices are equal to one, real and nominal values coincide in this closure, but the IO block always works with quantities, and this will matter in Section 3.3. In (19), the vectors $\boldsymbol{\beta}_C$, $\boldsymbol{\beta}_I$ and $\boldsymbol{\beta}_G$ contain the shares of each component spent on agricultural goods, manufactured goods and services. Since the elements of each vector add up to one, the sum of final demands is equal to GDP. Consumption is mostly spent on services ($\boldsymbol{\beta}_C = [0.15, 0.35, 0.50]$), investment on manufactured goods ($\boldsymbol{\beta}_I = [0.20, 0.50, 0.30]$) and government spending on services ($\boldsymbol{\beta}_G = [0.10, 0.30, 0.60]$). Gross outputs are obtained from the Leontief inverse (20), and employment in each industry is gross output divided by labour productivity (21), which is highest in manufacturing ($pr_2 = 5$) and lowest in services ($pr_3 = 2.2$).
 
@@ -859,9 +861,9 @@ Prices are determined by the technique of production ($\mathbf{A}$ and $\mathbf{
 
 **Reproduction prices and current prices.** When mark-ups are at their **normal** levels, $\mu_{0j}$, the price equations return the **reproduction prices** $\mathbf{p}^S$, that is, the prices that allow each industry to cover its costs and earn its normal profits. In the model, $\boldsymbol{\mu}_0 = [0.3, 0.4, 0.3]$, so that $\mathbf{p}^S \approx [0.93, 1.01, 0.98]$ with $w = 1$. Current prices, however, can diverge from reproduction prices when demand grows faster than expected. Following [Canelli et al. (2026)](#references), mark-ups rise when actual output exceeds its **normal** level, and normal output adjusts gradually to actual output:
 
-$$x^N_j = x^N_{j,-1} + \phi_N \cdot (x_{j,-1} - x^N_{j,-1}) \quad \text{(27)}$$
+$$x^N_j = x^N_{j,-1} + \phi_N \cdot (x_{j,-1} - x^N_{j,-1}) \quad \text{(27) [B]}$$
 
-$$\mu_j = \mu_{0j} + \mu_1 \cdot \left( \frac{x_{j,-1}}{x^N_{j,-1}} - 1 \right) \quad \text{(28)}$$
+$$\mu_j = \mu_{0j} + \mu_1 \cdot \left( \frac{x_{j,-1}}{x^N_{j,-1}} - 1 \right) \quad \text{(28) [B]}$$
 
 with $\mu_1 = 0.2$ and $\phi_N = 0.1$. When demand rises, firms raise their mark-ups and current prices rise above reproduction prices. As normal output catches up with actual output, mark-ups return to their normal levels and current prices converge back to reproduction prices. Demand affects relative prices and distribution in the short run, but not in the long run, which is consistent with the classical view that normal prices are governed by technique and distribution.
 
@@ -869,9 +871,9 @@ with $\mu_1 = 0.2$ and $\phi_N = 0.1$. When demand rises, firms raise their mark
 
 First, real and nominal variables must now be distinguished, and all the components of final demand are decided in real terms. Households decide their real consumption on the basis of their real disposable income and their real wealth, that is, their nominal values deflated by the consumer price index (5). Nominal consumption is real consumption times the consumer price index (6). Government spending is set in real terms, as in Model SBM, and its nominal value depends on the price of the goods purchased (10). Investment is also decided in real terms (20), and firms pay for it at the current price of investment goods (21):
 
-$$C_r = \alpha_1 \cdot \frac{YD}{p_c} + \alpha_2 \cdot \frac{V_{-1}}{p_c} \quad \text{(5)}, \qquad C = p_c \cdot C_r \quad \text{(6)}$$
+$$C_r = \alpha_1 \cdot \frac{YD}{p_c} + \alpha_2 \cdot \frac{V_{-1}}{p_c} \quad \text{(5) [B]}, \qquad C = p_c \cdot C_r \quad \text{(6) [I]}$$
 
-$$G = p_g \cdot G_r \quad \text{(10)}, \qquad I = p_i \cdot I_r \quad \text{(21)}$$
+$$G = p_g \cdot G_r \quad \text{(10) [I]}, \qquad I = p_i \cdot I_r \quad \text{(21) [I]}$$
 
 where the price indices are weighted averages of current prices, with the composition shares as weights: $p_c = \mathbf{p} \cdot \boldsymbol{\beta}_C$ (31), $p_i = \mathbf{p} \cdot \boldsymbol{\beta}_I$ (32) and $p_g = \mathbf{p} \cdot \boldsymbol{\beta}_G$ (33). Nominal GDP is the sum of nominal expenditures (equation (11) of the script), real GDP is the sum of real expenditures (12), and their ratio is the GDP deflator (13). The IO block now works in real terms: final demand by industry is computed from real consumption, investment and government spending (24).
 
@@ -879,9 +881,9 @@ where the price indices are weighted averages of current prices, with the compos
 
 Second, the distribution of income is now determined by prices. The wage bill is no longer a residual: it is the nominal wage rate times employment (15). It is now **profits** that are the residual, and they are entirely distributed to households, who pay taxes on them (1)-(2):
 
-$$WB = w \cdot N \quad \text{(15)}$$
+$$WB = w \cdot N \quad \text{(15) [I]}$$
 
-$$F_f = Y - WB - AF - r_{l,-1} \cdot L_{d,-1} \quad \text{(16)}$$
+$$F_f = Y - WB - AF - r_{l,-1} \cdot L_{d,-1} \quad \text{(16) [I]}$$
 
 Third, amortisation funds are set aside at the replacement cost of capital, $AF = p_i \cdot DA$ (19), and the fiscal rule is expressed in real terms (39). The other equations are unchanged: in particular, wealth, income and the portfolio choices of households are still expressed in nominal terms. In the transactions-flow matrix, the only change is a new row recording the distributed profits of firms ($+F_f$ for households, $-F_f$ for the current account of firms).
 
@@ -1019,27 +1021,27 @@ Model **ECO-IO-SBM** with the climate block is Model IO-SBM plus nine equations.
 
 **Equations.** Total energy use is the sum of the energy required by the three industries, given their energy intensities $\epsilon_j$ (22). A share $\eta_j$ of the energy used by each industry is renewable (23), and the rest is non-renewable (24):
 
-$$EN = \sum_j \epsilon_j \cdot x_j \quad \text{(22)}$$
+$$EN = \sum_j \epsilon_j \cdot x_j \quad \text{(22) [B]}$$
 
-$$REN = \sum_j \epsilon_j \cdot \eta_j \cdot x_j \quad \text{(23)}$$
+$$REN = \sum_j \epsilon_j \cdot \eta_j \cdot x_j \quad \text{(23) [B]}$$
 
-$$NEN = EN - REN \quad \text{(24)}$$
+$$NEN = EN - REN \quad \text{(24) [I]}$$
 
 CO<sub>2</sub> emissions are proportional to non-renewable energy (26), with a CO<sub>2</sub> intensity $\upsilon$ that declines at the rate $g_{\upsilon}$ (25). Emissions are also computed industry by industry (27), and accumulate in the atmosphere (28):
 
-$$\upsilon = \upsilon_{-1} \cdot (1 - g_{\upsilon}) \quad \text{(25)}$$
+$$\upsilon = \upsilon_{-1} \cdot (1 - g_{\upsilon}) \quad \text{(25) [B]}$$
 
-$$EMIS = \upsilon \cdot NEN \quad \text{(26)}$$
+$$EMIS = \upsilon \cdot NEN \quad \text{(26) [B]}$$
 
-$$EMIS_j = \upsilon \cdot \epsilon_j \cdot (1 - \eta_j) \cdot x_j \quad \text{(27)}$$
+$$EMIS_j = \upsilon \cdot \epsilon_j \cdot (1 - \eta_j) \cdot x_j \quad \text{(27) [B]}$$
 
-$$CO2_{cum} = CO2_{cum,-1} + EMIS \quad \text{(28)}$$
+$$CO2_{cum} = CO2_{cum,-1} + EMIS \quad \text{(28) [I]}$$
 
 Following the climate-science literature ([Matthews et al., 2009](#references)), the temperature anomaly is a linear function of cumulative emissions, through the **transient climate response to cumulative carbon emissions** (TCRE), corrected for the contribution of non-CO<sub>2</sub> forcing, $f_{nc}$ (29). The coefficient $car = 3.67$ converts tonnes of CO<sub>2</sub> into tonnes of carbon. Since all these coefficients are constant, the temperature anomaly is the initial anomaly plus a constant, $\tau$, times cumulative emissions. Finally, the climate factor $\omega$ reduces the target capital-output ratios of all industries as the temperature rises above its initial level (30), so that the target capital stock becomes $K^T = \omega \cdot \sum_j \kappa_j \cdot x_{j,-1}$ (13). Denoting the temperature anomaly by $TEMP$, to avoid confusion with taxes:
 
-$$TEMP = TEMP_0 + \tau \cdot CO2_{cum}, \quad \text{with} \quad \tau = \frac{TCRE}{(1 - f_{nc}) \cdot car} \quad \text{(29)}$$
+$$TEMP = TEMP_0 + \tau \cdot CO2_{cum}, \quad \text{with} \quad \tau = \frac{TCRE}{(1 - f_{nc}) \cdot car} \quad \text{(29) [B]}$$
 
-$$\omega = 1 - \omega_1 \cdot (TEMP_{-1} - TEMP_0) \quad \text{(30)}$$
+$$\omega = 1 - \omega_1 \cdot (TEMP_{-1} - TEMP_0) \quad \text{(30) [B]}$$
 
 The energy intensities are $\boldsymbol{\epsilon} = [4, 3, 1.5]$ EJ per unit of output, so that agriculture is the most energy-intensive industry, and the renewable shares are $\boldsymbol{\eta} = [0.12, 0.15, 0.18]$. The initial temperature anomaly is $TEMP_0 = 1.2$°C, roughly its current level, and $TCRE = 1.65$°C per 1,000 GtC. The ecological block is calibrated loosely on world magnitudes (total energy use is about 600 EJ), so that the model is best read as a stylised representation of the world economy. With $\omega_1 = 0.2$, each additional degree of warming reduces the target capital stock by 20%. This is a strong and purely illustrative assumption.
 
