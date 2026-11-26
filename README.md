@@ -487,7 +487,7 @@ The associated accounting matrices are shown in Tables 7 and 8.
 | Net worth           | $-V$                | 0         | 0         | 0            | $+B_s$     | $+NETFA$               | $-K$     |
 | **Column tot.**     | 0                   | 0         | 0         | 0            | 0          | 0                      | 0        |
 
-Compared with Table 5, there is one more asset (foreign bills, converted into domestic currency at the current exchange rate $xr$) and one more sector. The net worth of the rest of the world vis-à-vis the domestic economy is the opposite of the **net foreign assets** of the domestic economy, $NETFA = xr \cdot BF_h - B_w$. The identity of Section 2.1 now becomes $V = B_s + K + NETFA$: household wealth is matched by public debt, fixed capital and claims on the rest of the world.
+Compared with Table 5, there is one more asset (foreign bills, converted into domestic currency at the current exchange rate $xr$, defined as the number of units of domestic currency (¥) per unit of foreign currency, so that a rise in $xr$ is a depreciation of the domestic currency) and one more sector. The net worth of the rest of the world vis-à-vis the domestic economy is the opposite of the **net foreign assets** of the domestic economy, $NETFA = xr \cdot BF_h - B_w$. The identity of Section 2.1 now becomes $V = B_s + K + NETFA$: household wealth is matched by public debt, fixed capital and claims on the rest of the world.
 
 #### Table 8. Transactions-flow matrix of Model OPENSBM-FLEX
 
