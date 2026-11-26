@@ -1080,7 +1080,7 @@ src="beijing_figures/ECO_experiment.gif" alt="Effects of higher government spend
 
 #### 🛠️ Hands-on: the ecological block in the code
 
-The ecological block is placed after the IO block in `3a_ECO_IO_SBM_CLIMATE.R`, since it needs the vector of gross outputs:
+The ecological block is placed after the IO block in `3a_ECO_IO_SBM_CLIMATE.R`, where the current gross outputs have just been computed. This is done for clarity: since the block is solved by iteration, and since warming affects the economy only with a lag ($\omega$ depends on $TEMP_{-1}$), its position in the loop does not change the results:
 
 ```r
       # E) ECOSYSTEM ####
