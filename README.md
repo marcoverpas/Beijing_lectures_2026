@@ -571,7 +571,7 @@ src="beijing_figures/OPENSBM_experiment.gif" alt="Effects of higher government s
 </figure>
 <br>
 
-**🎮 Interactive version.** A simulation laboratory for Model OPENSBM-FLEX is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html). It allows you to change fiscal policy, the domestic and foreign interest rates, foreign income, the portfolio share of foreign bills, the price elasticity of trade and the speed of adjustment of the exchange rate. (With a high speed of adjustment and high elasticities, the exchange rate can overshoot and the model can break down, as in exercise 4 of Box E.) As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
+**🎮 Interactive version.** A simulation laboratory for Model OPENSBM-FLEX is available [here](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html). It allows you to change fiscal policy (including the fiscal rule), the domestic and foreign interest rates, the sensitivity of the propensity to consume to the interest rate, foreign income, the portfolio share of foreign bills, the price elasticity of trade and the speed of adjustment of the exchange rate. (With a high speed of adjustment and high elasticities, the exchange rate can overshoot and the model can break down, as in exercise 4 of Box E.) As in Box B, new values apply from period 101 onwards, and the baseline is shown for comparison.
 
 [![Open interactive model](beijing_figures/launch_badge.svg)](https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html)
 <div align="center">

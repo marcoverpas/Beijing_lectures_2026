@@ -301,9 +301,9 @@ function Panel(container, o) {
 W_ = 560; H_ = 300;   // wider panels: three rows of two charts
 // MODEL-START ====================================================================
 // Initial values (periods 1 to 100), as in 1c_OPENSBM_FLEX.R
-const init = { alpha10: 0.68, alpha2: 0.1, theta: 0.2, G: 20, r: 0.02, rw: 0.02, yw: 200, el: 0.8, phixr: 3, lambda20: 0.1 };
-const alpha11 = 4, lambda10 = 0.15, lambda11 = 1, lambda12 = 1, lambda21 = 1, lambda22 = 1, lambdac = 0.2;
-const delta = 0.1, gamma = 0.1, kappa = 1.5, pr = 1, psi = 1, rbar = 0.02;
+const init = { alpha10: 0.68, alpha11: 4, alpha2: 0.1, theta: 0.2, G: 20, r: 0.02, psi: 1, rw: 0.02, yw: 200, el: 0.8, phixr: 3, lambda20: 0.1 };
+const lambda10 = 0.15, lambda11 = 1, lambda12 = 1, lambda21 = 1, lambda22 = 1, lambdac = 0.2;
+const delta = 0.1, gamma = 0.1, kappa = 1.5, pr = 1, rbar = 0.02;
 const eps0 = Math.log(0.1), eps2 = 1, mu0 = Math.log(0.2), mu2 = 1;
 
 const nPeriods = 200;     // Number of periods
@@ -320,7 +320,7 @@ function simulate(p) {
 
   for (let i = 2; i <= nPeriods; i++) {
     const q = (i >= 101) ? p : init;
-    const { alpha10, alpha2, theta, lambda20, phixr } = q, eps1 = q.el, mu1 = q.el;
+    const { alpha10, alpha11, alpha2, theta, psi, lambda20, phixr } = q, eps1 = q.el, mu1 = q.el;
     r[i] = q.r; rw[i] = q.rw; yw[i] = q.yw;
     const rb = r, rm = r, rl = r;
     for (let iter = 1; iter <= nIterations; iter++) {
@@ -396,9 +396,11 @@ function panel(box, idx, title, series, opt = {}) {
 const SLIDERS = [
   { id: "G", label: "Government spending, exogenous component (G<sub>0</sub>)", min: 10, max: 40, step: 1, value: 20, dec: 0 },
   { id: "alpha10", label: "Propensity to consume out of income, autonomous (&alpha;<sub>10</sub>)", min: 0.5, max: 0.8, step: 0.01, value: 0.68, dec: 2 },
+  { id: "alpha11", label: "Sensitivity of the propensity to consume to r (&alpha;<sub>11</sub>)", min: 0, max: 10, step: 0.5, value: 4, dec: 1 },
   { id: "alpha2", label: "Propensity to consume out of wealth (&alpha;<sub>2</sub>)", min: 0.05, max: 0.3, step: 0.01, value: 0.1, dec: 2 },
   { id: "theta", label: "Tax rate (&theta;)", min: 0.1, max: 0.4, step: 0.01, value: 0.2, dec: 2 },
   { id: "r", label: "Domestic interest rate (r<sub>b</sub> = r<sub>m</sub> = r<sub>l</sub>)", min: 0, max: 0.05, step: 0.005, value: 0.02, dec: 3 },
+  { id: "psi", label: "Fiscal rule: spending cut per unit of extra interest bill (&psi;; active only when r differs from 2%)", min: 0, max: 1, step: 0.05, value: 1, dec: 2 },
   { id: "rw", label: "Foreign interest rate (r<sub>w</sub>)", min: 0, max: 0.05, step: 0.005, value: 0.02, dec: 3 },
   { id: "yw", label: "Foreign income (Y<sub>w</sub>)", min: 150, max: 260, step: 5, value: 200, dec: 0 },
   { id: "lambda20", label: "Autonomous share of foreign bills in wealth (&lambda;<sub>20</sub>)", min: 0, max: 0.2, step: 0.01, value: 0.1, dec: 2 },
@@ -407,6 +409,7 @@ const SLIDERS = [
 ];
 function draw() {
   const p = readControls(SLIDERS);
+  greyOut("psi", Math.abs(p.r - rbar) < 1e-9);   // the fiscal rule reacts only to r - rbar
   const b = simulate(init), m = simulate(p);
   const idx = seq(95, nPeriods), sel = (o, k) => idx.map(i => o[k][i]);
   const S = (k, col, extra) => Object.assign({ b: sel(b, k), s: sel(m, k), col }, extra || {});
