@@ -55,7 +55,7 @@ The answers below are short and refer to the default calibration of the models. 
 1. **Durability.** The socio-economic stock grows much larger (about 572 against 321 Gt at period 200), and discards and waste fall slightly. Since there is less discarded stock, recycling also falls, and extraction rises slightly: higher durability alone does not reduce extraction in the short run.
 1. **The physical flow matrix.** The matter column adds up to zero (up to rounding errors of the order of $10^{-14}$) in every period: this is the physical counterpart of the hidden equation.
 
-### Box M - Agent-based models
+### Box N - Agent-based models
 
 1. **Back to the aggregate model.** Mean GDP is about ¥133 before the shock and ¥166 after it, very close to the results of Model SBM (¥132 and ¥165), and the Monte Carlo runs no longer differ from one another. The results are not identical because households plan their consumption out of last period's disposable income (rather than current income, as in Model SBM), and because workers come in whole units.
 1. **More friction.** The Monte Carlo runs become much more dispersed (the standard deviation of GDP across runs at period 100 rises from about ¥5 to ¥16), and mean GDP *rises* (to about ¥143 and ¥176). More frequent rationing means more involuntary saving, so that household wealth is much higher (about ¥529 against ¥424 before the shock). Through the fiscal anchor, higher wealth means more interest income and more consumption out of wealth, and hence higher income.

@@ -2,7 +2,7 @@
 
 These lectures are delivered at the [Central University of Finance and Economics](https://www.cufe.edu.cn/) (CUFE), Beijing, in December 2026, as part of the *International Scholar Project*.
 
-*Last update: 26 November 2026.*
+*Last update: 27 November 2026.*
 
 <div align="center">
 <figure>
@@ -1275,6 +1275,23 @@ The core of the matching process is:
 
 The goods market works like a queue at a shop. For each household, `cumsum(cdq)` is the total demand of all the households ahead of it in the queue *plus* its own demand. Subtracting its own demand, `cdq`, gives `cda`, the goods already claimed by those ahead of it when it reaches the shop. The household is then served its planned demand or what is left, `YC - cda`, whichever is smaller (and nothing if no goods are left).
 
+> ### 📦 Box M - Writing sequential code: getting the order right
+>
+> In the aggregate models, the equations are solved by iteration, so their order within the period does not affect the results. In the agent-based models, each line is executed once per period, from top to bottom, and the order is part of the model. Since variables are overwritten rather than indexed by period, a variable used before it is updated silently takes last period's value, without any error message. Five rules help:
+>
+> 1. **Write the timing first, in words.** Describe one period as a sequence of decisions: who decides what, in which order, and on what information. The ticks of the code follow this sequence.
+> 2. **For each variable on the right-hand side, ask whether it is an opening or a current value.** Opening values (last period's stocks, income and output) are known at the start of the period, while a current value can be used only below the line that computes it. If two current variables depend on each other, the block is simultaneous and needs either iteration or a lag that breaks the loop.
+> 3. **Compute flows first, from opening stocks, and update stocks last.** If a stock must be updated before a flow that uses its opening value, save a copy first (e.g. `Llag = L`).
+> 4. **Make errors loud.** During development, set the variables to be computed in the period to `NA` at the top of the period, so that any of them used too early turns the results into `NA`. Lagged values that are legitimately needed must be copied first:
+>
+> ```r
+> ydLag = yd                            # Last period's disposable income, needed for planning
+> Y = NA; WB = NA; Gs = NA; Is = NA     # Current flows: unknown until computed
+> ```
+>
+>    This catches flows used before they are computed, but not stocks used after they have been updated: for these, rules 3 and 5 apply.
+> 5. **Use the accounting as the final test.** A flow computed with the wrong timing no longer matches the transactions-flow matrix, and the redundant equation $H_h = H_s$ fails. A gap well above machine precision almost always signals a timing error.
+
 **Results.** Figure 17 shows the results of 50 Monte Carlo runs: each thin grey line is a single run, while the bold coloured line is the average across runs. As usual, government spending rises from ¥20 to ¥25 at period 101. The redundant equation holds to machine precision in every run ($|H_h - H_s| \approx 10^{-12}$).
 
 #### Figure 17. Model ABM-SBM: Monte Carlo results
@@ -1317,14 +1334,14 @@ src="beijing_figures/ABM_OPENSBM.png" alt="Results of Model ABM-OPENSBM" width="
 </figure>
 <br>
 
-> ### ✏️ Box M - Exercises with the agent-based models
+> ### ✏️ Box N - Exercises with the agent-based models
 >
 > 1. **Back to the aggregate model.** In `4a_ABM_SBM.R`, set `s <- 0` and `alpha1d <- 0`. How close are the results to those of Model SBM? Why are they not identical?
 > 1. **More friction.** Set `s <- 0.3`. What happens to the dispersion of the Monte Carlo runs, to mean GDP and to household wealth? Why does more friction lead to *higher* output?
 > 1. **More heterogeneity.** Set `alpha1d <- 0.2`. What happens to the Gini index? And to mean GDP?
 > 1. **A larger workforce.** Set `nHouseholds <- 250`. What happens to the unemployment rate and to GDP? What does this tell you about the nature of unemployment in the model?
 >
-> 👉 **Answers:** [here](ANSWERS.md#box-m---agent-based-models).
+> 👉 **Answers:** [here](ANSWERS.md#box-n---agent-based-models).
 
 ---
 
@@ -1486,7 +1503,7 @@ Lastly, a few words on **Artificial Intelligence** (AI). AI is transforming the 
 
 If SFC, IO, agent-based and other monetary-production approaches are to offer a credible alternative to mainstream methods, it will not be by matching them in mathematical elaboration. It will be by offering models that are fully consistent, economically transparent, and no more complex than the question requires: models that a student can open, read and understand.
 
-> ### 📦 Box N - Further material
+> ### 📦 Box O - Further material
 >
 > The companion repositories listed in the [Overview](#overview) cover what these lectures leave out:
 >
