@@ -1290,7 +1290,7 @@ The goods market works like a queue at a shop. For each household, `cumsum(cdq)`
 >    ```
 >    This catches flows used before they are computed, but not stocks used after they have been updated: for these, rules 3 and 5 apply.
 >
-> 5. **Use the accounting as the final test.** A flow computed with the wrong timing no longer matches the transactions-flow matrix, and the redundant equation $H_h = H_s$ fails. A gap well above machine precision almost always signals a timing error.
+> 5. **Use the accounting as the final test.** A flow computed with the wrong timing no longer matches the transactions-flow matrix, and the redundant equation $H_h = H_s$ fails. A gap well above machine precision signals an accounting error somewhere in the model; in sequential code, a value used with the wrong timing is a common cause.
 
 **Results.** Figure 17 shows the results of 50 Monte Carlo runs: each thin grey line is a single run, while the bold coloured line is the average across runs. As usual, government spending rises from ¥20 to ¥25 at period 101. The redundant equation holds to machine precision in every run ($|H_h - H_s| \approx 10^{-12}$).
 
