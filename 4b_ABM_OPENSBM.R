@@ -1,5 +1,5 @@
 # *************************************************************************
-#  Model ABM-OPENSBM (agent-based households, open economy, flexible exchange rate)
+#  Model AB-OPENSBM (agent-based households, open economy, flexible exchange rate)
 #  Model OPENSBM-FLEX with heterogeneous households and a job lottery
 #  Sources: Godley & Lavoie, Monetary Economics, chapters 4, 7 and 12;
 #           foreign-sector set-up as in the OPENSIMPLEST model;

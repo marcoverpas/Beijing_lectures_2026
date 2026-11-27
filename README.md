@@ -21,7 +21,7 @@ This repository presents a **family of small macroeconomic models** built around
 | **Aggregate**                | [1a. Model SBM](1a_SBM.R) | Model OPENSBM: <br> [1b. fixed exchange rate](1b_OPENSBM_FIX.R) · [1c. flexible exchange rate](1c_OPENSBM_FLEX.R) |
 | **Input-output**             | Model IO-SBM: <br> [2a. fixed prices](2a_IO_SBM.R) · [2b. Sraffa-like prices](2b_IO_SBM_SRAFFA.R) | Model IO-OPENSBM: <br> [2c. fixed prices](2c_IO_OPENSBM.R) · [2d. Sraffa-like prices](2d_IO_OPENSBM_SRAFFA.R) |
 | **Ecological (input-output)** | [3a. Model ECO-IO-SBM](3a_ECO_IO_SBM_CLIMATE.R) (climate block) <br> [3b. Model ECO-IO-SBM-FULL](3b_ECO_IO_SBM_FULL.R) (full block) | [3c. Model ECO-IO-OPENSBM](3c_ECO_IO_OPENSBM_CLIMATE.R) (climate block) <br> [3d. Model ECO-IO-OPENSBM-FULL](3d_ECO_IO_OPENSBM_FULL.R) (full block) |
-| **Agent-based**              | [4a. Model ABM-SBM](4a_ABM_SBM.R) | [4b. Model ABM-OPENSBM](4b_ABM_OPENSBM.R) |
+| **Agent-based**              | [4a. Model AB-SBM](4a_ABM_SBM.R) | [4b. Model AB-OPENSBM](4b_ABM_OPENSBM.R) |
 
 The models are listed in Table 1. Reading down a column shows how the *same* economy can be represented at increasing levels of detail: as economy-wide aggregates, as a set of interconnected **industries**, as an economy embedded in the **ecosystem**, and as a population of heterogeneous interacting **agents** (here, households). Reading across a row shows what changes when the economy trades with the rest of the world, under a fixed or a flexible exchange rate. The input-output model comes with two alternative *closures* of the price system: fixed prices, or Sraffa-like (cost-plus) prices that may diverge temporarily from their reproduction values when demand grows. Similarly, the ecological model comes in two versions: a climate block only, or a full block that also tracks matter, waste and the depletion of natural reserves. Each script is obtained from the previous one by adding a block of equations (and, where needed, modifying a few existing ones), so that the cost and the consequences of every extension can be seen directly in the code. Finally, Section 6 gives some hints on how the coefficients of these models can be calibrated and estimated on real-world data.
 
@@ -46,8 +46,8 @@ Sections 3.4, 4.3, 4.4, 5.3 and 6 are **extra material** (marked 📚): they ext
   - [4.4 - Open-economy versions](#44---open-economy-versions) 📚
 - [5 - Agent-based models](#5---agent-based-models)
   - [5.1 - Agent-based models and AB-SFC models](#51---agent-based-models-and-ab-sfc-models)
-  - [5.2 - Model ABM-SBM](#52---model-abm-sbm)
-  - [5.3 - Model ABM-OPENSBM](#53---model-abm-opensbm) 📚
+  - [5.2 - Model AB-SBM](#52---model-ab-sbm)
+  - [5.3 - Model AB-OPENSBM](#53---model-ab-opensbm) 📚
 - [6 - Calibration and estimation](#6---calibration-and-estimation) 📚
   - [6.1 - The SFC block](#61---the-sfc-block)
   - [6.2 - The IO block](#62---the-io-block)
@@ -1239,11 +1239,11 @@ Crucially, the models remain **stock-flow consistent**: since money is only ever
 >
 > On the **left**, every particle obeys the same differential equations ([Lorenz, 1963](#references)): the motion is intricate, even chaotic, but the shape was written into the equations from the start. This is complexity, but not emergence. On the **right**, the birds are told nothing about any global shape ([Reynolds, 1987](#references)). Switch the interaction off, and the flock dissolves: the pattern lived in the *interaction*, not in the birds. In the models below, involuntary unemployment, rationing and wealth inequality are the economic counterparts of the flock: no household is told to produce them.
 
-### 5.2 - Model ABM-SBM
+### 5.2 - Model AB-SBM
 
 📄 **R code:** [`4a_ABM_SBM.R`](4a_ABM_SBM.R)
 
-Model **ABM-SBM** (`4a_ABM_SBM.R`) is Model SBM populated by 180 households. Each household holds its own cash, bills and deposits, earns its own income, and has its own autonomous propensity to consume, $\alpha_{10,i}$, drawn from a uniform distribution between 0.58 and 0.78. As in Model SBM, the propensity to consume falls when the interest rate rises. The firm, banking and public sectors are aggregate, and follow the equations of Model SBM. Each period unfolds as a sequence of "ticks":
+Model **AB-SBM** (`4a_ABM_SBM.R`) is Model SBM populated by 180 households. Each household holds its own cash, bills and deposits, earns its own income, and has its own autonomous propensity to consume, $\alpha_{10,i}$, drawn from a uniform distribution between 0.58 and 0.78. As in Model SBM, the propensity to consume falls when the interest rate rises. The firm, banking and public sectors are aggregate, and follow the equations of Model SBM. Each period unfolds as a sequence of "ticks":
 
 1. firms plan investment, and each household plans its consumption out of its *last* disposable income and its wealth, $c_i = \alpha_{1,i} \cdot yd_{i,-1} + \alpha_2 \cdot v_{i,-1}$;
 1. the economy needs one worker for each unit of planned demand, and a **job lottery** fills the jobs: with a hiring spread $s = 0.1$, the number of jobs filled is a random fraction of those needed, so that some jobs remain unfilled;
@@ -1295,11 +1295,11 @@ The goods market works like a queue at a shop. For each household, `cumsum(cdq)`
 
 **Results.** Figure 17 shows the results of 50 Monte Carlo runs: each thin grey line is a single run, while the bold coloured line is the average across runs. As usual, government spending rises from ¥20 to ¥25 at period 101. The redundant equation holds to machine precision in every run ($|H_h - H_s| \approx 10^{-12}$).
 
-#### Figure 17. Model ABM-SBM: Monte Carlo results
+#### Figure 17. Model AB-SBM: Monte Carlo results
 
 <figure>
 <img
-src="beijing_figures/ABM_SBM.png" alt="Results of Model ABM-SBM" width="900">
+src="beijing_figures/ABM_SBM.png" alt="Results of Model AB-SBM" width="900">
 </figure>
 <br>
 
@@ -1317,29 +1317,29 @@ Three results are worth highlighting.
 - **Involuntary unemployment emerges.** Labour demand is determined by effective demand, not by the number of households willing to work, and the unemployment rate settles at about 24% before the shock and 5% after it. The level of the unemployment rate depends on the size of the workforce, which is a parameter, but its fluctuations and its response to fiscal policy are generated by the model.
 - **Wealth inequality emerges.** Households differ in their propensities to consume and in their luck in the queues for jobs and goods, so that their wealth differs too. The Gini index of household wealth settles at about 0.13 before the shock and falls to about 0.10 after it, because more households are employed. Figure 18 shows how the wealth distribution of a single run evolves over time (wealth per household is measured in ¥ on the horizontal axis). The colours mark three phases. In the first 60 periods (grey), households start with no wealth and accumulate it, and the Gini index falls from its high initial values. Between periods 60 and 100 (blue), the distribution fluctuates around a stable shape, and the changes in the Gini index of a single run are mostly noise. From period 101 (red), the fiscal expansion raises employment and the Gini index falls to about 0.10. The legend reports both the Gini index of the run shown and its mean across the 50 runs, which filters out the noise.
 
-#### Figure 18. Model ABM-SBM: the distribution of household wealth (run 1)
+#### Figure 18. Model AB-SBM: the distribution of household wealth (run 1)
 
 <figure>
 <img
-src="beijing_figures/ABM_wealth.gif" alt="Wealth distribution in Model ABM-SBM" width="650">
+src="beijing_figures/ABM_wealth.gif" alt="Wealth distribution in Model AB-SBM" width="650">
 </figure>
 <br>
 
-### 5.3 - Model ABM-OPENSBM
+### 5.3 - Model AB-OPENSBM
 
-> 📚 **Extra material.** This section extends Model ABM-SBM of Section 5.2 to the open economy, and can be skipped on a first reading.
+> 📚 **Extra material.** This section extends Model AB-SBM of Section 5.2 to the open economy, and can be skipped on a first reading.
 
 📄 **R code:** [`4b_ABM_OPENSBM.R`](4b_ABM_OPENSBM.R)
 
-Model **ABM-OPENSBM** (`4b_ABM_OPENSBM.R`) adds the foreign sector of Model OPENSBM-FLEX to Model ABM-SBM. Each household now also chooses how much to hold in foreign bills, and receives interest and capital gains on them, while exports, imports, the current account and the exchange rate are aggregate. Imports cover part of planned demand, so that only the rest requires domestic workers, and the goods available to the queue of buyers include imported goods.
+Model **AB-OPENSBM** (`4b_ABM_OPENSBM.R`) adds the foreign sector of Model OPENSBM-FLEX to Model AB-SBM. Each household now also chooses how much to hold in foreign bills, and receives interest and capital gains on them, while exports, imports, the current account and the exchange rate are aggregate. Imports cover part of planned demand, so that only the rest requires domestic workers, and the goods available to the queue of buyers include imported goods.
 
-Figure 19 shows the results. The macroeconomic behaviour is similar to that of Model OPENSBM-FLEX, with the same upward bias as in Model ABM-SBM: mean GDP is about ¥136 before the shock and ¥170 after it, and the exchange rate settles at about 1.23 and 1.42, against 1.19 and 1.37 in the aggregate model. Since income is higher, imports are higher too, and a larger depreciation is needed to balance the current account. Unemployment and wealth inequality behave as in the closed economy.
+Figure 19 shows the results. The macroeconomic behaviour is similar to that of Model OPENSBM-FLEX, with the same upward bias as in Model AB-SBM: mean GDP is about ¥136 before the shock and ¥170 after it, and the exchange rate settles at about 1.23 and 1.42, against 1.19 and 1.37 in the aggregate model. Since income is higher, imports are higher too, and a larger depreciation is needed to balance the current account. Unemployment and wealth inequality behave as in the closed economy.
 
-#### Figure 19. Model ABM-OPENSBM: Monte Carlo results
+#### Figure 19. Model AB-OPENSBM: Monte Carlo results
 
 <figure>
 <img
-src="beijing_figures/ABM_OPENSBM.png" alt="Results of Model ABM-OPENSBM" width="900">
+src="beijing_figures/ABM_OPENSBM.png" alt="Results of Model AB-OPENSBM" width="900">
 </figure>
 <br>
 

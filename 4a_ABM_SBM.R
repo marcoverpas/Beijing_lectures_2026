@@ -1,5 +1,5 @@
 # *************************************************************************
-#  Model ABM-SBM (agent-based households, closed economy)
+#  Model AB-SBM (agent-based households, closed economy)
 #  Model SBM with heterogeneous households and a job lottery
 #  Sources: Godley & Lavoie, Monetary Economics, chapters 4 and 7;
 #           agent-based set-up as in the Leeds lectures (ABM-PC, ABM-BMW)
