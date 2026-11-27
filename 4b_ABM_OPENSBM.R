@@ -3,7 +3,7 @@
 #  Model OPENSBM-FLEX with heterogeneous households and a job lottery
 #  Sources: Godley & Lavoie, Monetary Economics, chapters 4, 7 and 12;
 #           foreign-sector set-up as in the OPENSIMPLEST model;
-#           agent-based set-up as in the Leeds lectures (ABM-PC, ABM-BMW)
+#           agent-based set-up as in the Leeds lectures (AB-PC, AB-BMW)
 #  Author: Marco Veronese Passarella
 #  Last change: 27/11/2026
 # *************************************************************************
