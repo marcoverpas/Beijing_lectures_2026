@@ -104,7 +104,7 @@ for (mc in 1:MC) {
   # Set randomness seed
   set.seed(mc)
 
-  # Define and initialise the stocks (MICRO)
+  # Define and initialise the stocks and last period's flows (MICRO)
   v  = rep(0, nHouseholds)   # Micro: household wealth
   h  = rep(0, nHouseholds)   # Micro: cash
   b  = rep(0, nHouseholds)   # Micro: domestic bills
@@ -113,7 +113,7 @@ for (mc in 1:MC) {
   yd = rep(0, nHouseholds)   # Micro: disposable income (LAST period)
   c  = rep(0, nHouseholds)   # Micro: consumption (LAST period)
 
-  # Define and initialise the stocks (MACRO)
+  # Define and initialise the stocks, last period's output and the exchange rate (MACRO)
   K = 0; L = 0; M_s = 0; B_b = 0; Ylag = 0     # Firms and banks
   B_s = 0; B_cb = 0; H_s = 0                   # Government and central bank
   xr = 1; NETFA = 0; B_w = 0                   # Rest of the World
