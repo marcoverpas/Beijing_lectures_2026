@@ -91,9 +91,6 @@ store = list(Y    = matrix(0, nPeriods, MC),   # Output / income (GDP)
              UR   = matrix(0, nPeriods, MC),   # Unemployment rate
              GINI = matrix(0, nPeriods, MC))   # Gini index of household wealth
 
-# Store micro values (for MC = 1)
-vHist = matrix(0, nPeriods, nHouseholds)   # Wealth of each household
-
 # Gini index (auxiliary function)
 gini <- function(z) { z <- sort(pmax(z, 0)); n <- length(z)
   if (sum(z) == 0) return(0); sum((2 * (1:n) - n - 1) * z) / (n * sum(z)) }
@@ -196,9 +193,6 @@ for (mc in 1:MC) {
     H_s  = H_s + (B_cb - B_cblag)                       # Macro: supply of cash
     sfcGap = max(sfcGap, abs(sum(h) - H_s))             # Hidden equation: H_h = H_s
     Ylag = Y
-
-    # Store micro values (for MC = 1)
-    if (mc == 1) vHist[i, ] = v
 
     # Store macro values
     store$Y[i, mc] = Y;          store$C[i, mc] = sum(c);   store$I[i, mc] = Is

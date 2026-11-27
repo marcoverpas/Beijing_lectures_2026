@@ -69,7 +69,7 @@ store = list(Y    = matrix(0, nPeriods, MC),   # Output / income (GDP)
              UR   = matrix(0, nPeriods, MC),   # Unemployment rate
              GINI = matrix(0, nPeriods, MC))   # Gini index of household wealth
 
-# Store micro values (for MC = 1)
+# Store the wealth of each household (first run only, for the histogram)
 vHist = matrix(0, nPeriods, nHouseholds)   # Wealth of each household
 
 # Gini index (auxiliary function)
@@ -159,7 +159,7 @@ for (mc in 1:MC) {
     sfcGap = max(sfcGap, abs(sum(h) - H_s))             # Hidden equation: H_h = H_s
     Ylag = Y
 
-    # Store micro values (for MC = 1)
+    # Store the wealth of each household (first run only, for the histogram)
     if (mc == 1) vHist[i, ] = v
 
     # Store macro values
