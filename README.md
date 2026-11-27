@@ -443,7 +443,7 @@ Notice that the order of the equations does not matter for the solution: since t
 > <div align="center">
 > <figure>
 > <a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_sbm.html" target="_blank">
-> <img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+> <img src="beijing_figures/Playing.png" width="400">
 > </a>
 > </figure>
 > </div>
@@ -577,7 +577,7 @@ src="beijing_figures/OPENSBM_experiment.gif" alt="Effects of higher government s
 <div align="center">
 <figure>
 <a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_opensbm.html" target="_blank">
-<img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+<img src="beijing_figures/Playing.png" width="400">
 </a>
 </figure>
 </div>
@@ -795,7 +795,7 @@ With a single capital-output ratio, nothing happens at the macroeconomic level: 
 <div align="center">
 <figure>
 <a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_io_sbm.html" target="_blank">
-<img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+<img src="beijing_figures/Playing.png" width="400">
 </a>
 </figure>
 </div>
@@ -1073,7 +1073,7 @@ src="beijing_figures/ECO_experiment.gif" alt="Effects of higher government spend
 <div align="center">
 <figure>
 <a href="https://marcoverpas.github.io/Beijing_lectures_2026/beijing_figures/int_eco_io_sbm.html" target="_blank">
-<img src="https://raw.githubusercontent.com/marcoverpas/figures/main/Playing.png" width="400">
+<img src="beijing_figures/Playing.png" width="400">
 </a>
 </figure>
 </div>
