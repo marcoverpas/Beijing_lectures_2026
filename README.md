@@ -139,7 +139,7 @@ In the models presented in class (Sections 2.1, 2.2, 3.2, 3.3 and 4.2), each num
 
 <figure>
 <img
-src="https://raw.githubusercontent.com/marcoverpas/figures/main/Languages_3.png" alt="Programming languages and software used for SFC modelling" width="800">
+src="beijing_figures/Languages.png" alt="Programming languages and software used for SFC modelling" width="800">
 </figure>
 <br>
 
