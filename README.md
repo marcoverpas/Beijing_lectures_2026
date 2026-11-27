@@ -1284,12 +1284,12 @@ The goods market works like a queue at a shop. For each household, `cumsum(cdq)`
 > 3. **Compute flows first, from opening stocks, and update stocks last.** If a stock must be updated before a flow that uses its opening value, save a copy first (e.g. `Llag = L`).
 > 4. **Make errors loud.** During development, set the variables to be computed in the period to `NA` at the top of the period, so that any of them used too early turns the results into `NA`. Lagged values that are legitimately needed must be copied first:
 >
-> ```r
-> ydLag = yd                            # Last period's disposable income, needed for planning
-> Y = NA; WB = NA; Gs = NA; Is = NA     # Current flows: unknown until computed
-> ```
->
+>    ```r
+>    ydLag = yd                            # Last period's disposable income, needed for planning
+>    Y = NA; WB = NA; Gs = NA; Is = NA     # Current flows: unknown until computed
+>    ```
 >    This catches flows used before they are computed, but not stocks used after they have been updated: for these, rules 3 and 5 apply.
+>
 > 5. **Use the accounting as the final test.** A flow computed with the wrong timing no longer matches the transactions-flow matrix, and the redundant equation $H_h = H_s$ fails. A gap well above machine precision almost always signals a timing error.
 
 **Results.** Figure 17 shows the results of 50 Monte Carlo runs: each thin grey line is a single run, while the bold coloured line is the average across runs. As usual, government spending rises from ¥20 to ¥25 at period 101. The redundant equation holds to machine precision in every run ($|H_h - H_s| \approx 10^{-12}$).
