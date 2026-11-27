@@ -1306,7 +1306,7 @@ src="beijing_figures/ABM_SBM.png" alt="Results of Model ABM-SBM" width="900">
 **Where does the randomness come from?** It is useful to distinguish three random elements:
 
 1. the **hiring noise** ($s > 0$) changes the number of jobs filled, and hence output, in each period. It is the main source of the differences between the Monte Carlo runs;
-1. the **two queues** decide *which* households are hired and served, but not *how many*. They affect aggregate demand only because households have different propensities to consume, so that the distribution of income across them matters. With $s = 0$, the standard deviation of GDP across runs at period 100 falls from about ¥6 to about ¥0.5, and with identical households all runs are the same;
+1. the **two queues** decide *which* households are hired and served, but not the number of jobs filled or the total amount of goods sold. They affect aggregate demand only because households have different propensities to consume, so that the distribution of income and wealth across them matters. With $s = 0$, the standard deviation of GDP across runs at period 100 falls from about ¥6 to about ¥0.5. With $s = 0$ and identical households, all runs are the same;
 1. the **propensities to consume** are drawn randomly, but only once, and are the same in all runs. They do not make the runs differ, but they are what allows the queues to affect the aggregates.
 
 At the level of the single household, however, the queues matter a great deal: even with $s = 0$ and identical households, they alone produce a Gini index of wealth of about 0.10 before the shock and 0.05 after it.
