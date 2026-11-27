@@ -1303,6 +1303,14 @@ src="beijing_figures/ABM_SBM.png" alt="Results of Model ABM-SBM" width="900">
 </figure>
 <br>
 
+**Where does the randomness come from?** It is useful to distinguish three random elements:
+
+1. the **hiring noise** ($s > 0$) changes the number of jobs filled, and hence output, in each period. It is the main source of the differences between the Monte Carlo runs;
+1. the **two queues** decide *which* households are hired and served, but not *how many*. They affect aggregate demand only because households have different propensities to consume, so that the distribution of income across them matters. With $s = 0$, the standard deviation of GDP across runs at period 100 falls from about ¥6 to about ¥0.5, and with identical households all runs are the same;
+1. the **propensities to consume** are drawn randomly, but only once, and are the same in all runs. They do not make the runs differ, but they are what allows the queues to affect the aggregates.
+
+At the level of the single household, however, the queues matter a great deal: even with $s = 0$ and identical households, they alone produce a Gini index of wealth of about 0.10 before the shock and 0.05 after it.
+
 Three results are worth highlighting.
 
 - **Output is higher than in the aggregate model.** Mean GDP settles at about ¥136 before the shock and ¥170 after it, against ¥132 and ¥165 in Model SBM. When hiring falls short, households are rationed and cannot spend all they planned. The unspent income becomes **involuntary saving**, so that household wealth is higher (about ¥423 against ¥368). Through the fiscal anchor, more wealth means more interest-bearing assets, and hence higher national income. Without frictions and heterogeneity ($s = 0$ and identical households), GDP is about ¥133 and ¥166. This is close to, but not exactly equal to, the aggregate result, because households consume out of last period's income and jobs come in whole units.
