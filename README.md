@@ -1247,7 +1247,7 @@ Model **ABM-SBM** (`4a_ABM_SBM.R`) is Model SBM populated by 180 households. Eac
 
 1. firms plan investment, and each household plans its consumption out of its *last* disposable income and its wealth, $c_i = \alpha_{1,i} \cdot yd_{i,-1} + \alpha_2 \cdot v_{i,-1}$;
 1. the economy needs one worker for each unit of planned demand, and a **job lottery** fills the jobs: with a hiring spread $s = 0.1$, the number of jobs filled is a random fraction of those needed, so that some jobs remain unfilled;
-1. households are randomly ordered in a queue, which decides both who gets a job and who reaches the shop first;
+1. households are randomly ordered in two independent queues: one decides who gets a job, the other who reaches the shop first;
 1. goods are served first to the government, then to firms, and finally to households, **first-come-first-served**, until they run out;
 1. the wage bill (what is left of sales after interest and depreciation, here treated as wages) is split among the employed, and bank profits among all households;
 1. households pay taxes, accumulate wealth and choose their portfolio (cash for transactions, bills, and deposits as the buffer stock).
@@ -1260,20 +1260,21 @@ The core of the matching process is:
     Ypot = N * pr                                       # Macro: goods that can be produced
 
     ## TICK 3: households are re-shuffled ####
-    order = sample(nHouseholds)                         # Queue for both jobs and goods
+    order_c = sample(nHouseholds)                       # Queue for goods
+    order_j = sample(nHouseholds)                       # Queue for jobs (independent of order_c)
 
     ## TICK 4: goods are served: government, firms, then households ####
     Gs  = min(Gpl, Ypot)                                # Macro: government purchases served
     Is  = min(Ipl, Ypot - Gs)                           # Macro: investment served
     YC  = Ypot - Gs - Is                                # Macro: goods left for households
-    cdq = cd[order]                                     # Micro: planned demand in queue order
+    cdq = cd[order_c]                                   # Micro: planned demand in queue order
     cda = cumsum(cdq) - cdq                             # Micro: goods claimed by those ahead
     cds = pmin(cdq, pmax(0, YC - cda))                  # Micro: actually served
-    c   = rep(0, nHouseholds); c[order] = cds           # Micro: actual consumption
+    c   = rep(0, nHouseholds); c[order_c] = cds         # Micro: actual consumption
     Y   = Gs + Is + sum(c)                              # Macro: output (GDP) = goods actually sold
 ```
 
-The goods market works like a queue at a shop. For each household, `cumsum(cdq)` is the total demand of all the households ahead of it in the queue *plus* its own demand. Subtracting its own demand, `cdq`, gives `cda`, the goods already claimed by those ahead of it when it reaches the shop. The household is then served its planned demand or what is left, `YC - cda`, whichever is smaller (and nothing if no goods are left).
+The goods market works like a queue at a shop. For each household, `cumsum(cdq)` is the total demand of all the households ahead of it in the queue *plus* its own demand. Subtracting its own demand, `cdq`, gives `cda`, the goods already claimed by those ahead of it when it reaches the shop. The household is then served its planned demand or what is left, `YC - cda`, whichever is smaller (and nothing if no goods are left). The job queue, `order_j`, is used later in the period, when the wage bill is split among the first `N` households in it. Since the two queues are drawn independently, the households left without a job are not also, systematically, the last to be served at the shop.
 
 > ### 📦 Box M - Writing sequential code: getting the order right
 >
@@ -1304,9 +1305,9 @@ src="beijing_figures/ABM_SBM.png" alt="Results of Model ABM-SBM" width="900">
 
 Three results are worth highlighting.
 
-- **Output is higher than in the aggregate model.** Mean GDP settles at about ¥136 before the shock and ¥170 after it, against ¥132 and ¥165 in Model SBM. When hiring falls short, households are rationed and cannot spend all they planned. The unspent income becomes **involuntary saving**, so that household wealth is higher (about ¥424 against ¥368). Through the fiscal anchor, more wealth means more interest-bearing assets, and hence higher national income. Without frictions and heterogeneity ($s = 0$ and identical households), GDP is about ¥133 and ¥166. This is close to, but not exactly equal to, the aggregate result, because households consume out of last period's income and jobs come in whole units.
+- **Output is higher than in the aggregate model.** Mean GDP settles at about ¥136 before the shock and ¥170 after it, against ¥132 and ¥165 in Model SBM. When hiring falls short, households are rationed and cannot spend all they planned. The unspent income becomes **involuntary saving**, so that household wealth is higher (about ¥423 against ¥368). Through the fiscal anchor, more wealth means more interest-bearing assets, and hence higher national income. Without frictions and heterogeneity ($s = 0$ and identical households), GDP is about ¥133 and ¥166. This is close to, but not exactly equal to, the aggregate result, because households consume out of last period's income and jobs come in whole units.
 - **Involuntary unemployment emerges.** Labour demand is determined by effective demand, not by the number of households willing to work, and the unemployment rate settles at about 24% before the shock and 5% after it. The level of the unemployment rate depends on the size of the workforce, which is a parameter, but its fluctuations and its response to fiscal policy are generated by the model.
-- **Wealth inequality emerges.** Households differ in their propensities to consume and in their luck in the job lottery, so that their wealth differs too. The Gini index of household wealth settles at about 0.12 before the shock and falls to about 0.09 after it, because more households are employed. Figure 18 shows how the wealth distribution of a single run evolves over time (wealth per household is measured in ¥ on the horizontal axis). The colours mark three phases. In the first 60 periods (grey), households start with no wealth and accumulate it, and the Gini index falls from its high initial values. Between periods 60 and 100 (blue), the distribution fluctuates around a stable shape, and the changes in the Gini index of a single run are mostly noise. From period 101 (red), the fiscal expansion raises employment and the Gini index falls to about 0.09. The legend reports both the Gini index of the run shown and its mean across the 50 runs, which filters out the noise.
+- **Wealth inequality emerges.** Households differ in their propensities to consume and in their luck in the queues for jobs and goods, so that their wealth differs too. The Gini index of household wealth settles at about 0.13 before the shock and falls to about 0.10 after it, because more households are employed. Figure 18 shows how the wealth distribution of a single run evolves over time (wealth per household is measured in ¥ on the horizontal axis). The colours mark three phases. In the first 60 periods (grey), households start with no wealth and accumulate it, and the Gini index falls from its high initial values. Between periods 60 and 100 (blue), the distribution fluctuates around a stable shape, and the changes in the Gini index of a single run are mostly noise. From period 101 (red), the fiscal expansion raises employment and the Gini index falls to about 0.10. The legend reports both the Gini index of the run shown and its mean across the 50 runs, which filters out the noise.
 
 #### Figure 18. Model ABM-SBM: the distribution of household wealth (run 1)
 

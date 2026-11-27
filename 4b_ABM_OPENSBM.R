@@ -5,7 +5,7 @@
 #           foreign-sector set-up as in the OPENSIMPLEST model;
 #           agent-based set-up as in the Leeds lectures (ABM-PC, ABM-BMW)
 #  Author: Marco Veronese Passarella
-#  Last change: 16/11/2026
+#  Last change: 27/11/2026
 # *************************************************************************
 #  Conventions: upper-case = MACRO total; lower-case = MICRO (one household)
 # *************************************************************************
@@ -25,8 +25,8 @@
 #      transactions), domestic bills, foreign bills and deposits (buffer);
 #    - the exchange rate adjusts to the current account; the rest of the
 #      world holds domestic bills as a residual.
-#  One single random shuffle of households per period decides BOTH who gets a
-#  job AND who reaches the shop first.
+#  Two independent random shuffles of households per period decide who gets
+#  a job and who reaches the shop first.
 # *************************************************************************
 
 # Clear environment
@@ -138,17 +138,18 @@ for (mc in 1:MC) {
     Ypot = N * pr + IM                                  # Macro: goods available (domestic + imported)
 
     ## TICK 3: households are re-shuffled ####
-    order = sample(nHouseholds)                         # Queue for both jobs and goods
+    order_c = sample(nHouseholds)                       # Queue for goods
+    order_j = sample(nHouseholds)                       # Queue for jobs (independent of order_c)
 
     ## TICK 4: goods are served: exports, government, firms, then households ####
     Xs  = min(X, Ypot)                                  # Macro: exports served
     Gs  = min(Gpl, Ypot - Xs)                           # Macro: government purchases served
     Is  = min(Ipl, Ypot - Xs - Gs)                      # Macro: investment served
     YC  = Ypot - Xs - Gs - Is                           # Macro: goods left for households
-    cdq = cd[order]                                     # Micro: planned demand in queue order
+    cdq = cd[order_c]                                   # Micro: planned demand in queue order
     cda = cumsum(cdq) - cdq                             # Micro: goods claimed by those ahead
     cds = pmin(cdq, pmax(0, YC - cda))                  # Micro: actually served
-    c   = rep(0, nHouseholds); c[order] = cds           # Micro: actual consumption
+    c   = rep(0, nHouseholds); c[order_c] = cds         # Micro: actual consumption
     Y   = Xs + Gs + Is + sum(c) - IM                    # Macro: output (GDP) = domestic goods actually sold
 
     ## TICK 5: firms and banks ####
@@ -161,7 +162,7 @@ for (mc in 1:MC) {
 
     ## TICK 6: incomes, taxes, wealth ####
     wage = rep(0, nHouseholds)
-    if (N >= 1) wage[order[1:N]] = WB / N               # Micro: wage of the employed
+    if (N >= 1) wage[order_j[1:N]] = WB / N             # Micro: wage of the employed
     xrlag  = xr
     intinc = rb * b + rm * m + rw * bf * xr             # Micro: interest on last period's assets (xr not yet updated)
     income = wage + FB / nHouseholds + intinc           # Micro: total income

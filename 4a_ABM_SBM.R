@@ -4,7 +4,7 @@
 #  Sources: Godley & Lavoie, Monetary Economics, chapters 4 and 7;
 #           agent-based set-up as in the Leeds lectures (ABM-PC, ABM-BMW)
 #  Author: Marco Veronese Passarella
-#  Last change: 16/11/2026
+#  Last change: 27/11/2026
 # *************************************************************************
 #  Conventions: upper-case = MACRO total; lower-case = MICRO (one household)
 # *************************************************************************
@@ -20,8 +20,8 @@
 #      among the employed; bank profits are split equally among households;
 #    - households pay taxes and allocate wealth between cash (for
 #      transactions), bills and deposits (the buffer stock).
-#  One single random shuffle of households per period decides BOTH who gets a
-#  job AND who reaches the shop first.
+#  Two independent random shuffles of households per period decide who gets
+#  a job and who reaches the shop first.
 # *************************************************************************
 
 # Clear environment
@@ -114,16 +114,17 @@ for (mc in 1:MC) {
     Ypot = N * pr                                       # Macro: goods that can be produced
 
     ## TICK 3: households are re-shuffled ####
-    order = sample(nHouseholds)                         # Queue for both jobs and goods
+    order_c = sample(nHouseholds)                       # Queue for goods
+    order_j = sample(nHouseholds)                       # Queue for jobs (independent of order_c)
 
     ## TICK 4: goods are served: government, firms, then households ####
     Gs  = min(Gpl, Ypot)                                # Macro: government purchases served
     Is  = min(Ipl, Ypot - Gs)                           # Macro: investment served
     YC  = Ypot - Gs - Is                                # Macro: goods left for households
-    cdq = cd[order]                                     # Micro: planned demand in queue order
+    cdq = cd[order_c]                                   # Micro: planned demand in queue order
     cda = cumsum(cdq) - cdq                             # Micro: goods claimed by those ahead
     cds = pmin(cdq, pmax(0, YC - cda))                  # Micro: actually served
-    c   = rep(0, nHouseholds); c[order] = cds           # Micro: actual consumption
+    c   = rep(0, nHouseholds); c[order_c] = cds         # Micro: actual consumption
     Y   = Gs + Is + sum(c)                              # Macro: output (GDP) = goods actually sold
 
     ## TICK 5: firms and banks ####
@@ -136,7 +137,7 @@ for (mc in 1:MC) {
 
     ## TICK 6: incomes, taxes, wealth ####
     wage = rep(0, nHouseholds)
-    if (N >= 1) wage[order[1:N]] = WB / N               # Micro: wage of the employed
+    if (N >= 1) wage[order_j[1:N]] = WB / N             # Micro: wage of the employed
     intinc = rb * b + rm * m                            # Micro: interest on last period's bills and deposits
     income = wage + FB / nHouseholds + intinc           # Micro: total income
     tax    = theta * income                             # Micro: taxes
